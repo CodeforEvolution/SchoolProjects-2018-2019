@@ -1,8 +1,13 @@
+import javax.swing.JOptionPane;
+
 
 public class FishExperimentation {
 	public static void main(String[] args) {
-		Fish theLittleFishThatCould = new Fish();
-		Fish thiccFishie = new Fish(1000);
+		String fishName = JOptionPane.showInputDialog("Your fish is ready to be named! :)");
+		String fishHeight = JOptionPane.showInputDialog("It's time to say how thick your fish is! :D");
+		
+		Fish theLittleFishThatCould = new Fish(fishName, Double.parseDouble(fishHeight));
+		Fish thiccFishie = new Fish("Big Daddy", 1000);
 		
 		System.out.println("Just a fish: " + theLittleFishThatCould);
 		System.out.println("Big daddy fish: " + thiccFishie);
@@ -15,6 +20,6 @@ public class FishExperimentation {
 		
 		thiccFishie.setNumberOfScales(5);
 		
-		System.out.println("Big daddy is having a crisis! : " + thiccFishie);
+		JOptionPane.showMessageDialog(null, "Big daddy is having a crisis! : " + thiccFishie, "Mid Life Crissis!", JOptionPane.ERROR_MESSAGE, null);
 	}
 }
