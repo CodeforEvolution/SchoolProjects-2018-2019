@@ -3,8 +3,9 @@ public class Bug {
 	private boolean left;
 	private int distance;
 
-	public Bug(int howFar)
+	public Bug(String bugName, int howFar)
 	{
+		myName = bugName;
 		left = false;
 		distance = howFar;
 	}
@@ -17,9 +18,22 @@ public class Bug {
 			distance--;
 	}
 	
+	public void move(int amount)
+	{
+		if (left == false)
+			distance += amount;
+		else
+			distance -= amount;
+	}
+	
 	public void turn()
 	{
 		left = !left;
+	}
+	
+	public String getName()
+	{
+		return myName;
 	}
 	
 	public int getPosition()
@@ -30,6 +44,15 @@ public class Bug {
 	public String toString()
 	{
 		String out = "\n";
-		out += myName + ":";
+		out += myName + ":\n";
+		out += "\tDistance: " + distance + "\n";
+		out += "\tDirection: ";
+		if (left == true)
+			out += "left";
+		else
+			out += "right";
+		out += "\n";
+		
+		return out;
 	}
 }
