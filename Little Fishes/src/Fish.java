@@ -35,6 +35,11 @@ public class Fish {
 		numberScales /= randomatic.nextInt(4);
 	}
 	
+	public String getFishieName()
+	{
+		return fishName;
+	}
+	
 	public double getFishieWeight()
 	{
 		return fishieWeight;
