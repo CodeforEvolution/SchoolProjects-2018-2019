@@ -3,7 +3,7 @@ package utils;
 import java.io.PrintStream;
 
 public class printUtils {
-	static PrintStream sysOut = System.out;
+	public static PrintStream sysOut = System.out;
 	
 	public static void printArray(Object[] input)
 	{

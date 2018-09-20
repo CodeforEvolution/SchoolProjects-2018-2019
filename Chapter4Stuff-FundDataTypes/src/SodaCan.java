@@ -28,4 +28,15 @@ public class SodaCan {
 	{
 		return (canHeight * 2 * Math.PI * (canDiameter / 2)) + 2 * (Math.PI * (canDiameter / 2));
 	}
+	
+	public String toString()
+	{
+		String out = "\n";
+		out += "Can Height: " + canHeight + "\n";
+		out += "Can Diamter: " + canDiameter + "\n";
+		out += "Can Volume: " + getVolume() + "\n";
+		out += "Can Surface Area: " + getSurfaceArea() + "\n";
+ 		
+		return out;
+	}
 }
