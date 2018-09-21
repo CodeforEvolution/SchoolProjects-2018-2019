@@ -1,12 +1,27 @@
 
 public class TimeInterval {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	private int diffMins;
+	private int diffHours;
+	
+	public TimeInterval(int startTime, int endTime)
+	{
+		int overallDiff = 0;
+		
+		if (startTime > endTime)
+			overallDiff = startTime - endTime;
+		else
+			overallDiff = endTime - startTime;
+		
+		String diff = Integer.toString(overallDiff);
 	}
-
+	
+	public int getHours()
+	{
+		return diffHours;
+	}
+	
+	public int getMinutes()
+	{
+		return diffMins;
+	}
 }
