@@ -3,8 +3,8 @@ public class QuadraticEquationTester {
 	public static void main(String[] args)
 	{
 		double a = 1;
-		double b = -3;
-		double c = 1;
+		double b = -5;
+		double c = 6;
 		
 		QuadraticEquation quadEq = new QuadraticEquation(a, b, c);
 		
