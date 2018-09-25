@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 
 public class TimeInterval {
 	private int diffMins;
@@ -9,34 +7,40 @@ public class TimeInterval {
 	{
 		int overallDiff = 0;
 		
+		String start = Integer.toString(startTime);
+		String end = Integer.toString(endTime);
+		
+		int hours = 0;
+		int minutes = 0;
+		
 		if (startTime > endTime)
-			overallDiff = startTime - endTime;
-		else
-			overallDiff = endTime - startTime;
-		
-		char temp[] = Integer.toString(overallDiff).toCharArray();
-		System.out.println(Arrays.toString(temp));
-		
-		int diff[] = new int[temp.length];
-		for (int i = 0; i < temp.length; i++)
 		{
-			diff[i] = Integer.parseInt(Character.toString(temp[i]));
-		}
-		
-		if (diff.length == 4)
-		{
-			diffHours += diff[0] * 10;
-			diffHours += diff[1];
-			diffMins += diff[2] * 10;
-			diffMins += diff[3];
+			hours = (24 - Integer.parseInt(start.substring(0,1))) + Integer.parseInt(end.substring(0,1));
+			minutes = (60 - Integer.parseInt(start.substring(2,3)) + (60 - Integer.parseInt(end.substring(2,3))));
+			overallDiff = hours + minutes;
 		}
 		else
 		{
-			diffHours += diff[0];
-			diffMins += diff[1];
-			diffMins += diff[2];
+			hours = Integer.parseInt(start.substring(0, 1)) - Integer.parseInt(end.substring(0, 1));
+			minutes = Integer.parseInt(start.substring(2, 3)) - Integer.parseInt(end.substring(2, 3));
+			overallDiff = hours + minutes;
 		}
 		
+		String temp = Integer.toString(overallDiff);
+		int trail = Integer.numberOfTrailingZeros(overallDiff);
+		System.out.println(temp);
+		
+		if (temp.length() == 4)
+		{
+			diffHours = Integer.parseInt(temp.substring(0, 1));
+			diffMins = Integer.parseInt(temp.substring(2, 3));
+		}
+		else
+		{
+			diffHours = Integer.parseInt(Character.toString(temp.charAt(0)));
+			diffMins = Integer.parseInt(temp.substring(1,2));
+		}
+		diffMins *= 10 * trail;
 	}
 	
 	public int getHours()

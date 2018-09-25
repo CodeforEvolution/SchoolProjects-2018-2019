@@ -9,9 +9,9 @@ public class printUtils {
 	{
 		for (int i = 0; i < input.length; i++)
 		{
-			System.out.print(input[i]);
+			sysOut.print(input[i]);
 		}
-		System.out.println();
+		sysOut.println();
 		sysOut.println();
 	}
 }
