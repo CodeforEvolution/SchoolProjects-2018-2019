@@ -1,4 +1,4 @@
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.Scanner;
 
 
@@ -9,16 +9,18 @@ public class TriangleTester {
 		
 		System.out.println("First triangle x,y, separated by a space");
 
-		Point first = new Point(in.nextInt(), in.nextInt());
+		Point2D.Double first = new Point2D.Double(in.nextDouble(), in.nextDouble());
 		
 		System.out.println("Second triangle x,y, separated by a space");
-		Point second = new Point(in.nextInt(), in.nextInt());
+		Point2D.Double second = new Point2D.Double(in.nextDouble(), in.nextDouble());
 		
 		System.out.println("Third triangle x,y, separated by a space");
-		Point third = new Point(in.nextInt(), in.nextInt());
+		Point2D.Double third = new Point2D.Double(in.nextDouble(), in.nextDouble());
 		
 		Triangle bob = new Triangle(first, second, third);
 
 		System.out.println(bob);
+		
+		in.close();
 	}
 }

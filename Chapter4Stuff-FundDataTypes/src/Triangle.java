@@ -1,4 +1,4 @@
-import java.awt.Point;
+import java.awt.geom.*;
 
 //   c
 // A /\ B
@@ -6,9 +6,9 @@ import java.awt.Point;
 //    C
 
 public class Triangle {
-	private Point pointA;
-	private Point pointB;
-	private Point pointC;
+	private Point2D.Double pointA;
+	private Point2D.Double pointB;
+	private Point2D.Double pointC;
 	
 	public enum TriSide
 	{
@@ -22,37 +22,37 @@ public class Triangle {
 	
 	public Triangle()
 	{
-		pointA = new Point(0,0);
-		pointB = new Point(0,0);
-		pointC = new Point(0,0);
+		pointA = new Point2D.Double(0,0);
+		pointB = new Point2D.Double(0,0);
+		pointC = new Point2D.Double(0,0);
 	}
 	
-	public Triangle(Point inPointA, Point inPointB, Point inPointC)
+	public Triangle(Point2D.Double.Double inPointA, Point2D.Double inPointB, Point2D.Double inPointC)
 	{
 		pointA = inPointA;
 		pointB = inPointB;
 		pointC = inPointC;
 	}
 	
-	public Triangle(int xA, int yA, int xB, int yB, int xC, int yC)
+	public Triangle(double xA, double yA, double xB, double yB, double xC, double yC)
 	{
-		pointA = new Point(xA, yA);
-		pointB = new Point(xB, yB);
-		pointC = new Point(xC, yC);
+		pointA = new Point2D.Double.Double(xA, yA);
+		pointB = new Point2D.Double.Double(xB, yB);
+		pointC = new Point2D.Double.Double(xC, yC);
 	}
 	
-	public void setPoints(Point inPointA, Point inPointB, Point inPointC)
+	public void setPoints(Point2D.Double inPointA, Point2D.Double inPointB, Point2D.Double inPointC)
 	{
 		pointA = inPointA;
 		pointB = inPointB;
 		pointC = inPointC;
 	}
 	
-	public void setPoints(int xA, int yA, int xB, int yB, int xC, int yC)
+	public void setPodoubles(double xA, double yA, double xB, double yB, double xC, double yC)
 	{
-		pointA = new Point(xA, yA);
-		pointB = new Point(xB, yB);
-		pointC = new Point(xC, yC);		
+		pointA = new Point2D.Double(xA, yA);
+		pointB = new Point2D.Double(xB, yB);
+		pointC = new Point2D.Double(xC, yC);		
 	}
 	
 	public double getSide(TriSide side)
@@ -88,13 +88,13 @@ public class Triangle {
 		switch (angle)
 		{
 			case ANGLE_A:
-				outAngle = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) - Math.pow(c, 2)) / (-2 * b * c));
+				outAngle = (180 / Math.PI) * Math.acos((Math.pow(a, 2) - Math.pow(b, 2) - Math.pow(c, 2)) / (-2 * b * c));
 				break;
 			case ANGLE_B:
-				outAngle = Math.acos((Math.pow(b, 2) - Math.pow(a, 2) - Math.pow(c, 2)) / (-2 * a * c));
+				outAngle = (180 / Math.PI) * Math.acos((Math.pow(b, 2) - Math.pow(a, 2) - Math.pow(c, 2)) / (-2 * a * c));
 				break;
 			case ANGLE_C:
-				outAngle = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2)) / (-2 * a * b));
+				outAngle = (180 / Math.PI) * Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2)) / (-2 * a * b));
 				break;
 			default:
 				return -1;
