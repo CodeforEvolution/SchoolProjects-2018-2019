@@ -37,7 +37,7 @@ public class Triangle {
 	public Triangle(int xA, int yA, int xB, int yB, int xC, int yC)
 	{
 		pointA = new Point(xA, yA);
-		pointB = new Point(xB, xC);
+		pointB = new Point(xB, yB);
 		pointC = new Point(xC, yC);
 	}
 	
@@ -51,7 +51,7 @@ public class Triangle {
 	public void setPoints(int xA, int yA, int xB, int yB, int xC, int yC)
 	{
 		pointA = new Point(xA, yA);
-		pointB = new Point(xB, xC);
+		pointB = new Point(xB, yB);
 		pointC = new Point(xC, yC);		
 	}
 	
@@ -81,13 +81,20 @@ public class Triangle {
 	{
 		double outAngle = 0.0;
 		
+		double a = getSide(TriSide.SIDE_A);
+		double b = getSide(TriSide.SIDE_B);
+		double c = getSide(TriSide.SIDE_C);
+		
 		switch (angle)
 		{
 			case ANGLE_A:
+				outAngle = Math.acos((Math.pow(a, 2) - Math.pow(b, 2) - Math.pow(c, 2)) / (-2 * b * c));
 				break;
 			case ANGLE_B:
+				outAngle = Math.acos((Math.pow(b, 2) - Math.pow(a, 2) - Math.pow(c, 2)) / (-2 * a * c));
 				break;
 			case ANGLE_C:
+				outAngle = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2)) / (-2 * a * b));
 				break;
 			default:
 				return -1;
