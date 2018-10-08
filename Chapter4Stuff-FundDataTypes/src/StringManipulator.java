@@ -9,6 +9,7 @@ public class StringManipulator {
 		
 		System.out.println("Please enter anything: ");
 		input = in.next();
+		in.close();
 		
 		System.out.println("\nNow we'll break it into characters...");
 		char split[] = input.toCharArray();
