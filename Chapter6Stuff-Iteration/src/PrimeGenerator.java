@@ -6,25 +6,42 @@ public class PrimeGenerator {
 	public PrimeGenerator(int upTo)
 	{
 		upperLimit = upTo;
-		index = index;
+		index = 0;
 	}
 	
 	public int nextPrime()
 	{
-		boolean found = false;
-		boolean prime = false;
-		
-		while (found == false)
+		for (int i = index; i <= upperLimit; i++)
 		{
-			for (int i = index; (prime == false || index <= upperLimit); i++)
+			if (isPrime(i) == true)
 			{
-				if ()
-				
-				
+				index = i;
+				index++;
+				return index - 1;
 			}
 		}
 		
+		return -1;
 	}
 	
-	private int
+	public void rewind()
+	{
+		index = 0;
+	}
+	
+	public static boolean isPrime(int number)
+	{
+		 if (number <= 1)
+			 return false;
+		
+		for (int i = 2; i < number; i++)
+		{
+	        if (number % i == 0 && i != number)
+	        {
+	        	return false;
+	        }
+	    }
+		
+	    return true;
+	}
 }
