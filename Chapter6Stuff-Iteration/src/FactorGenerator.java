@@ -46,21 +46,22 @@ public class FactorGenerator {
 	
 	private void setupFactors(int inNumber)
 	{
+		ArrayList<Integer> temp = new ArrayList<Integer>();
 		for (int i = 1; i < inNumber; i++)
 		{
 			if (inNumber % i == 0)
 			{
 				if (isPrime(i) == true)
 				{
-					factors.add(i);
+					temp.add(i);
 				}
 			}
 		}
 		
-		int product = factors.get(0);
-		for (int i = 1; i < factors.size(); i++)
+		int product = temp.get(0);
+		for (int i = 1; i < temp.size(); i++)
 		{
-			product *= factors.get(i);
+			product *= temp.get(i);
 		}
 		
 		if (inNumber != product)
@@ -68,17 +69,19 @@ public class FactorGenerator {
 			int second = inNumber / product;
 			if (isPrime(second) == true)
 			{
-				factors.add(second);
+				temp.add(second);
 			}
 			else
 			{
 				setupFactors(second);
 			}
 		}
+		
+		factors.addAll(temp);
 		Collections.sort(factors);
 	}
 	
-	public static boolean isPrime(int number)
+	private boolean isPrime(int number)
 	{
 		 if (number <= 1)
 			 return false;
