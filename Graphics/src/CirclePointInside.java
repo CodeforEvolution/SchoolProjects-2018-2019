@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Scanner;
 
@@ -35,9 +36,9 @@ public class CirclePointInside {
 			smallCol = Color.RED;
 		}
 		
-		scene.drawPoint(new Point2D(x,y));
+		scene.drawPoint(new Point((int)x,(int)y));
 		Circle theNew = new Circle(scene, 30, new Point2D.Double(x, y), smallCol);
-		
+
 		return;
 	}
 }
