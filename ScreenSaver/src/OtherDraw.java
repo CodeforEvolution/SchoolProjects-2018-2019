@@ -9,7 +9,6 @@ public class OtherDraw implements Runnable {
 		shape = theShape;
 	}
 
-	@Override
 	public void run() {
 		Random r = new Random();
 		

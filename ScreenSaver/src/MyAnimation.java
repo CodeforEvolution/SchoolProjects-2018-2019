@@ -26,6 +26,8 @@ public class MyAnimation {
 			threads.add(new Thread(new OtherDraw(new Square(myLife, theColor, new Point(r.nextInt(myLife.getWidth()), r.nextInt(myLife.getHeight()))))));
 			threads.get(i).start();
 		}
+
+		//MouseFollow follow = new MouseFollow();
 		
 		while(true)
 		{
