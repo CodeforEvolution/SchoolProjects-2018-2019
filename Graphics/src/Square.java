@@ -1,14 +1,13 @@
 import java.awt.Color;
 import java.awt.Point;
 
-public class Egg extends MoverPainter {
+public class Square extends MoverPainter {
 	private Canvas drawPlace;
 	private Color ourColor;
 	
-	private static final int EGG_HEIGHT = 50;
-	private static final int EGG_WIDTH = 30;
+	private static final int SQUARE_SIZE = 50;
 	
-	public Egg(Canvas surface, Color appearance, Point start)
+	public Square(Canvas surface, Color appearance, Point start)
 	{
 		drawPlace = surface;
 		ourColor = appearance;
@@ -22,7 +21,7 @@ public class Egg extends MoverPainter {
 		Color old = drawPlace.getInkColor();
 		
 		drawPlace.setInkColor(ourColor);
-		drawPlace.drawFilledOval(where.x, where.y, EGG_WIDTH, EGG_HEIGHT);
+		drawPlace.drawFilledRectangle(where.x, where.y, SQUARE_SIZE, SQUARE_SIZE);
 		
 		drawPlace.setInkColor(old);
 	}
@@ -32,7 +31,7 @@ public class Egg extends MoverPainter {
 		Color old = drawPlace.getInkColor();
 		
 		drawPlace.setInkColor(drawPlace.getBackgroundColor());
-		drawPlace.drawFilledOval(where.x, where.y, EGG_WIDTH, EGG_HEIGHT);
+		drawPlace.drawFilledRectangle(where.x, where.y, SQUARE_SIZE, SQUARE_SIZE);
 		
 		drawPlace.setInkColor(old);
 	}

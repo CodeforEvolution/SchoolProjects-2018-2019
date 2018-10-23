@@ -506,6 +506,16 @@ public class Canvas
        graphic.drawImage(oldImage, 0, 0, null);
         frame.pack();
     }
+    
+    public int getWidth()
+    {
+    	return canvas.getWidth();
+    }
+    
+    public int getHeight()
+    {
+    	return canvas.getHeight();
+    }
 
    /**
      * Returns the size of the canvas.
