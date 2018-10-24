@@ -26,8 +26,23 @@ public class ProbTwo {
 		for (int i = 0; i < wackyNumbers.length; i++)
 		{
 			if (wackyNumbers[i] < average)
-				System.out.print(wackyNumbers[i]);
+				System.out.print(wackyNumbers[i] + " ");
 		}
-		System.out.println();                         
+		System.out.println();
+		
+		System.out.println("\nNumbers that are negative: ");
+		for (int i = 0; i < wackyNumbers.length; i++)
+		{
+			if (wackyNumbers[i] < 0)
+				System.out.print(wackyNumbers[i] + " ");
+		}
+		System.out.println();
+		
+		System.out.println("\nNumbers that are Odd: ");
+		for (int i = 0; i < wackyNumbers.length; i++)
+		{
+			if (wackyNumbers[i] % 2 != 0)
+				System.out.print(wackyNumbers[i] + " ");
+		}
 	}
 }
