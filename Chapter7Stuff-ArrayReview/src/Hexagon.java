@@ -49,17 +49,12 @@ public class Hexagon extends MoverPainter {
 		}
 		else
 		{
-			xPoints[0] = where.x - (2 * scale);
-			xPoints[1] = where.x - (1 * scale);
-			xPoints[2] = where.x + (1 * scale);
-			xPoints[3] = where.x + (2 * scale);
-			xPoints[4] = where.x + (1 * scale);
-			xPoints[5] = where.x - (1 * scale);
-		}
-		
-		for (int i = 0; i < 6; i++)
-		{
-			xPoints[i] *= scale;
+			xPoints[0] = where.x - (1 * scale);
+			xPoints[1] = where.x - (2 * scale);
+			xPoints[2] = where.x + (4 * scale);
+			xPoints[3] = where.x + (4 * scale);
+			xPoints[4] = where.x + (2 * scale);
+			xPoints[5] = where.x + (1 * scale);
 		}
 		
 		return xPoints;
@@ -69,25 +64,23 @@ public class Hexagon extends MoverPainter {
 	{
 		int yPoints[] = new int[6];
 		
-		int centerOff = 5 * scale;
-		
 		if (convex == true)
 		{
 			yPoints[0] = where.y;
-			yPoints[1] = where.y - centerOff;
-			yPoints[2] = where.y - centerOff;
+			yPoints[1] = where.y - scale;
+			yPoints[2] = where.y - scale;
 			yPoints[3] = where.y;
-			yPoints[4] = where.y + centerOff;
-			yPoints[5] = where.y + centerOff;
+			yPoints[4] = where.y + scale;
+			yPoints[5] = where.y + scale;
 		}
 		else
 		{
 			yPoints[0] = where.y;
-			yPoints[1] = where.y - centerOff;
-			yPoints[2] = where.y - centerOff;
+			yPoints[1] = where.y - scale;
+			yPoints[2] = where.y - scale;
 			yPoints[3] = where.y;
-			yPoints[4] = where.y + centerOff;
-			yPoints[5] = where.y + centerOff;
+			yPoints[4] = where.y + (2 * scale);
+			yPoints[5] = where.y + scale;
 		}
 		
 		return yPoints;

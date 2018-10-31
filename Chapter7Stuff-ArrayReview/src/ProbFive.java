@@ -9,7 +9,7 @@ public class ProbFive {
 		microPaint.setVisible(true);
 		
 		microPaint.setInkColor(Color.BLACK);
-		Hexagon theShape = new Hexagon(microPaint, new Point(25, 25), 10, false);
+		Hexagon theShape = new Hexagon(microPaint, new Point(25, 25), 30, false);
 		Hexagon theOther = new Hexagon(microPaint, new Point(50, 50), 10, true);
 		
 		theShape.moveTo(new Point(200, 500));
