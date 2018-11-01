@@ -72,14 +72,19 @@ public class ProbEightTicTacToe {
 		{
 			for (int y = 0; y < theGrid.length; y++)
 			{
-				switch (theGrid[x][y])
+				switch (theGrid[y][x])
 				{
 					case NONE:
-						theBoard.drawFilledRectangle((x * (theBoard.getWidth() / 3)) + theBoard.getWidth() / 6, theBoard.getHeight() / (y + 1), 10, 10);
+						theBoard.setInkColor(Color.WHITE);
+						theBoard.drawFilledRectangle((x * (theBoard.getWidth() / 3)) + theBoard.getWidth() / 6, (y * (theBoard.getHeight() / 3)) + theBoard.getHeight() / 6, 10, 10);
 						break;
 					case O:
+						theBoard.setInkColor(Color.BLUE);
+						theBoard.drawFilledRectangle((x * (theBoard.getWidth() / 3)) + theBoard.getWidth() / 6, (y * (theBoard.getHeight() / 3)) + theBoard.getHeight() / 6, 10, 10);
 						break;
 					case X:
+						theBoard.setInkColor(Color.RED);
+						theBoard.drawFilledRectangle((x * (theBoard.getWidth() / 3)) + theBoard.getWidth() / 6, (y * (theBoard.getHeight() / 3)) + theBoard.getHeight() / 6, 10, 10);
 						break;
 					default:
 						break;

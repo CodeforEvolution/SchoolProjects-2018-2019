@@ -57,6 +57,13 @@ public class Fish {
 	
 	public String toString()
 	{
-		return "\nWeight: " + fishieWeight + "\nScales: " + numberScales + "\n";
+		String out = "";
+		
+		out += "Name : " + fishName + "\n";
+		out += "Weight: " + fishieWeight + "\n";
+		out += "Scales: " + numberScales + "\n";
+		out += "\n";
+		
+		return out;
 	}
 }
