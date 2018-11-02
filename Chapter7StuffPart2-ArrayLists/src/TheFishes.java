@@ -24,7 +24,27 @@ public class TheFishes {
 			System.out.println(fishNet.get(r.nextInt(4)).getFishieName() + "'s scales are going wild!!!");
 			fishNet.get(r.nextInt(4)).setNumberOfScales(r.nextInt(100));
 		}
+		System.out.println();
 		
-		System.out.println("\nHow traumatic: \n" + fishNet);
+		System.out.println("More fish please ;)");
+		for (int i = 0; i < 10; i++)
+		{
+			fishNet.add(new Fish("Babies!", 5));
+		}
+		
+		System.out.println("Confusion!!!");
+		for (int i = 0; i < fishNet.size(); i++)
+		{
+			fishNet.set(r.nextInt(fishNet.size()), fishNet.get(r.nextInt(fishNet.size())));
+		}
+		
+		System.out.println("Oops, overcrowded the tank...");
+		for (int i = 0; i < r.nextInt(fishNet.size()); i++)
+		{
+			fishNet.remove(i);
+		}
+		
+		System.out.println("\nLet's see what's going on now...");
+		System.out.println(fishNet);
 	}
 }
