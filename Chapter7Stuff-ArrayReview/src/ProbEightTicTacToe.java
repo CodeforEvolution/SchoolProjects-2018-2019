@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -6,7 +7,7 @@ public class ProbEightTicTacToe {
 	enum grid_value {X, O, NONE};
 	
 	final static int GRID_LINE_THICKNESS = 10;
-	final static int O_SIZE = 50;
+	final static int O_SIZE = 100;
 	
 	public static void main(String[] args)
 	{
@@ -117,15 +118,15 @@ public class ProbEightTicTacToe {
 			{
 				switch (theGrid[y][x])
 				{
-					case NONE:
-						drawNone(theBoard, x, y);
-						break;
 					case O:
 						drawO(theBoard, x, y);
 						break;
 					case X:
 						drawX(theBoard, x, y);
 						break;
+					case NONE:
+//						drawNone(theBoard, x, y);
+//						break;
 					default:
 						break;
 				}
@@ -141,8 +142,22 @@ public class ProbEightTicTacToe {
 		int xStart = (xPos * (easel.getWidth() / 3)) + easel.getWidth() / 6;
 		int yStart = (yPos * (easel.getHeight() / 3)) + easel.getHeight() / 6;
 		
+		int[] xXs = new int[2];
+		int[] xYs = new int[2];
 		
-		//easel.drawPolygon(xs, ys, size);
+		xXs[0] = xStart + (easel.getWidth() / 6);
+		xYs[0] = yStart + (easel.getHeight() / 6);
+		xXs[1] = xStart - (easel.getWidth() / 6) + GRID_LINE_THICKNESS;
+		xYs[1] = yStart - (easel.getHeight() / 6) + GRID_LINE_THICKNESS;
+		
+		easel.drawPolygon(xXs, xYs, xXs.length);
+		
+		xXs[0] = xStart + (easel.getWidth() / 6);
+		xYs[0] = yStart - (easel.getHeight() / 6) + GRID_LINE_THICKNESS;
+		xXs[1] = xStart - (easel.getWidth() / 6) + GRID_LINE_THICKNESS;
+		xYs[1] = yStart + (easel.getHeight() / 6);
+		
+		easel.drawPolygon(xXs, xYs, xXs.length);
 		
 		easel.setInkColor(old);
 	}
@@ -152,8 +167,8 @@ public class ProbEightTicTacToe {
 		Color old = easel.getInkColor();
 		
 		easel.setInkColor(Color.BLUE);
-		int xWhere = (xPos * (easel.getWidth() / 3)) + easel.getWidth() / 6;
-		int yWhere = (yPos * (easel.getHeight() / 3)) + easel.getHeight() / 6;
+		int xWhere = ((xPos * (easel.getWidth() / 3)) + easel.getWidth() / 6) - (O_SIZE / 2);
+		int yWhere = ((yPos * (easel.getHeight() / 3)) + easel.getHeight() / 6) - (O_SIZE /2);
 		
 		easel.drawOval(xWhere, yWhere, O_SIZE, O_SIZE);
 		
@@ -167,6 +182,7 @@ public class ProbEightTicTacToe {
 		easel.setInkColor(Color.WHITE);
 		int xWhere = (xPos * (easel.getWidth() / 3)) + easel.getWidth() / 6;
 		int yWhere = (yPos * (easel.getHeight() / 3)) + easel.getHeight() / 6;
+		easel.drawFilledRectangle(xWhere, yWhere, 10, 10);
 		
 		easel.setInkColor(old);
 	}

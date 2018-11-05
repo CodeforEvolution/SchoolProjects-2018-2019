@@ -45,6 +45,13 @@ public class TheFishes {
 		}
 		
 		System.out.println("\nLet's see what's going on now...");
-		System.out.println(fishNet);
+		System.out.println(fishNet + "\n");
+		
+		int first = r.nextInt(fishNet.size());
+		int second = r.nextInt(fishNet.size());
+		
+		System.out.print("It seems " + fishNet.get(first).getFishieName() + " is ");
+		System.out.print(fishNet.get(first).equals(fishNet.get(second)));
+		System.out.println("ly related to " + fishNet.get(second).getFishieName());
 	}
 }

@@ -7,6 +7,8 @@ public class Fish {
 	private String fishName;
 	
 	private Random randomatic = new Random();
+	
+	private final double EPSILON = 0.00001;
 
 	public Fish()
 	{
@@ -58,12 +60,35 @@ public class Fish {
 	public String toString()
 	{
 		String out = "";
-		
-		out += "Name : " + fishName + "\n";
-		out += "Weight: " + fishieWeight + "\n";
-		out += "Scales: " + numberScales + "\n";
-		out += "\n";
+
+		out += "Name: " + fishName + "\n";
+		out += "\tWeight: " + fishieWeight + "\n";
+		out += "\tScales: " + numberScales + "\n";
 		
 		return out;
+	}
+	
+	public boolean equals(Object theOther)
+	{
+		if (this == theOther)
+		{
+			return true;
+		}
+
+		Fish other = (Fish)theOther;
+		if (other instanceof Fish)
+		{
+			if ((other.getFishieName().equals(this.getFishieName())) && 
+				(other.getNumberOfScales() == this.getNumberOfScales()) &&
+				(other.getFishieWeight() == this.getFishieWeight() ? true : Math.abs(other.getFishieWeight() - this.getFishieWeight()) < EPSILON))
+			{
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
