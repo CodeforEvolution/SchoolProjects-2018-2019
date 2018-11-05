@@ -55,10 +55,25 @@ public class DecimalsForAll {
 			System.out.println(huge[i]);
 		}
 		System.out.println();
+		
+		Object[] result = switchThem(small, large);
+		small = (double[]) result[0];
+		large = (double[]) result[1];
+		
+		System.out.println("Your swaped Arrays: ");
+		System.out.println("Small var: " + Arrays.toString(small));
+		System.out.println("Large var: " + Arrays.toString(large));
 	}
 	
-	public static void switchThem(Object[] first, Object[] second)
-	{
+	public static Object[] switchThem(double[] first, double[] second)
+	{	
+		double[] newFir = new double[second.length];
+		double[] newSec = new double[first.length];
+		newFir = Arrays.copyOf(second, second.length);
+		newSec = Arrays.copyOf(first,  first.length);
 		
+		Object[] obj = {newFir, newSec};
+		
+		return obj;
 	}
 }
