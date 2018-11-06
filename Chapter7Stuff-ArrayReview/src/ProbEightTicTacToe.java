@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -19,6 +18,10 @@ public class ProbEightTicTacToe {
 		
 		Random r = new Random();
 		
+		System.out.println("Tic tac toe start!");
+		doIntro(theBoard);
+		
+		/* Drawing test code
 		for (int i = 0; i < 2; i++)
 		{
 			int x = 0;
@@ -44,9 +47,19 @@ public class ProbEightTicTacToe {
 			} while (locationTaken(grid, x, y) == true);
 			grid[x][y] = grid_value.O;
 		}
+		*/
 		
 		System.out.println(gridToString(grid));
 		drawBoard(theBoard, grid);
+	}
+	
+	public static void doIntro(Canvas theSurface)
+	{
+		Color old = theSurface.getInkColor();
+		
+		theSurface.setInkColor(Color.GREEN);
+		
+		theSurface.setInkColor(old);
 	}
 	
 	public static boolean locationTaken(grid_value[][] theGrid, int col, int row)
