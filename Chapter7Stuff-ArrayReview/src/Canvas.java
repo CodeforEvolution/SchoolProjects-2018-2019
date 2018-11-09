@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.*;
 import java.awt.event.*;
 
@@ -106,6 +107,11 @@ public class Canvas
             graphic.fillRect(0, 0, size.width, size.height);
             graphic.setColor(inkColor);
         }
+    }
+    
+    public FontRenderContext getFontContext()
+    {
+    	return graphic.getFontRenderContext();
     }
     
     public int getWidth()

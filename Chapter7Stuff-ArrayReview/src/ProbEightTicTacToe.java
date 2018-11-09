@@ -1,8 +1,12 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.font.FontRenderContext;
 import java.util.Random;
 
 
-public class ProbEightTicTacToe {
+public class ProbEightTicTacToe implements MouseMotionListener {
 	enum grid_value {X, O, NONE};
 	
 	final static int GRID_LINE_THICKNESS = 10;
@@ -10,18 +14,8 @@ public class ProbEightTicTacToe {
 	
 	public static void main(String[] args)
 	{
-		grid_value[][] grid = new grid_value[3][3];
-		resetBoard(grid);
-		
-		Canvas theBoard = new Canvas("The TTT", 500, 500, Color.BLACK);
-		theBoard.setVisible(true);
-		
-		Random r = new Random();
-		
-		System.out.println("Tic tac toe start!");
-		doIntro(theBoard);
-		
 		/* Drawing test code
+		Random r = new Random();
 		for (int i = 0; i < 2; i++)
 		{
 			int x = 0;
@@ -49,17 +43,53 @@ public class ProbEightTicTacToe {
 		}
 		*/
 		
+		grid_value[][] grid = new grid_value[3][3];
+		resetBoard(grid);
+		
+		Canvas theBoard = new Canvas("The TTT", 500, 500, Color.BLACK);
+		theBoard.setVisible(true);
+		
+		System.out.println("Tic tac toe start!");
+		doIntro(theBoard);
+		
+		boolean game = true;
+		boolean yourTurn = true;
+		while (game == true)
+		{
+
+		}
+		
+		
+		
 		System.out.println(gridToString(grid));
-		drawBoard(theBoard, grid);
 	}
 	
 	public static void doIntro(Canvas theSurface)
 	{
 		Color old = theSurface.getInkColor();
 		
-		theSurface.setInkColor(Color.GREEN);
+		theSurface.setInkColor(Color.ORANGE);
+		theSurface.setFontSize(18);
+		
+		drawCenterText(theSurface, "Hello");
+		theSurface.pause(3000);
+		theSurface.erase();
+		drawCenterText(theSurface, "Welcome to Tic Tac Toe!");
+		theSurface.pause(3000);
+		theSurface.erase();
+		drawCenterText(theSurface, "Get ready to play!");
+		theSurface.pause(3000);
+		theSurface.erase();
+		drawCenterText(theSurface, "You're X, go you!");
+		theSurface.pause(3000);
+		theSurface.erase();
 		
 		theSurface.setInkColor(old);
+	}
+	
+	public static void drawCenterText(Canvas easel, String theText)
+	{
+		easel.drawString(theText, (easel.getWidth() / 2) - ((int)easel.getFont().getStringBounds(theText, easel.getFontContext()).getCenterX()), (easel.getHeight() / 2));
 	}
 	
 	public static boolean locationTaken(grid_value[][] theGrid, int col, int row)
@@ -198,5 +228,17 @@ public class ProbEightTicTacToe {
 		easel.drawFilledRectangle(xWhere, yWhere, 10, 10);
 		
 		easel.setInkColor(old);
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
