@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -10,7 +11,6 @@ public class PurseTester {
 		Coin dime = new Coin("Dime", 0.10);
 		
 		Scanner in = new Scanner(System.in);
-		in.useDelimiter("end");
 		System.out.println("Add coins to the purse, when done, type 'end'.");
 		
 		String input = "";
@@ -19,11 +19,10 @@ public class PurseTester {
 		{	
 			System.out.println("\nWhat should the name of this coin be? : ");
 			input = in.next();
-			System.out.println("\nWhat should the value of this coin be? (Only useful if coin isn't a normal coin) : ");
-			val = in.nextDouble();
-			
 			if (input.equals("end") == false)
 			{
+				System.out.println("\nWhat should the value of this coin be? (Only useful if coin isn't a normal coin) : ");
+				val = in.nextFloat();
 				manPurse.addCoin(new Coin(input, val));
 			}
 		} while (input.equals("end") == false);
@@ -44,6 +43,9 @@ public class PurseTester {
 		System.out.println("Number of coins in purse: " + manPurse.numberOfCoins());
 		System.out.println("Total value of coins in purse: " + manPurse.valueOfCoins());
 		System.out.println("Average value of coins in purse: " + manPurse.averageCoinVal());
+		
+		System.out.println("\nPurse contents: ");
+		System.out.println(Arrays.toString(manPurse.getArrayVals()));
 		
 		
 	}

@@ -1,4 +1,6 @@
 
+
+
 public class Coin {
 	enum Coin_Type {PENNY, NICKEL, DIME, QUARTER, CUSTOM};
 	

@@ -29,6 +29,7 @@ public class Purse {
 		for (double x: storage)
 		{
 			total += x;
+			System.out.println("Purse value: " + total);
 		}
 		
 		return total;
@@ -37,5 +38,17 @@ public class Purse {
 	public double averageCoinVal()
 	{
 		return valueOfCoins() / numberOfCoins();
+	}
+	
+	public double[] getArrayVals()
+	{
+		double[] outArray = new double[storage.size()];
+		
+		for (int i = 0; i < storage.size(); i++)
+		{
+			outArray[i] = storage.get(i);
+		}
+		
+		return outArray;
 	}
 }
