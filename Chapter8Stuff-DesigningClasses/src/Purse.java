@@ -29,7 +29,6 @@ public class Purse {
 		for (double x: storage)
 		{
 			total += x;
-			System.out.println("Purse value: " + total);
 		}
 		
 		return total;

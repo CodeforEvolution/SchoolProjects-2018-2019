@@ -22,7 +22,8 @@ public class PurseTester {
 			if (input.equals("end") == false)
 			{
 				System.out.println("\nWhat should the value of this coin be? (Only useful if coin isn't a normal coin) : ");
-				val = in.nextFloat();
+				val = in.nextDouble();
+				//v
 				manPurse.addCoin(new Coin(input, val));
 			}
 		} while (input.equals("end") == false);
