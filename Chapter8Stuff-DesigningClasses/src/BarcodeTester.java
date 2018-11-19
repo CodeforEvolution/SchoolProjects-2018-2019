@@ -2,7 +2,10 @@
 public class BarcodeTester {
 	public static void main(String[] args)
 	{
-		double check = 000100;
-		System.out.println(check);
+		Barcode bar = new Barcode(95014);
+		System.out.println(bar);
+		
+		Barcode other = new Barcode("||:|:::|:|:||::::::||:|::|:::|||");
+		System.out.println(other);
 	}
 }
