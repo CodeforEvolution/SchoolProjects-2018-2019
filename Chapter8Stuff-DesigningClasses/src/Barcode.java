@@ -39,10 +39,11 @@ public class Barcode {
 			throw new IllegalArgumentException("Your barcode isn't formatted correctly...");
 		}
 		
+		zipcode = "";
 		int i = 1;
-		while (i < barcode.length())
+		while ((i + 5) < barcode.length() - 5)
 		{
-			barcode += codeToNumber(barcode.substring(i, i + 5));
+			zipcode += codeToNumber(barcode.substring(i, i + 5));
 			i += 5;
 		}
 	}
