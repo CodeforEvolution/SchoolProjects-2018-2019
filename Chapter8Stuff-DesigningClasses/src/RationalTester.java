@@ -20,5 +20,16 @@ public class RationalTester {
 		
 		System.out.println("Total multiply ops: " + Rational.operationNumber);
 		System.out.println("f1 equals f2? : " + f1.equals(f2));
+		
+		//Comparable Expansion
+		System.out.println();
+		
+		int result = f1.compareTo(f2);
+		if (result == 0)
+			System.out.println(f1 + " is equal to " + f2);
+		else if (result == -1)
+			System.out.println(f1 + " is less than " + f2);
+		else
+			System.out.println(f1 + " is greater than " + f2);
 	}
 }

@@ -48,6 +48,25 @@ public class PurseTester {
 		System.out.println("\nPurse contents: ");
 		System.out.println(Arrays.toString(manPurse.getArrayVals()));
 		
+		//Comparable extension
+		System.out.println();
+		
+		Purse freshPurse = new Purse();
+		freshPurse.addCoin(new Coin("OP", 100000));
+		int comparison = manPurse.compareTo(freshPurse);
+
+		if (comparison == -1)
+		{
+			System.out.println("The man purse has less coins than the fresh purse!");
+		}
+		else if (comparison == 0)
+		{
+			System.out.println("The man purse has the same amounts of coins as the fresh purse!");
+		}
+		else
+		{
+			System.out.println("The man purse has more coins than the fresh purse!");
+		}
 		
 	}
 }

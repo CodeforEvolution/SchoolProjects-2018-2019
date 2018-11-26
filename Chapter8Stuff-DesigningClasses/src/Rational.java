@@ -1,5 +1,7 @@
+import java.math.BigDecimal;
 
-public class Rational {
+
+public class Rational implements Comparable {
 	private int numerator;
 	private int denominator;
 	public static int operationNumber = 0;
@@ -130,5 +132,15 @@ public class Rational {
 		}
 		
 		return gcd;
+	}
+
+	@Override
+	public int compareTo(Object compareTo) {
+		Rational other = (Rational)compareTo;
+		
+		BigDecimal ours = new BigDecimal(this.getNumerator() / this.getDenominator());
+		BigDecimal theirs = new BigDecimal(other.getNumerator() / other.getDenominator());
+		
+		return ours.compareTo(theirs);
 	}
 }
