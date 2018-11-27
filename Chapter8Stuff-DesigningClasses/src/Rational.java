@@ -138,8 +138,8 @@ public class Rational implements Comparable {
 	public int compareTo(Object compareTo) {
 		Rational other = (Rational)compareTo;
 		
-		BigDecimal ours = new BigDecimal(this.getNumerator() / this.getDenominator());
-		BigDecimal theirs = new BigDecimal(other.getNumerator() / other.getDenominator());
+		BigDecimal ours = new BigDecimal((1.0 * this.getNumerator()) / this.getDenominator());
+		BigDecimal theirs = new BigDecimal((1.0 * other.getNumerator()) / other.getDenominator());
 		
 		return ours.compareTo(theirs);
 	}

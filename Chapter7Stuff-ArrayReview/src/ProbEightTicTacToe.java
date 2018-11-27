@@ -6,7 +6,7 @@ import java.awt.font.FontRenderContext;
 import java.util.Random;
 
 
-public class ProbEightTicTacToe implements MouseMotionListener {
+public class ProbEightTicTacToe {
 	enum grid_value {X, O, NONE};
 	
 	final static int GRID_LINE_THICKNESS = 10;
@@ -52,14 +52,13 @@ public class ProbEightTicTacToe implements MouseMotionListener {
 		System.out.println("Tic tac toe start!");
 		doIntro(theBoard);
 		
-		boolean game = true;
-		boolean yourTurn = true;
-		while (game == true)
+		boolean again = false;
+		do
 		{
-
-		}
-		
-		
+			//playGame();
+			
+			drawCenterText(theBoard, "Would you like to play again? (Answer y or n in terminal)");
+		} while (again == true);
 		
 		System.out.println(gridToString(grid));
 	}
@@ -228,17 +227,5 @@ public class ProbEightTicTacToe implements MouseMotionListener {
 		easel.drawFilledRectangle(xWhere, yWhere, 10, 10);
 		
 		easel.setInkColor(old);
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
