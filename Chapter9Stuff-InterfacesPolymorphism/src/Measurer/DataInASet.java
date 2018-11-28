@@ -1,39 +1,39 @@
-package Measurable;
+package Measurer;
 
 /**
    Computes the average of a set of data values.
 */
-public class DataSet
+public class DataInASet
 {
    /**
       Constructs an empty data set.
    */
-   public DataSet()
+   public DataInASet(Measurer myMeasurer)
    {
       sum = 0;
       count = 0;
       maximum = null;
-      minimum = null;
+      theMagicRuler = myMeasurer;
    }
 
    /**
       Adds a data value to the data set.
       @param x a data value
    */
-   public void add(Measurable x)
+   public void add(Object x)
    {
-      sum += x.getMeasure();
+      sum += theMagicRuler.measure(x);
 
       if (count == 0)
       {
          maximum = x;
          minimum = x;
       }
-      else if (maximum.getMeasure() < x.getMeasure())
+      else if (theMagicRuler.measure(maximum) < theMagicRuler.measure(x))
       {
     	  maximum = x;
       }
-      else if (minimum.getMeasure() > x.getMeasure())
+      else if (theMagicRuler.measure(minimum) > theMagicRuler.measure(x))
       {
     	  minimum = x;
       }
@@ -55,18 +55,19 @@ public class DataSet
       Gets the largest of the added data.
       @return the maximum or 0 if no data has been added
    */
-   public Measurable getMaximum()
+   public Object getMaximum()
    {
       return maximum;
    }
    
-   public Measurable getMinimum()
+   public Object getMinimum()
    {
 	   return minimum;
    }
 
    private double sum;
-   private Measurable maximum;
-   private Measurable minimum;
+   private Object maximum;
+   private Object minimum;
+   private Measurer theMagicRuler;
    private int count;
 }

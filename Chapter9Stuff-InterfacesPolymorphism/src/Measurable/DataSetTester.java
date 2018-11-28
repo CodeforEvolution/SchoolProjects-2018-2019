@@ -35,7 +35,7 @@ public class DataSetTester
             + max.getMeasure());
      // System.out.println("Expected: 0.25");          
       
-     //Jake's work
+     //Jake's work - Reactor
       DataSet reactorData = new DataSet();
       
       reactorData.add(new FusionReactor("ITER", 100.5));
@@ -46,6 +46,24 @@ public class DataSetTester
 
       max = reactorData.getMaximum();
       System.out.println("Largest amount of crazy atoms in a reactor: " + max.getMeasure());
-   }
+      
+      //Dice
+      DataSet diceSet = new DataSet();
+      
+      Die dieing = new Die();
+      dieing.roll();
+      Die theDie = new Die();
+      theDie.roll();
+      Die bigDie = new Die();
+      bigDie.roll();
+      
+      diceSet.add(dieing);
+      diceSet.add(theDie);
+      diceSet.add(bigDie);
+      
+      System.out.println("Max roll: " + diceSet.getMaximum().getMeasure());
+      System.out.println("Minimum roll: " + diceSet.getMinimum().getMeasure());
+      System.out.println("Average roll: " + diceSet.getAverage());
+	}
 }
 
