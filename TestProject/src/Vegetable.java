@@ -51,7 +51,11 @@ public class Vegetable implements Comparable
 	}   
 
 	public static void main(String[]args)
-	{                                         // test program w/ different weights for v1,v2
+	{        
+		Comparable h = new Vegetable("HEY", 0.0);
+		Vegetable v = (Vegetable)h;
+		h = v;
+		// test program w/ different weights for v1,v2
 		Vegetable v1 = new Vegetable("potato", 14.1); 
 		Vegetable v2 = new Vegetable("carrot", 4.7); 
 		System.out.println(v1);

@@ -1,5 +1,7 @@
 package Measurer;
 
+import java.util.ArrayList;
+
 /**
    Computes the average of a set of data values.
 */
