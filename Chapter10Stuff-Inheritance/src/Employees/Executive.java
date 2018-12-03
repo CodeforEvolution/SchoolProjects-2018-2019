@@ -1,3 +1,4 @@
+package Employees;
 
 public class Executive extends Manager {
 	private String myCompany;
