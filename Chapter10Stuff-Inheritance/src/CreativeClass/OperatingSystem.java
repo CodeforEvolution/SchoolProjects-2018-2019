@@ -18,6 +18,10 @@ public abstract class OperatingSystem {
 	
 	public abstract String getType();
 	
+	public abstract String getLatestVersion();
+	
+	public abstract int getAmountHardwareSupport();
+	
 	public int getYearsUsed()
 	{
 		return yearsOld;
@@ -31,5 +35,21 @@ public abstract class OperatingSystem {
 	public Color getDesktopBackground()
 	{
 		return backgroundColor;
+	}
+	
+	public String toString()
+	{
+		String out = "";
+		
+		out += this.getName() + ": \n";
+		out += "\tType: " + this.getType() + "\n";
+		out += "\tLatest Version: " + this.getLatestVersion() + "\n";
+		out += "\tHardware Supported: " + this.getAmountHardwareSupport() + "\n";
+		out += "\tEase of Use: " + this.howEasyToUse() + "\n";
+		out += "\tDesktop Background: " + this.getDesktopBackground() + "\n";
+		out += "\tYears Used by User: " + this.getYearsUsed() + "\n";
+		
+				
+		return out;
 	}
 }

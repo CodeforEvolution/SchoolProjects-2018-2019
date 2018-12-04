@@ -8,6 +8,12 @@ public class HourlyWorker extends Worker {
 	
 	public double computePay(int theHours)
 	{
-		return mySalary * 40;
+		if (theHours < 0)
+			throw new IllegalArgumentException("Hours can't be less than 0!");
+		
+		if (theHours <= 40)
+			return theHours * myWage;
+		else
+			return (40 * myWage) + ((theHours - 40) * (myWage * 1.5));
 	}
 }

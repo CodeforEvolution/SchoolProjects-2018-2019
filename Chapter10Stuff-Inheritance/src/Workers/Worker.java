@@ -2,12 +2,12 @@ package Workers;
 
 public abstract class Worker {
 	private String myName;
-	protected double mySalary;
+	protected double myWage;
 	
-	public Worker(String theName, double theRateOSalary)
+	public Worker(String theName, double theWage)
 	{
 		myName = theName;
-		mySalary = theRateOSalary;
+		myWage = theWage;
 	}
 	
 	public String getName()
@@ -17,7 +17,7 @@ public abstract class Worker {
 	
 	public double getSalary()
 	{
-		return mySalary;
+		return myWage;
 	}
 	
 	public abstract double computePay(int theHours);
