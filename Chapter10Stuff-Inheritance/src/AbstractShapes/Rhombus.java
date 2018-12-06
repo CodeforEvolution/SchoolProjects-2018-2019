@@ -13,7 +13,7 @@ public class Rhombus extends Shape {
 	@Override
 	public double area()
 	{
-		return 4 * (0.5 * (Math.sin(myAngle / 2) * mySide) * (Math.cos(myAngle / 2) * mySide));
+		return 4 * (0.5 * (Math.sin((Math.PI / 180.0) * myAngle / 2.0) * mySide) * (Math.cos((Math.PI / 180.0) * myAngle / 2.0) * mySide));
 	}
 
 	@Override

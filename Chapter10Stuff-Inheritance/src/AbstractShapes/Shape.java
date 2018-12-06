@@ -14,4 +14,15 @@ public abstract class Shape implements Comparable<Shape>
 		else
 			return 0;
 	}
+	
+	public String toString()
+	{
+		String out = "";
+		
+		out += this.getClass().getSimpleName() + ": \n";
+		out += "\tArea: " + area() + "\n";
+		out += "\tPerimeter: " + perimeter() + "\n";
+		
+		return out;
+	}
 }
