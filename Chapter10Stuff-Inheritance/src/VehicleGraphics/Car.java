@@ -38,7 +38,10 @@ public class Car extends Vehicle {
 		Color old = whereToDraw.getInkColor();
 		
 		whereToDraw.setInkColor(whereToDraw.getBackgroundColor());
-		whereToDraw.drawRectangle(where.x, where.y, 50, 20);
+		whereToDraw.drawFilledRectangle(where.x, where.y, 50, 20);
+		whereToDraw.drawFilledRectangle(where.x - 25, where.y + 20, 100, 30);
+		whereToDraw.drawFilledOval(where.x - 20, where.y + 50, 20, 20);
+		whereToDraw.drawFilledOval(where.x + 45, where.y + 50, 20, 20);
 		
 		whereToDraw.setInkColor(old);
 	}

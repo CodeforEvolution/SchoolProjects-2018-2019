@@ -10,6 +10,7 @@ public abstract class Vehicle {
 	
 	protected Vehicle(Point initialPos, Canvas drawPlace, Color theColor)
 	{
+		currentPos = initialPos;
 		myColor = theColor;
 		whereToDraw = drawPlace;
 		draw(initialPos);

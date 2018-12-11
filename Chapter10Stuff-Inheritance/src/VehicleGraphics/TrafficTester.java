@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class TrafficTester {
 	private static Random r;
-	private final static int WORLD_HEIGHT = 500;
-	private final static int WORLD_LENGTH = 500;
+	public final static int WORLD_HEIGHT = 500;
+	public final static int WORLD_LENGTH = 500;
 
 	public static void main(String[] args)
 	{	
@@ -17,7 +17,7 @@ public class TrafficTester {
 		
 		for (int i = 0; i < 10; i++)
 		{
-			randomVehicle(city);
+			new Thread(new Animator(randomVehicle(city))).start();
 		}
 	}
 	
