@@ -17,7 +17,8 @@ public class TrafficTester {
 		
 		for (int i = 0; i < 10; i++)
 		{
-			new Thread(new Animator(randomVehicle(city))).start();
+			randomVehicle(city);
+			//new Plane(new Point(250, 250), city, randomColor());
 		}
 	}
 	
@@ -25,13 +26,16 @@ public class TrafficTester {
 	{
 		Point p = new Point(r.nextInt(500) + 1, r.nextInt(500) + 1);
 		
-		if (r.nextBoolean() == true)
+		switch (r.nextInt(3))
 		{
-			return new Car(p, whereToCreate, randomColor());
-		}
-		else
-		{
-			return new Truck(p, whereToCreate, randomColor());
+			case 0:
+				return new Car(p, whereToCreate, randomColor());
+			case 1:
+				return new Truck(p, whereToCreate, randomColor());
+			case 2:
+				return new Plane(p, whereToCreate, randomColor());
+			default:
+				return new Car(p, whereToCreate, randomColor());
 		}
 	}
 	
