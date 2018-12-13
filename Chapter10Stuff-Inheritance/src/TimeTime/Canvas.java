@@ -1,25 +1,10 @@
-package VehicleGraphics;
+package TimeTime;
 
 // Canvas + Click
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Ellipse2D;
-import java.util.HashMap;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
 
 /**
  * Class Canvas - a class to allow for simple graphical drawing on a canvas.
@@ -43,8 +28,6 @@ public class Canvas {
 	private Color inkColor;
 	private Image canvasImage;
 	private Point clickedPoint; // IAT
-	private boolean stateSave;
-	private HashMap<String, Object> savedState;
 
 	/**
 	 * Create a Canvas with default height, width and background color (300,
@@ -128,20 +111,6 @@ public class Canvas {
 			graphic.fillRect(0, 0, size.width, size.height);
 			graphic.setColor(inkColor);
 		}
-	}
-	
-	//My own methods
-	public void pushState()
-	{
-		if (stateSave != true)
-			stateSave = true;
-			savedState.put("BColor", this.getBackgroundColor());
-			
-	}
-	
-	public void popState()
-	{
-		
 	}
 
 	public int getWidth() {

@@ -6,12 +6,12 @@ public class Car {
 	private double myMileage;
 	private double howManyBills;
 	
-	public Car(String make, int year, double mileage, double cost)
+	public Car (String make, int year, double mileage)
 	{
 		myCreator = make;
 		dateOBirth = year;
 		myMileage = mileage;
-		howManyBills = cost;
+		howManyBills = 0;
 	}
 	
 	public String getName()
@@ -19,9 +19,24 @@ public class Car {
 		return myCreator;
 	}
 	
-	public int modelYear()
+	public int getModelYear()
 	{
 		return dateOBirth;
+	}
+	
+	public double getMiles()
+	{
+		return myMileage;
+	}
+	
+	public void setPrice(double thePrice)
+	{
+		howManyBills = thePrice;
+	}
+	
+	public double getPrice()
+	{
+		return howManyBills;
 	}
 	
 	public void takeTestRide(double miles)
