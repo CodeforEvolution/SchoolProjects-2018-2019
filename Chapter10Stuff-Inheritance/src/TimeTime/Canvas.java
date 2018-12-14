@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
+import java.util.HashMap;
 
 /**
  * Class Canvas - a class to allow for simple graphical drawing on a canvas.
@@ -28,6 +29,8 @@ public class Canvas {
 	private Color inkColor;
 	private Image canvasImage;
 	private Point clickedPoint; // IAT
+	private boolean stateSaved;
+	private HashMap<String, Object> pushedState;
 
 	/**
 	 * Create a Canvas with default height, width and background color (300,
@@ -110,6 +113,33 @@ public class Canvas {
 			graphic.setColor(backgroundColor);
 			graphic.fillRect(0, 0, size.width, size.height);
 			graphic.setColor(inkColor);
+		}
+
+		// My own vars
+		stateSaved = false;
+		pushedState = new HashMap<String, Object>();
+	}
+
+	// My own methods
+	public void pushState() {
+		if (stateSaved == false) {
+			stateSaved = true;
+			pushedState.clear();
+			pushedState.put("BackColor", this.getBackgroundColor());
+			pushedState.put("InkColor", this.getInkColor());
+			pushedState.put("Font", this.getFont());
+			pushedState.put("FontSize", this.graphic.getFont().getSize());
+		}
+
+	}
+
+	public void popState() {
+		if (stateSaved == true) {
+			stateSaved = false;
+			this.setBackgroundColor((Color) pushedState.get("BackColor"));
+			this.setInkColor((Color) pushedState.get("InkColor"));
+			this.setFont((Font) pushedState.get("Font"));
+			this.setFontSize((int) pushedState.get("FontSize"));
 		}
 	}
 

@@ -1,25 +1,11 @@
-package VehicleGraphics;
+package utils;
 
 // Canvas + Click
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Ellipse2D;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.event.*;
 import java.util.HashMap;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * Class Canvas - a class to allow for simple graphical drawing on a canvas.
@@ -128,13 +114,15 @@ public class Canvas {
 			graphic.fillRect(0, 0, size.width, size.height);
 			graphic.setColor(inkColor);
 		}
+
+		// My own vars
+		stateSaved = false;
+		pushedState = new HashMap<String, Object>();
 	}
-	
-	//My own methods
-	public void pushState()
-	{
-		if (stateSaved == false)
-		{
+
+	// My own methods
+	public void pushState() {
+		if (stateSaved == false) {
 			stateSaved = true;
 			pushedState.clear();
 			pushedState.put("BackColor", this.getBackgroundColor());
@@ -142,18 +130,16 @@ public class Canvas {
 			pushedState.put("Font", this.getFont());
 			pushedState.put("FontSize", this.graphic.getFont().getSize());
 		}
-			
+
 	}
-	
-	public void popState()
-	{
-		if (stateSaved == true)
-		{
+
+	public void popState() {
+		if (stateSaved == true) {
 			stateSaved = false;
-			this.setBackgroundColor((Color)pushedState.get("BackColor"));
-			this.setInkColor((Color)pushedState.get("InkColor"));
-			this.setFont((Font)pushedState.get("Font"));
-			this.setFontSize((int)pushedState.get("FontSize"));
+			this.setBackgroundColor((Color) pushedState.get("BackColor"));
+			this.setInkColor((Color) pushedState.get("InkColor"));
+			this.setFont((Font) pushedState.get("Font"));
+			this.setFontSize((int) pushedState.get("FontSize"));
 		}
 	}
 
