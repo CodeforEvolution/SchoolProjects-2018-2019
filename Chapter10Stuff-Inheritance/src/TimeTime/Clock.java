@@ -7,23 +7,29 @@ public class Clock {
 	private Canvas where;
 	private Point currentPos;
 	private Color myColor;
+	private int currSec;
 	private int currMin;
 	private int currHour;
+	
+	private static final int SEC_RAD = 100;
+	private static final int MIN_RAD = 90;
+	private static final int HOUR_RAD = 70;
+	private static final int ROTATER = 90;
 	
 	public Clock(Canvas surface, Point initialPos, Color theColor)
 	{
 		where = surface;
 		currentPos = initialPos;
 		myColor = theColor;
-		setTime(0, 0);
+		setTime(0, 0, 0);
 		draw();
 	}
 	
-	public void setTime(int hours, int minutes)
+	public void setTime(int hours, int minutes, int seconds)
 	{
 		currHour = hours;
 		currMin = minutes;
-		where.erase();
+		currSec = seconds;
 		draw();
 	}
 	
@@ -57,13 +63,17 @@ public class Clock {
 	{
 		where.pushState();
 		
-		int H = currHour;
-		int M = currMin;
+		int Hdeg = (currHour * 30) - ROTATER;
+		int Mdeg = (currMin * 6) - ROTATER;
+		int Sdeg = (currSec * 6) - ROTATER;
 		
 		where.setInkColor(Color.WHITE);
+
+		Point sHand = new Point((currentPos.x + 100) + (int)(Math.cos(Sdeg * (Math.PI/180.0)) * SEC_RAD), (currentPos.y + 100) + (int)(Math.sin(Sdeg * (Math.PI/180.0)) * SEC_RAD));
+		Point mHand = new Point((currentPos.x + 100) + (int)(Math.cos(Mdeg * (Math.PI/180.0)) * MIN_RAD), (currentPos.y + 100) + (int)(Math.sin(Mdeg * (Math.PI/180.0)) * MIN_RAD));
+		Point hHand = new Point((currentPos.x + 100) + (int)(Math.cos(Hdeg * (Math.PI/180.0)) * HOUR_RAD), (currentPos.y + 100) + (int)(Math.sin(Hdeg * (Math.PI/180.0)) * HOUR_RAD));
 		
-		Point mHand = new Point(100 + (int)Math.cos(M), 100 + (int)Math.cos(M));
-		Point hHand = new Point(100 + (int)Math.cos(H), 100 + (int)Math.cos(H));
+		where.drawLine(new Point(currentPos.x + 100, currentPos.y + 100), sHand);
 		where.drawLine(new Point(currentPos.x + 100, currentPos.y + 100), mHand);
 		where.drawLine(new Point(currentPos.x + 100, currentPos.y + 100), hHand);
 		
