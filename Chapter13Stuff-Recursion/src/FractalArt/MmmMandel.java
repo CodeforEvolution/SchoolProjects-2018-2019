@@ -6,18 +6,17 @@ import java.awt.Point;
 public class MmmMandel {
 	public static void main(String[] args)
 	{
-		Canvas easel = new Canvas("Here it is!", 500, 500, Color.BLACK);
+		Canvas easel = new Canvas("Here it is!", 1000, 1000, Color.BLACK);
 		easel.setVisible(true);
 		easel.setInkColor(Color.ORANGE);
 		
 		//new MandelDrawer(new Point(0, 0), new Point(300, 300), 20, easel).run();
 		mandelTime(new Point(0, 0), new Point(300, 300), 20, easel);
-		mandelTime(new Point(50, 50), new Point(450, 450), 20, easel);
 		
 		return;
 	}
 	
-	public static void mandelTime (Point whereStart, Point whereEnd, int levels, Canvas surface)
+	public static void mandelTime(Point whereStart, Point whereEnd, int levels, Canvas surface)
 	{
 		if (levels < 0)
 			throw new IllegalArgumentException("?!?");
