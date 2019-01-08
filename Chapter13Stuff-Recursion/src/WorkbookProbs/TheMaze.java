@@ -18,15 +18,17 @@ public class TheMaze {
 		Canvas theMaze = new Canvas("THEMOUSE", 700, 700, Color.BLACK);
 		theMaze.setVisible(true);
 
-		int[][] theGrid = {	{1,1,1,0,1,1,0,0,0,1,1,1,1},
+/*		int[][] theGrid = {	{1,1,1,0,1,1,0,0,0,1,1,1,1},
 							{1,1,1,0,1,1,0,0,0,1,1,1,1},
 							{1,1,1,1,1,1,0,0,0,1,1,1,1},
 							{1,1,1,0,1,1,0,0,0,1,1,1,1},
 							{1,1,1,0,1,1,1,1,1,1,1,1,1},
 							{1,1,1,0,1,1,0,0,0,1,1,0,1},
 							{1,0,1,0,1,1,0,0,0,1,0,1,1},
-							{0,0,0,0,1,1,0,0,0,1,1,1,1}	};
-
+							{0,0,0,0,1,1,0,0,0,1,1,1,1}	}; */
+		
+		int[][] theGrid = randomGrid();
+		
 		System.out.println("Before\n");
 		printGrid(theGrid);
 		drawGrid(theMaze, theGrid);
@@ -38,6 +40,84 @@ public class TheMaze {
 		drawGrid(theMaze, theGrid);
 	}
 	
+	private static int[][] randomGrid()
+	{
+		int[][] grid = new int[30][30];
+		
+		for (int y = 0; y < 30; y++)
+		{
+			for (int x = 0; x < 30; x++)
+			{
+				switch(r.nextInt(4))
+				{
+					case 0:
+					case 1:
+					case 2:
+						grid[x][y] = PATH;
+						break;
+					case 3:
+						grid[x][y] = WALL;
+						break;
+					default:
+						throw new Error("Hmm");
+				}
+			}
+		}
+		
+		return grid;
+	}
+
+	private static boolean valid(int[][] grid, int row, int column)
+	{
+		boolean result = false;
+		
+		if (row >= 0 && row < grid.length &&
+			column >= 0 && column < grid[row].length)
+		{
+			if (grid[row][column] == 1)
+				result = true;
+		}
+
+		return result;
+	}
+	
+	private static boolean traverse(Canvas surface, int[][] grid, int row, int column)
+	{
+		drawGrid(surface, grid);
+		surface.pause(100);
+		boolean done = false;
+		
+		if (valid(grid, row, column))
+		{
+			grid[row][column] = STEP;
+			
+			if (row == grid.length - 1 && column == grid[0].length - 1)
+			{
+				done = true;
+			}
+			else
+			{
+				done = traverse(surface, grid, row + 1, column); //down
+				if (!done)
+					done = traverse(surface, grid, row, column + 1); //right
+				if (!done)
+					done = traverse(surface, grid, row - 1, column); //up
+				if (!done)
+					done = traverse(surface, grid, row, column - 1); //left
+				
+				grid[row][column] = DEADEND;
+			}
+			
+			if (done)
+				grid[row][column] = STAND;
+		}
+		
+		return done;
+	}
+	
+	
+	
+	/* Jake's implementation (broken)
 	private static boolean valid(int[][] baseGrid, int row, int column)
 	{
 		if (row >= baseGrid.length || row < 0)
@@ -57,11 +137,23 @@ public class TheMaze {
 		return true;
 	}
 	
+	private static boolean trapped(int[][] baseGrid, int row, int column)
+	{
+		if ((valid(baseGrid, row + 1, column) == false || baseGrid[row + 1][column] != PATH) &&
+			(valid(baseGrid, row, column + 1) == false || baseGrid[row][column + 1] != PATH) &&
+			(valid(baseGrid, row - 1, column) == false || baseGrid[row - 1][column] != PATH) &&
+			(valid(baseGrid, row, column - 1) == false || baseGrid[row][column - 1] != PATH))		
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	private static boolean traverse(Canvas output, int[][] whatToTraverse, int row, int column)
 	{
 		System.out.println("\nSolving:\n");
 		printGrid(whatToTraverse);
-		output.pause(300);
+		output.pause(50);
 		drawGrid(output, whatToTraverse);
 		
 		boolean done = false;
@@ -79,29 +171,58 @@ public class TheMaze {
 				switch (r.nextInt(2))
 				{
 					case 0:
+						//Go Down
 						done = traverse(output, whatToTraverse, row + 1, column);
 						break;
 					case 1:
+						//Go Right
 						done = traverse(output, whatToTraverse, row, column + 1);
 						break;
 					default:
 						throw new Error("What?!?");
 				}
 				
-				/*
-				done = traverse(output, whatToTraverse, row + 1, column);
 				if (!done)
 				{
-					done = traverse(output, whatToTraverse, row, column + 1);
+					switch (r.nextInt(2))
+					{
+						case 0:
+							//Go Up
+							done = traverse(output, whatToTraverse, row - 1, column);
+							if (valid(whatToTraverse, row, column) && trapped(whatToTraverse, row, column) == false)
+							{
+								whatToTraverse[row][column] = DEADEND;
+							}
+							break;
+						case 1:
+							//Go Left
+							done = traverse(output, whatToTraverse, row, column - 1);
+							if (valid(whatToTraverse, row, column) && trapped(whatToTraverse, row, column) == false)
+									{
+										whatToTraverse[row][column] = DEADEND;
+									}
+							break;
+						default:
+							throw new Error("What?!?");
+					}
 				}
-				if (!done)
+				
+				if (false)
 				{
-					done = traverse(output, whatToTraverse, row - 1, column);
+					done = traverse(output, whatToTraverse, row + 1, column);
+					if (!done)
+					{
+						done = traverse(output, whatToTraverse, row, column + 1);
+					}
+					if (!done)
+					{
+						done = traverse(output, whatToTraverse, row - 1, column);
+					}
+					if (!done)
+					{
+						done = traverse(output, whatToTraverse, row, column - 1);
+					}
 				}
-				if (!done)
-				{
-					done = traverse(output, whatToTraverse, row, column - 1);
-				}*/
 			}
 
 			if (done)
@@ -109,24 +230,25 @@ public class TheMaze {
 				whatToTraverse[row][column] = STAND;
 			}
 		}
-		else
+		
+		if (false)
 		{	
 			done = false;
 			
 			// Find our last step
 			if (valid(whatToTraverse, row + 1, column) == true && whatToTraverse[row + 1][column] == STEP)
 			{
-				// Last step was down
-				if (anyWhereElse(whatToTraverse, row, column) == false)
+				// We just stepped up
+				if (valid(whatToTraverse, row, column) == false && trapped(whatToTraverse, row, column) == true)
 				{
 					whatToTraverse[row][column] = DEADEND;
 				}
-				traverse(output, whatToTraverse, row - 2, column);
+				traverse(output, whatToTraverse, row + 2, column);
 			}
 			else if (valid(whatToTraverse, row, column + 1) == true && whatToTraverse[row][column + 1] == STEP)
 			{
-				// Last step was right
-				if (anyWhereElse(whatToTraverse, row, column) == false)
+				// We just stepped left
+				if (valid(whatToTraverse, row, column) == false)
 				{
 					whatToTraverse[row][column] = DEADEND;
 				}
@@ -135,8 +257,8 @@ public class TheMaze {
 			}
 			if (valid(whatToTraverse, row - 1, column) == true && whatToTraverse[row - 1][column] == STEP)
 			{
-				// Last step was up
-				if (anyWhereElse(whatToTraverse, row, column) == false)
+				// We just stepped down
+				if (valid(whatToTraverse, row, column) == false)
 				{
 					whatToTraverse[row][column] = DEADEND;
 				}
@@ -145,34 +267,19 @@ public class TheMaze {
 			else if (valid(whatToTraverse, row, column - 1) == true  && whatToTraverse[row][column - 1] == STEP)
 			{
 				// Last step was left
-				if (anyWhereElse(whatToTraverse, row, column) == false)
+				if (valid(whatToTraverse, row, column) == false)
 				{
 					whatToTraverse[row][column] = DEADEND;
 				}
 				traverse(output, whatToTraverse, row, column - 2);
 			}
 			//whatToTraverse[row][column] = PATH;
-			
 		}
 		
 		return done;
 	}
-	
-	private static boolean anyWhereElse(int[][] theGrid, int row, int column)
-	{
-		if (valid(theGrid, row, column) == false)
-			return false;
+*/	
 
-		if (theGrid[row + 1][column] != WALL && theGrid[row + 1][column] == PATH ||
-			theGrid[row - 1][column] != WALL && theGrid[row - 1][column] == PATH ||
-			theGrid[row][column + 1] != WALL && theGrid[row][column + 1] == PATH ||
-			theGrid[row][column - 1] != WALL && theGrid[row][column - 1] == PATH)
-		{
-			return true;
-		}
-		return false;
-	}
-	
 	private static void printGrid(int[][] toGrid)
 	{
 		for (int y = 0; y < toGrid.length; y++)
