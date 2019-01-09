@@ -1,6 +1,7 @@
 package WorkbookProbs;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -8,14 +9,14 @@ import javax.swing.JOptionPane;
 public class TheMaze {
 	public final static int WALL = 0;
 	public final static int PATH = 1;
-	public final static int DEADEND = 3;
-	public final static int STEP = 4;
-	public final static int STAND = 5;
+	public final static int DEADEND = 2;
+	public final static int STEP = 3;
+	public final static int STAND = 4;
 	public static Random r = new Random();
 	
 	public static void main(String[] args)
 	{	
-		Canvas theMaze = new Canvas("THEMOUSE", 700, 700, Color.BLACK);
+		Canvas theMaze = new Canvas("THEMOUSE", 600, 600, Color.BLACK);
 		theMaze.setVisible(true);
 
 /*		int[][] theGrid = {	{1,1,1,0,1,1,0,0,0,1,1,1,1},
@@ -27,7 +28,7 @@ public class TheMaze {
 							{1,0,1,0,1,1,0,0,0,1,0,1,1},
 							{0,0,0,0,1,1,0,0,0,1,1,1,1}	}; */
 		
-		int[][] theGrid = randomGrid();
+		int[][] theGrid = randomGrid(5, 5);
 		
 		System.out.println("Before\n");
 		printGrid(theGrid);
@@ -40,29 +41,59 @@ public class TheMaze {
 		drawGrid(theMaze, theGrid);
 	}
 	
-	private static int[][] randomGrid()
+	private static int[][] randomGrid(int xSize, int ySize)
 	{
-		int[][] grid = new int[30][30];
+		int[][] grid = new int[xSize][ySize];
 		
-		for (int y = 0; y < 30; y++)
+		//Make 100 random patterns
+		for (int i = 0; i < 1000; i++)
 		{
-			for (int x = 0; x < 30; x++)
+			int x = r.nextInt(xSize);
+			int y = r.nextInt(ySize);
+			
+			switch (r.nextInt(4))
 			{
-				switch(r.nextInt(4))
+				case 0:
+					grid[x][y] = PATH;
+					break;
+				//Cool design time
+				case 1:
 				{
-					case 0:
-					case 1:
-					case 2:
-						grid[x][y] = PATH;
-						break;
-					case 3:
-						grid[x][y] = WALL;
-						break;
-					default:
-						throw new Error("Hmm");
+					for (int c = 0; c < (grid.length / (r.nextInt(10) + 1)); c++)
+					{
+						grid[c][y] = PATH;
+					}
+					break;
+				}
+				case 2:
+				{
+					for (int c = 0; c < (grid[0].length / (r.nextInt(10) + 1)); c++)
+					{
+						grid[x][c] = PATH;
+					}
+					break;
+				}
+				case 3:
+				{
+					for (int cy = 0; cy <= (grid.length / (r.nextInt(4) + 1)); cy++)
+					{
+						for (int cx = 0; cx <= (grid[0].length / (r.nextInt(4) + 1)); cx++)
+						{
+							grid[cx][cy] = PATH;
+						}
+					}
+					break;
+				}
+				default:
+				{
+					throw new Error("?!?");
 				}
 			}
 		}
+		
+		// The start and end definitely can't be a wall...
+		grid[0][0] = PATH;
+		grid[xSize - 1][ySize - 1] = PATH;
 		
 		return grid;
 	}
@@ -74,7 +105,7 @@ public class TheMaze {
 		if (row >= 0 && row < grid.length &&
 			column >= 0 && column < grid[row].length)
 		{
-			if (grid[row][column] == 1)
+			if (grid[row][column] == PATH)
 				result = true;
 		}
 
@@ -84,7 +115,7 @@ public class TheMaze {
 	private static boolean traverse(Canvas surface, int[][] grid, int row, int column)
 	{
 		drawGrid(surface, grid);
-		surface.pause(100);
+		surface.pause(10);
 		boolean done = false;
 		
 		if (valid(grid, row, column))
@@ -113,9 +144,122 @@ public class TheMaze {
 		}
 		
 		return done;
+	}	
+
+	private static void printGrid(int[][] toGrid)
+	{
+		for (int y = 0; y < toGrid.length; y++)
+		{
+			for (int x = 0; x < toGrid[y].length; x++)
+			{
+				System.out.print(toGrid[y][x] + " ");
+			}
+			System.out.println();
+		}
 	}
 	
+	private static void drawGrid(Canvas surface, int[][] toGrid)
+	{
+		surface.erase();
+		
+		for (int y = 0; y < toGrid.length; y++)
+		{
+			for (int x = 0; x < toGrid[y].length; x++)
+			{
+				switch(toGrid[y][x])
+				{
+					case WALL:
+						drawWall(surface, x, y, toGrid);
+						break;
+					case PATH:
+						drawPath(surface, x, y, toGrid);
+						break;
+					case STEP:
+						drawStep(surface, x, y, toGrid);
+						break;
+					case STAND:
+						drawStand(surface, x, y, toGrid);
+						break;
+					case DEADEND:
+						drawDeadEnd(surface, x, y, toGrid);
+						break;
+					default:
+						JOptionPane.showMessageDialog(null, "Unknown value in grid!", "Error", JOptionPane.ERROR_MESSAGE);
+						break;
+				}
+			}
+		}
+	}
 	
+	private static void drawWall(Canvas surface, int theX, int theY, int[][] grid)
+	{
+		surface.pushState();
+		
+		surface.setInkColor(Color.BLUE);
+		
+		int height = surface.getHeight() / grid.length;
+		int width = surface.getWidth() / grid[0].length;
+		
+		surface.drawFilledRectangle(width * theX, height * theY, width, height);
+		
+		surface.popState();
+	}
+	
+	private static void drawPath(Canvas surface, int theX, int theY, int[][] grid)
+	{
+		surface.pushState();
+		
+		surface.setInkColor(Color.ORANGE);
+		
+		int height = surface.getHeight() / grid.length;
+		int width = surface.getWidth() / grid[0].length;
+		
+		surface.drawFilledRectangle(width * theX, height * theY, width, height);
+		
+		surface.popState();
+	}
+	
+	private static void drawStep(Canvas surface, int theX, int theY, int[][] grid)
+	{
+		surface.pushState();
+		
+		surface.setInkColor(Color.YELLOW);
+		
+		int height = surface.getHeight() / grid.length;
+		int width = surface.getWidth() / grid[0].length;
+		
+		surface.drawOval(width * theX, height * theY, width, height);
+		
+		surface.popState();
+	}
+	
+	private static void drawStand(Canvas surface, int theX, int theY, int[][] grid)
+	{
+		surface.pushState();
+		
+		surface.setInkColor(Color.GREEN);
+		
+		int height = surface.getHeight() / grid.length;
+		int width = surface.getWidth() / grid[0].length;
+		
+		surface.drawFilledOval(width * theX, height * theY, width, height);
+		
+		surface.popState();
+	}
+	
+	private static void drawDeadEnd(Canvas surface, int theX, int theY, int[][] grid)
+	{
+		surface.pushState();
+		
+		surface.setInkColor(Color.RED);
+		
+		int height = surface.getHeight() / grid.length;
+		int width = surface.getWidth() / grid[0].length;
+		
+		surface.drawFilledOval(width * theX, height * theY, width, height);
+		
+		surface.popState();
+	}
 	
 	/* Jake's implementation (broken)
 	private static boolean valid(int[][] baseGrid, int row, int column)
@@ -278,120 +422,5 @@ public class TheMaze {
 		
 		return done;
 	}
-*/	
-
-	private static void printGrid(int[][] toGrid)
-	{
-		for (int y = 0; y < toGrid.length; y++)
-		{
-			for (int x = 0; x < toGrid[y].length; x++)
-			{
-				System.out.print(toGrid[y][x] + " ");
-			}
-			System.out.println();
-		}
-	}
-	
-	private static void drawGrid(Canvas surface, int[][] toGrid)
-	{
-		surface.erase();
-		
-		for (int y = 0; y < toGrid.length; y++)
-		{
-			for (int x = 0; x < toGrid[y].length; x++)
-			{
-				switch(toGrid[y][x])
-				{
-					case WALL:
-						drawWall(surface, x, y, toGrid);
-						break;
-					case PATH:
-						drawPath(surface, x, y, toGrid);
-						break;
-					case STEP:
-						drawStep(surface, x, y, toGrid);
-						break;
-					case STAND:
-						drawStand(surface, x, y, toGrid);
-						break;
-					case DEADEND:
-						drawDeadEnd(surface, x, y, toGrid);
-						break;
-					default:
-						JOptionPane.showMessageDialog(null, "Unknown value in grid!", "Error", JOptionPane.ERROR_MESSAGE);
-						break;
-				}
-			}
-		}
-	}
-	
-	private static void drawWall(Canvas surface, int theX, int theY, int[][] grid)
-	{
-		surface.pushState();
-		
-		surface.setInkColor(Color.BLUE);
-		
-		int height = surface.getHeight() / grid.length;
-		int width = surface.getWidth() / grid[0].length;
-		
-		surface.drawFilledRectangle(width * theX, height * theY, width, height);
-		
-		surface.popState();
-	}
-	
-	private static void drawPath(Canvas surface, int theX, int theY, int[][] grid)
-	{
-		surface.pushState();
-		
-		surface.setInkColor(Color.ORANGE);
-		
-		int height = surface.getHeight() / grid.length;
-		int width = surface.getWidth() / grid[0].length;
-		
-		surface.drawFilledRectangle(width * theX, height * theY, width, height);
-		
-		surface.popState();
-	}
-	
-	private static void drawStep(Canvas surface, int theX, int theY, int[][] grid)
-	{
-		surface.pushState();
-		
-		surface.setInkColor(Color.YELLOW);
-		
-		int height = surface.getHeight() / grid.length;
-		int width = surface.getWidth() / grid[0].length;
-		
-		surface.drawOval(width * theX, height * theY, width, height);
-		
-		surface.popState();
-	}
-	
-	private static void drawStand(Canvas surface, int theX, int theY, int[][] grid)
-	{
-		surface.pushState();
-		
-		surface.setInkColor(Color.GREEN);
-		
-		int height = surface.getHeight() / grid.length;
-		int width = surface.getWidth() / grid[0].length;
-		
-		surface.drawFilledOval(width * theX, height * theY, width, height);
-		
-		surface.popState();
-	}
-	
-	private static void drawDeadEnd(Canvas surface, int theX, int theY, int[][] grid)
-	{
-		surface.pushState();
-		
-		surface.setInkColor(Color.RED);
-		
-		int height = surface.getHeight() / grid.length;
-		int width = surface.getWidth() / grid[0].length;
-		
-		surface.drawFilledOval(width * theX, height * theY, width, height);
-		
-		surface.popState();
-	}
+*/
 }
