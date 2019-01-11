@@ -16,7 +16,7 @@ public class TheMaze {
 	
 	public static void main(String[] args)
 	{	
-		Canvas theMaze = new Canvas("THEMOUSE", 600, 600, Color.BLACK);
+		Canvas theMaze = new Canvas("THEMOUSE", 800, 800, Color.BLACK);
 		theMaze.setVisible(true);
 
 /*		int[][] theGrid = {	{1,1,1,0,1,1,0,0,0,1,1,1,1},
@@ -28,7 +28,7 @@ public class TheMaze {
 							{1,0,1,0,1,1,0,0,0,1,0,1,1},
 							{0,0,0,0,1,1,0,0,0,1,1,1,1}	}; */
 		
-		int[][] theGrid = randomGrid(5, 5);
+		int[][] theGrid = randomGrid(250, 250);
 		
 		System.out.println("Before\n");
 		printGrid(theGrid);
@@ -45,50 +45,30 @@ public class TheMaze {
 	{
 		int[][] grid = new int[xSize][ySize];
 		
-		//Make 100 random patterns
-		for (int i = 0; i < 1000; i++)
+		for (int x = 2; x < ySize; x += r.nextInt(4))
 		{
-			int x = r.nextInt(xSize);
-			int y = r.nextInt(ySize);
-			
-			switch (r.nextInt(4))
+			for (int i = 0; i < xSize; i++)
 			{
-				case 0:
-					grid[x][y] = PATH;
-					break;
-				//Cool design time
-				case 1:
-				{
-					for (int c = 0; c < (grid.length / (r.nextInt(10) + 1)); c++)
-					{
-						grid[c][y] = PATH;
-					}
-					break;
-				}
-				case 2:
-				{
-					for (int c = 0; c < (grid[0].length / (r.nextInt(10) + 1)); c++)
-					{
-						grid[x][c] = PATH;
-					}
-					break;
-				}
-				case 3:
-				{
-					for (int cy = 0; cy <= (grid.length / (r.nextInt(4) + 1)); cy++)
-					{
-						for (int cx = 0; cx <= (grid[0].length / (r.nextInt(4) + 1)); cx++)
-						{
-							grid[cx][cy] = PATH;
-						}
-					}
-					break;
-				}
-				default:
-				{
-					throw new Error("?!?");
-				}
+				grid[i][x] = PATH;
 			}
+		}
+		
+		for (int y = 0; y < ySize; y += r.nextInt(4))
+		{
+			for (int i = 0; i < ySize; i++)
+			{
+				grid[y][i] = PATH;
+			}
+		}
+		
+		for (int i = 0; i < ySize; i++)
+		{
+			grid[xSize - 1][i] = PATH;
+		}
+		
+		for (int i = 0; i < xSize; i++)
+		{
+			grid[r.nextInt(xSize - 4) + 4][r.nextInt(ySize - 2) + 2] = WALL;
 		}
 		
 		// The start and end definitely can't be a wall...
@@ -114,8 +94,9 @@ public class TheMaze {
 	
 	private static boolean traverse(Canvas surface, int[][] grid, int row, int column)
 	{
+		surface.pause(150);
 		drawGrid(surface, grid);
-		surface.pause(10);
+		
 		boolean done = false;
 		
 		if (valid(grid, row, column))
@@ -128,15 +109,54 @@ public class TheMaze {
 			}
 			else
 			{
-				done = traverse(surface, grid, row + 1, column); //down
-				if (!done)
-					done = traverse(surface, grid, row, column + 1); //right
-				if (!done)
-					done = traverse(surface, grid, row - 1, column); //up
-				if (!done)
-					done = traverse(surface, grid, row, column - 1); //left
-				
-				grid[row][column] = DEADEND;
+				switch (r.nextInt(4))
+				{
+					case 0:
+						done = traverse(surface, grid, row + 1, column); //down
+						if (!done)
+							done = traverse(surface, grid, row, column + 1); //right
+						if (!done)
+							done = traverse(surface, grid, row - 1, column); //up
+						if (!done)
+							done = traverse(surface, grid, row, column - 1); //left
+						
+						grid[row][column] = DEADEND;
+						break;
+					case 1:
+						done = traverse(surface, grid, row, column - 1); //left
+						if (!done)
+							done = traverse(surface, grid, row + 1, column); //down
+						if (!done)
+							done = traverse(surface, grid, row, column + 1); //right
+						if (!done)
+							done = traverse(surface, grid, row - 1, column); //up
+						grid[row][column] = DEADEND;
+						break;
+					case 2:
+						done = traverse(surface, grid, row - 1, column); //up
+						if (!done)
+							done = traverse(surface, grid, row, column - 1); //left
+						if (!done)
+							done = traverse(surface, grid, row + 1, column); //down
+						if (!done)
+							done = traverse(surface, grid, row, column + 1); //right
+						
+						grid[row][column] = DEADEND;
+						break;
+					case 3:
+						done = traverse(surface, grid, row, column + 1); //right
+						if (!done)
+							done = traverse(surface, grid, row - 1, column); //up
+						if (!done)
+							done = traverse(surface, grid, row, column - 1); //left
+						if (!done)
+							done = traverse(surface, grid, row + 1, column); //down
+						
+						grid[row][column] = DEADEND;
+						break;
+					default:
+						break;
+				}
 			}
 			
 			if (done)
@@ -195,12 +215,18 @@ public class TheMaze {
 	{
 		surface.pushState();
 		
+		//Wall
 		surface.setInkColor(Color.BLUE);
 		
 		int height = surface.getHeight() / grid.length;
 		int width = surface.getWidth() / grid[0].length;
 		
 		surface.drawFilledRectangle(width * theX, height * theY, width, height);
+		
+		//Stripes
+		surface.setInkColor(Color.BLACK);
+		surface.drawFilledRectangle(width * theX, (height * theY) + (height / 4), width, height / 6);
+		surface.drawFilledRectangle(width * theX, (height * theY) + 2 * (height / 4), width, height / 6);
 		
 		surface.popState();
 	}
@@ -209,6 +235,7 @@ public class TheMaze {
 	{
 		surface.pushState();
 		
+		//Square
 		surface.setInkColor(Color.ORANGE);
 		
 		int height = surface.getHeight() / grid.length;
@@ -216,19 +243,27 @@ public class TheMaze {
 		
 		surface.drawFilledRectangle(width * theX, height * theY, width, height);
 		
+		//Cool
+		surface.setInkColor(Color.BLACK);
+		surface.drawTriangle((width * theX) + (width / 2), (height * theY),
+							(width * theX) + 5, (height * theY) + height,
+							(width * theX) + width, (height * theY) + height);
+		
 		surface.popState();
 	}
 	
 	private static void drawStep(Canvas surface, int theX, int theY, int[][] grid)
-	{
+	{	
 		surface.pushState();
 		
-		surface.setInkColor(Color.YELLOW);
+		drawPath(surface, theX, theY, grid);
+		
+		surface.setInkColor(new Color(100, 100, 100));
 		
 		int height = surface.getHeight() / grid.length;
 		int width = surface.getWidth() / grid[0].length;
 		
-		surface.drawOval(width * theX, height * theY, width, height);
+		surface.drawFilledOval(width * theX, height * theY, width, height);
 		
 		surface.popState();
 	}
@@ -236,6 +271,8 @@ public class TheMaze {
 	private static void drawStand(Canvas surface, int theX, int theY, int[][] grid)
 	{
 		surface.pushState();
+		
+		drawPath(surface, theX, theY, grid);
 		
 		surface.setInkColor(Color.GREEN);
 		
@@ -250,6 +287,8 @@ public class TheMaze {
 	private static void drawDeadEnd(Canvas surface, int theX, int theY, int[][] grid)
 	{
 		surface.pushState();
+		
+		drawPath(surface, theX, theY, grid);
 		
 		surface.setInkColor(Color.RED);
 		
