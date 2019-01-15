@@ -1,5 +1,6 @@
 package Review;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class TriDigitArray {
@@ -87,7 +88,7 @@ public class TriDigitArray {
 				twohigh = i;
 			}
 			
-			if (theArray[i] > theArray[low] && theArray[i] < theArray[twolow]);
+			if (theArray[i] > theArray[low] && theArray[i] < theArray[twolow])
 			{
 				twolow = i;
 			}
@@ -101,6 +102,20 @@ public class TriDigitArray {
 		theArray[twolow] = temp;
 		
 		printArray(theArray);
+		
+		// Step e
+		System.out.println();
+		
+		int[] partun = new int[5];
+		int[] partdeux = new int[5];
+		
+		System.out.println("It's splitting time!");
+		partun = Arrays.copyOfRange(theArray, 0, 4);
+		partdeux = Arrays.copyOfRange(theArray, 5, 9);
+		
+		System.out.println("Your two new arrays: ");
+		printArray(partun);
+		printArray(partdeux);
 	}
 	
 	private static void printArray(int[] inArray)
