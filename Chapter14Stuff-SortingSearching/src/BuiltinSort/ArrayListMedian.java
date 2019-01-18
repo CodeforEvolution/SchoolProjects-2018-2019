@@ -7,7 +7,7 @@ import java.util.Random;
 public class ArrayListMedian {
 	public static void main (String[] args)
 	{
-Random r = new Random();
+		Random r = new Random();
 		
 		ArrayList<Integer> leArray = new ArrayList<Integer>();
 		
