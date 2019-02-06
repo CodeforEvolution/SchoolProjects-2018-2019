@@ -6,45 +6,58 @@ import java.util.Random;
 public class YoloSort {
 	public static void main(String[] args)
 	{
-		int[] theArrayToSort = {3, 5, 6, 3, 5, 2, 4, 11, 40, 320, 43, 12};
-		System.out.println("The original array: " + Arrays.toString(theArrayToSort));
+		int[] theArrayToSortA = new int[900];
+		int[] theArrayToSortB = new int[900];
+		int[] averageTimeA = new int[10];
+		int[] averageTimeB = new int[10];
 		
-		double start = System.currentTimeMillis();
-		int[] sortedArray = yoloSort(theArrayToSort);
-		double end = System.currentTimeMillis();
+		for (int i = 0; i < 900; i++)
+		{
+			theArrayToSortA[i] = new Random().nextInt(1000);
+		}
+		theArrayToSortB = Arrays.copyOf(theArrayToSortA, theArrayToSortA.length);
+
+		System.out.println("The original array: " + Arrays.toString(theArrayToSortA));
+		
+		for (int i = 0; i < 10; i++)
+		{
+			double start = System.currentTimeMillis();
+			yoloSort(theArrayToSortA);
+			double end = System.currentTimeMillis();
+			
+			System.out.println("The sort took: " + (end - start) + "ms");
+			System.out.println("\nThe sorted array: " + Arrays.toString(theArrayToSortA));
+		}
 				
-		System.out.println("The sort took: " + (end - start) + "ms");
-		System.out.println("\nThe sorted array: " + Arrays.toString(sortedArray));
+		
 		
 		double startA = System.currentTimeMillis();
-		Arrays.sort(theArrayToSort);
+		Arrays.sort(theArrayToSortB);
 		double endA = System.currentTimeMillis();
 		
 		System.out.println("\nThe other sort took: " + (endA - startA) + "ms");
-		System.out.println("\nThe other sorted array: " + Arrays.toString(theArrayToSort));
+		System.out.println("\nThe other sorted array: " + Arrays.toString(theArrayToSortB));
 	}
 	
-	public static int[] yoloSort(int[] inArray)
+	public static void yoloSort(int[] inArray)
 	{
 		Random r = new Random();
-		int[] outArray = Arrays.copyOf(inArray, inArray.length);
 		
-		while (isSorted(outArray) == false)
+		while (isSorted(inArray) == false)
 		{
 	
-			int first = r.nextInt(outArray.length);
-			int second = r.nextInt(outArray.length);
+			int first = r.nextInt(inArray.length);
+			int second = r.nextInt(inArray.length);
 			
-			if ((first > second && outArray[first] < outArray[second]) ||
-				(first < second && outArray[first] > outArray[second]))
+			if (first == second)
+				continue;
+			
+			if ((first > second && inArray[first] < inArray[second]) ||
+				(first < second && inArray[first] > inArray[second]))
 			{
-				swap(outArray, first, second);
+				swap(inArray, first, second);
 			}
-			
-			System.out.println("\nCurrent array: " + Arrays.toString(outArray));
 		}
-		
-		return outArray;
 	}
 	
 	public static boolean isSorted(int[] inArray)
