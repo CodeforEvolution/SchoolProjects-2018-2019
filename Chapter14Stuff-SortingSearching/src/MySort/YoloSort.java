@@ -6,37 +6,68 @@ import java.util.Random;
 public class YoloSort {
 	public static void main(String[] args)
 	{
+		final int TESTS = 50;
+		int[] originArray = new int[900];
 		int[] theArrayToSortA = new int[900];
 		int[] theArrayToSortB = new int[900];
-		int[] averageTimeA = new int[10];
-		int[] averageTimeB = new int[10];
+		double[] averageTimeA = new double[TESTS];
+		double[] averageTimeB = new double[TESTS];
 		
 		for (int i = 0; i < 900; i++)
 		{
-			theArrayToSortA[i] = new Random().nextInt(1000);
+			originArray[i] = new Random().nextInt(1000);
 		}
-		theArrayToSortB = Arrays.copyOf(theArrayToSortA, theArrayToSortA.length);
 
 		System.out.println("The original array: " + Arrays.toString(theArrayToSortA));
 		
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < TESTS; i++)
 		{
+			theArrayToSortA = Arrays.copyOf(originArray, originArray.length);
+			
 			double start = System.currentTimeMillis();
 			yoloSort(theArrayToSortA);
 			double end = System.currentTimeMillis();
 			
-			System.out.println("The sort took: " + (end - start) + "ms");
-			System.out.println("\nThe sorted array: " + Arrays.toString(theArrayToSortA));
+			
+			double time = end - start;
+			System.out.println("\nYolo sort took: " + time + "ms");
+			System.out.println("\nSorted array: " + Arrays.toString(theArrayToSortA));
+			
+			averageTimeA[i] = time;
 		}
-				
 		
+		for (int i = 0; i < TESTS; i++)
+		{
+			theArrayToSortB = Arrays.copyOf(originArray, originArray.length);
+			
+			double startB = System.currentTimeMillis();
+			Arrays.sort(theArrayToSortB);
+			double endB = System.currentTimeMillis();
+			
+			double time = endB - startB;
+			System.out.println("\nBuiltin sort took: " + time + "ms");
+			System.out.println("\nSorted array: " + Arrays.toString(theArrayToSortB));
+			
+			averageTimeB[i] = time;
+		}
 		
-		double startA = System.currentTimeMillis();
-		Arrays.sort(theArrayToSortB);
-		double endA = System.currentTimeMillis();
+		double averageA = 0.0;
+		for (int i = 0; i < averageTimeA.length; i++)
+		{
+			averageA += averageTimeA[i];
+		}
+		averageA /= averageTimeA.length;
 		
-		System.out.println("\nThe other sort took: " + (endA - startA) + "ms");
-		System.out.println("\nThe other sorted array: " + Arrays.toString(theArrayToSortB));
+		System.out.println("\nYolo sort average time: " + averageA + "ms");
+		
+		double averageB = 0.0;
+		for (int i = 0; i < averageTimeB.length; i++)
+		{
+			averageB += averageTimeB[i];
+		}
+		averageB /= averageTimeB.length;
+		
+		System.out.println("Builtin sort average time: " + averageB + "ms");
 	}
 	
 	public static void yoloSort(int[] inArray)
@@ -47,13 +78,16 @@ public class YoloSort {
 		{
 	
 			int first = r.nextInt(inArray.length);
-			int second = r.nextInt(inArray.length);
-			
-			if (first == second)
+			int second = first + 1;
+
+			if (second > 899)
 				continue;
 			
-			if ((first > second && inArray[first] < inArray[second]) ||
-				(first < second && inArray[first] > inArray[second]))
+			int firstI = inArray[first];
+			int secondI = inArray[second];
+			
+			if ((first > second && firstI < secondI) ||
+				(first < second && firstI > secondI))
 			{
 				swap(inArray, first, second);
 			}
