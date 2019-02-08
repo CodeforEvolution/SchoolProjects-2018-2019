@@ -7,13 +7,15 @@ public class YoloSort {
 	public static void main(String[] args)
 	{
 		final int TESTS = 50;
-		int[] originArray = new int[900];
-		int[] theArrayToSortA = new int[900];
-		int[] theArrayToSortB = new int[900];
+		final int ARRAY_SIZE = 1280;
+
+		int[] originArray = new int[ARRAY_SIZE];
+		int[] theArrayToSortA = new int[ARRAY_SIZE];
+		int[] theArrayToSortB = new int[ARRAY_SIZE];
 		double[] averageTimeA = new double[TESTS];
 		double[] averageTimeB = new double[TESTS];
 		
-		for (int i = 0; i < 900; i++)
+		for (int i = 0; i < ARRAY_SIZE; i++)
 		{
 			originArray[i] = new Random().nextInt(1000);
 		}
@@ -80,7 +82,7 @@ public class YoloSort {
 			int first = r.nextInt(inArray.length);
 			int second = first + 1;
 
-			if (second > 899)
+			if (second >= inArray.length || second < 0)
 				continue;
 			
 			int firstI = inArray[first];
