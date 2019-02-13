@@ -19,7 +19,7 @@ public class SortedDuplicates {
 		System.out.println("Removing duplicates from: " + theArray);
 		
 		int removed = 0;
-		for (int i = 0; i <= theArray.size() - removed; i++)
+		for (int i = 0; i <= theArray.size() - removed + 1; i++)
 		{
 			removed += removeDuplicates(theArray, i); 
 		}
