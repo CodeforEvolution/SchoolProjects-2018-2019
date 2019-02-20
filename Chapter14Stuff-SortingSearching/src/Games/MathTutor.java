@@ -4,10 +4,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MathTutor {
-	public enum GameMode {ADD, SUB, MD, ALL};
-	public final static int SUCCESS_TO_LEVEL_UP = 10;
+	public final static int SUCCESS_TO_LEVEL_UP = 2;
 	public final static int START_LIVES = 3;
-	public final static int MAX_INTEGER = 20;
+	public final static int MAX_INTEGER = 9;
+	public final static int VICTOR = MAX_INTEGER;
 	
 	public final static Random rEngine = new Random();
 	public final static Scanner input = new Scanner(System.in);
@@ -15,7 +15,6 @@ public class MathTutor {
 	public static void main(String[] args)
 	{
 		int success = 0;
-		GameMode mode = GameMode.ADD;
 		int tries = START_LIVES;
 		boolean again = true;
 		
@@ -25,12 +24,7 @@ public class MathTutor {
 		do
 		{
 			boolean result = false;
-			int level = (success % SUCCESS_TO_LEVEL_UP) + 1;
-			
-			if (success / SUCCESS_TO_LEVEL_UP == 0);
-			{
-				System.out.println("LEVEL UP!!!! Welcome to level " + level + "!");
-			}
+			int level = (success / SUCCESS_TO_LEVEL_UP) + 1;
 
 			System.out.println("Get ready for a question: ");
 			
@@ -113,7 +107,8 @@ public class MathTutor {
 		System.out.println("/*********************************************************/");
 		System.out.println("I'm Toot, your personal tutor!");
 		System.out.println("For this game, simply answer math problems correctly.");
-		System.out.println("Every " + SUCCESS_TO_LEVEL_UP + " correct answers the diffculty will increase.");
+		System.out.println("Every " + SUCCESS_TO_LEVEL_UP + " correct answers, the diffculty will increase.");
+		System.out.println("Fail " + START_LIVES + " time(s) and it's game over!");
 		System.out.println("Level 1 is addition, level 2 is subtraction,");
 		System.out.println("level 3 is multiplication and division, and level 4 is completely random!");
 		System.out.println("/*********************************************************/");
@@ -131,6 +126,8 @@ public class MathTutor {
 	
 	public static boolean level1Ques()
 	{
+		System.out.println("A level 1 addition question: ");
+		
 		int a = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
 		int b = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
 		int answer = a + b;
@@ -142,16 +139,74 @@ public class MathTutor {
 	
 	public static boolean level2Ques()
 	{
-		return true;
+		System.out.println("A level 2 subtraction question: ");
+		
+		int a = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+		int b = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+		int answer = a - b;
+		
+		System.out.println("What is " + a + " - " + b + "?");
+		
+		return new Integer(input.next()) == answer;
 	}
 	
 	public static boolean level3Ques()
 	{
-		return true;
+		int a;
+		int b;
+		int answer;
+		
+		if (rEngine.nextBoolean())
+		{
+			System.out.println("A level 3 multiplication question: ");
+			
+			a = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+			b = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+			answer = a * b;
+			
+			System.out.println("What is " + a + " * " + b + "?");
+		}
+		else
+		{
+			System.out.println("A level 3 division question: ");
+			
+			a = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+			
+			// Cheap way to do this, but it works
+			do
+			{
+				b = rEngine.nextInt(MAX_INTEGER * 2) - MAX_INTEGER;
+			} while (a % b != 0);
+			answer = a / b;
+			
+			System.out.println("What is " + a + " / " + b + "?");
+		}
+		
+		
+		return new Integer(input.next()) == answer;
 	}
 	
 	public static boolean level4Ques()
 	{
-		return true;
+		System.out.println("Level 4 Mix up! It's time for...");
+		
+		boolean result = false;
+		
+		switch (rEngine.nextInt(3))
+		{
+			case 0:
+				result = level1Ques();
+				break;
+			case 1:
+				result = level2Ques();
+				break;
+			case 2:
+				result = level3Ques();
+				break;
+			default:
+				throw new Error("What kind of question is this?!?");
+		}
+		
+		return result;
 	}
 }
