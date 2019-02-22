@@ -1,7 +1,22 @@
 package Games;
 
 public class Team implements Comparable<Team> {
-	public enum Region {NORTH, SOUTH, MIDWEST, EAST};
+	public enum Region
+	{
+		NORTH(1), SOUTH(2), MIDWEST(3), EAST(4);
+						
+		private int internalRep;
+		
+		Region(int internal)
+		{
+			internalRep = internal;
+		}
+		
+		public int getValue()
+		{
+			return internalRep;
+		}
+	};
 	
 	private String fName;
 	private Region fRegion;
