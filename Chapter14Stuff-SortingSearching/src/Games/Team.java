@@ -3,7 +3,7 @@ package Games;
 public class Team implements Comparable<Team> {
 	public enum Region
 	{
-		NORTH(1), SOUTH(2), MIDWEST(3), EAST(4), UNKNOWN(5);
+		NORTH(1), SOUTH(2), MIDWEST(3), EAST(4);
 
 		private int internalRep;
 
@@ -30,7 +30,7 @@ public class Team implements Comparable<Team> {
 				case 4:
 					return EAST;
 				default:
-					return UNKNOWN;
+					return null;
 			}
 		}
 
@@ -100,27 +100,10 @@ public class Team implements Comparable<Team> {
 	{
 		String out = "";
 
-		out += "Team: " + fName;
-		out += "\n\tRegion: " + regionToString();
+		out += "\nTeam: " + fName;
+		out += "\n\tRegion: " + fRegion;
 		out += "\n\tSeed: " + fSeed;
 
 		return out;
-	}
-
-	private String regionToString()
-	{
-		switch (fRegion)
-		{
-			case EAST:
-				return "East";
-			case MIDWEST:
-				return "Midwest";
-			case NORTH:
-				return "North";
-			case SOUTH:
-				return "South";
-			default:
-				return "Unknown";
-		}
 	}
 }
