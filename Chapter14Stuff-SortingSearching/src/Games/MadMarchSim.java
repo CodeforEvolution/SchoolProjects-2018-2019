@@ -42,20 +42,59 @@ public class MadMarchSim {
 		System.out.println(teams);
 		System.out.println();
 
+		System.out.println("\nRound 1:");
 		roundOne(teams, winners);
 
-		System.out.println("\n Round 1 Winners:");
+		System.out.println("\nRound 1 Winners:");
 		System.out.println(winners);
 
+		System.out.println("\nRound 2:");
 		roundTwo(teams, winners);
 
-		System.out.println("\n Round 2 Winners:");
+		System.out.println("\nRound 2 Winners:");
 		System.out.println(winners);
 
+		midRound(teams, winners);
+
+		System.out.println("\nSemifinals:");
 		roundRegionSemi(teams, winners);
 
-		System.out.println("\n Round 3 Winners:");
+		System.out.println("\nRegional SemiFinal Winners:");
 		System.out.println(winners);
+
+		midRound(teams, winners);
+
+		System.out.println("\nRegion Finals:");
+		roundRegionFinal(teams, winners);
+
+		System.out.println("\nRegion Final Winners:");
+		System.out.println(winners);
+
+		midRound(teams, winners);
+
+		System.out.println("\nFinal Four:");
+		roundFinalFour(teams, winners);
+
+		System.out.println("\nThe Remaining Two:");
+		System.out.println(winners);
+
+		midRound(teams, winners);
+
+		System.out.println("It's time for the championship");
+		roundFinale(teams, winners);
+
+		System.out.println("\nThe Champion Is: ");
+		System.out.println(winners.get(0).getName() + "!");
+		System.out.println("Congragulations!!!");
+
+
+	}
+
+	public static void midRound(ArrayList<Team> teams, ArrayList<Team> winners)
+	{
+		teams.clear();
+		teams = winners;
+		winners.clear();
 	}
 
 	public static void roundOne(ArrayList<Team> teams, ArrayList<Team> winnerPlace)
@@ -85,7 +124,27 @@ public class MadMarchSim {
 
 	public static void roundTwo(ArrayList<Team> teams, ArrayList<Team> winnerPlace)
 	{
+		int teamsPerRegion = teams.size() / REGION_COUNT;
 
+		Region currRegion = null;
+		for (int r = 1; r < REGION_COUNT + 1; r++)
+		{
+			currRegion = Region.enumForValue(r);
+			for (int i = 1; i < (teamsPerRegion / 2) + 1; i++)
+			{
+				Team destToWin = findTeam(teams, currRegion, i);
+				Team destToLose = findTeam(teams, currRegion, teamsPerRegion + 1 - i);
+
+
+				Team winner = randomWinner(destToWin, destToLose);
+
+				System.out.println("\nNow for the " + destToWin.getSeed() + " seed and " + destToLose.getSeed() + " seed:");
+				System.out.println("It's " + destToWin.getName() + " versus " + destToLose.getName() + " in the " + currRegion + " Region!");
+				System.out.println("The winner is..." + winner.getName() + "!");
+
+				winnerPlace.add(winner);
+			}
+		}
 	}
 
 	public static void roundRegionSemi(ArrayList<Team> teams, ArrayList<Team> winnerPlace)
@@ -102,12 +161,14 @@ public class MadMarchSim {
 	{
 
 	}
+
 	public static void roundRegionFinal(ArrayList<Team> teams, ArrayList<Team> winnerPlace)
 	{
 
 	}
 
-	public static Team findTeam(ArrayList<Team> teams, Region theRegion, int seed) {
+	public static Team findTeam(ArrayList<Team> teams, Region theRegion, int seed)
+	{
 		for (int i = 0; i < teams.size(); i++)
 		{
 			Team currTeam = teams.get(i);
