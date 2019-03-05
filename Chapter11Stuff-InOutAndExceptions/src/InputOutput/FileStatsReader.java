@@ -1,6 +1,7 @@
 package InputOutput;
 
 import java.io.File;
+import java.io.FileReader;
 import java.net.URI;
 import java.util.Scanner;
 
@@ -10,10 +11,8 @@ public class FileStatsReader {
 		/* File opening and setup */
 		Scanner in = new Scanner(System.in);
 
-		Scanner fileReader = null;
-		File inputFile = null;
+		URI fileLocation = null;
 		String filePath = "";
-		URI path = null;
 
 		System.out.println("Welcome!");
 
@@ -27,44 +26,80 @@ public class FileStatsReader {
 			System.out.println("\nChecking path and attempting to open the file...");
 
 			try {
-				path = new URI(filePath);
-				inputFile = new File(path);
-				fileReader = new Scanner(inputFile);
+				fileLocation = new URI(filePath);
 			} catch (Exception e) {
 				System.out.println("\nWe couldn't open that file...try again please.\n");
 				ok = false;
 			}
 		} while (ok == false);
+		in.close();
 
 		System.out.println("Success!");
 
 		/* Statistic counting!!! */
-		int characters = characterCount(fileReader);
-		int words = wordCount(fileReader);
-		int lines = lineCount(fileReader);
+		int characters = -1;
+		int words = -1;
+		int lines = -1;
 
-		System.out.println("\nLines in file: " + lines);
-		System.out.println("\nWords in file: " + words);
+		try
+		{
+			characters = characterCount(fileLocation);
+			words = wordCount(fileLocation);
+			lines = lineCount(fileLocation);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Couldn't read statistics of file!!");
+			e.printStackTrace();
+		}
+
 		System.out.println("\nChars in file: " + characters);
+		System.out.println("\nWords in file: " + words);
+		System.out.println("\nLines in file: " + lines);
 	}
 
-	public static int characterCount(Scanner input)
+	private static int characterCount(URI input) throws Exception
 	{
 		int count = 0;
+		FileReader reader = new FileReader(new File(input));
+
+		while (reader.read() != -1)
+		{
+			count++;
+		}
+
+		reader.close();
 
 		return count;
 	}
 
-	public static int wordCount(Scanner input)
+	private static int wordCount(URI input) throws Exception
 	{
 		int count = 0;
+		Scanner reader = new Scanner(new File(input));
+
+		while (reader.hasNext())
+		{
+			count++;
+			reader.next();
+		}
+
+		reader.close();
 
 		return count;
 	}
 
-	public static int lineCount(Scanner input)
+	private static int lineCount(URI input) throws Exception
 	{
 		int count = 0;
+		Scanner reader = new Scanner(new File(input));
+
+		while(reader.hasNextLine())
+		{
+			count++;
+		}
+
+		reader.close();
 
 		return count;
 	}
