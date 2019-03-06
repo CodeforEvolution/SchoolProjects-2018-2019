@@ -94,9 +94,10 @@ public class FileStatsReader {
 		int count = 0;
 		Scanner reader = new Scanner(new File(input));
 
-		while(reader.hasNextLine())
+		while (reader.hasNextLine())
 		{
 			count++;
+			reader.nextLine();
 		}
 
 		reader.close();
