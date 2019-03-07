@@ -48,6 +48,7 @@ public class GibberishConvertor {
 
 			for (int count = 0; count < words.length; count++)
 			{
+				/* Word to gibberish! Note, this method handles punctuation properly. */
 				output += wordToGibberish(words[count]) + " ";
 			}
 
@@ -73,7 +74,29 @@ public class GibberishConvertor {
 			wordEnd++;
 		}
 
-		String word = inWord.substring(0, wordEnd) + "a";
+		/* The actual word, translate it into gibberish! */
+		String word = inWord.substring(0, wordEnd);
+		char[] temp = word.toCharArray();
+
+		for (int count = 0; count < temp.length; count++)
+		{
+			/* All gibberish rules */
+			switch (temp[count])
+			{
+				case 'a':
+				case 'e':
+				case 'i':
+				case 'o':
+				case 'u':
+					word = word.substring(0, count) + "b" + temp[count] + "g" + word.substring(count, word.length());
+					break;
+				default:
+					word += "yes" + word;
+					break;
+			}
+		}
+
+		/* The punctuation */
 		String punctuation = inWord.substring(wordEnd, inWord.length());
 
 		out += word;
