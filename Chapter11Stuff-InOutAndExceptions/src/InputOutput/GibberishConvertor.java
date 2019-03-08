@@ -7,6 +7,9 @@ import java.util.Scanner;
 public class GibberishConvertor {
 	public static void main(String[] args)
 	{
+
+		/* Part 1 */
+
 		/* File opening and setup */
 		Scanner in = new Scanner(System.in);
 
