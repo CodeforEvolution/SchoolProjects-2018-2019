@@ -1,6 +1,7 @@
 package InputOutput;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,13 +74,15 @@ public class OutAndIntoGibberish {
 			}
 		} while (ok == false);
 
+		/* Writer stuff */
+
 		System.out.println("\nSaving your sentences to file at: " + fileHandle.getAbsolutePath());
 
 		try
 		{
 			writer = new FileOutputStream(fileHandle);
 		}
-		catch (Exception e)
+		catch (IOException e)
 		{
 			System.out.println("Couldn't open the file to write to...sorry...");
 			return;
@@ -90,6 +93,7 @@ public class OutAndIntoGibberish {
 			byte[] raw = lines.get(count).getBytes();
 			try {
 				writer.write(raw);
+				writer.write("\n".getBytes());
 			} catch (IOException e) {
 				System.out.println("Couldn't write a line to the file, quitting...");
 				return;
@@ -101,5 +105,68 @@ public class OutAndIntoGibberish {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		/* Reading back from the file */
+		Scanner reader = null;
+
+		try {
+			reader = new Scanner(fileHandle);
+		} catch (FileNotFoundException e) {
+			System.out.println("You sly dog, did you delete the file before I tried to read it again? :)");
+			return;
+		}
+
+		System.out.println("Reading the file back and translating it to Gibberish...");
+		while (reader.hasNext())
+		{
+			System.out.print(reader.next());
+		}
+
+	}
+
+	private static String wordToGibberish(String inWord)
+	{
+		char[] splitWord = inWord.toCharArray();
+		String out = "";
+
+		// We split the word chunk into the word and possible punctuation
+		int wordEnd = 0;
+		for (int count = 0; count < splitWord.length; count++)
+		{
+			if (Character.isAlphabetic(splitWord[count]) == false)
+				break;
+
+			wordEnd++;
+		}
+
+		/* The actual word, translate it into gibberish! */
+		String word = inWord.substring(0, wordEnd);
+		char[] temp = word.toCharArray();
+
+		for (int count = 0; count < temp.length; count++)
+		{
+			/* All gibberish rules */
+			switch (temp[count])
+			{
+				case 'a':
+				case 'e':
+				case 'i':
+				case 'o':
+				case 'u':
+					word = word.substring(0, count) + "b" + temp[count] + "g" + word.substring(count, word.length());
+					break;
+				default:
+					word += "yes" + word;
+					break;
+			}
+		}
+
+		/* The punctuation */
+		String punctuation = inWord.substring(wordEnd, inWord.length());
+
+		out += word;
+		out += punctuation;
+
+		return out;
 	}
 }
