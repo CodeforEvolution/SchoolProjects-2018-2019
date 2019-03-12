@@ -116,10 +116,18 @@ public class OutAndIntoGibberish {
 			return;
 		}
 
-		System.out.println("Reading the file back and translating it to Gibberish...");
-		while (reader.hasNext())
+		System.out.println("\nReading the file back and translating it to Gibberish:");
+		while (reader.hasNextLine())
 		{
-			System.out.print(reader.next());
+			String line = reader.nextLine();
+			String[] words = line.split(" ");
+
+			for (int count = 0; count < words.length; count++)
+			{
+				/* Word to gibberish! Note, this method handles punctuation properly. */
+				System.out.print(wordToGibberish(words[count] + " "));
+			}
+			System.out.println();
 		}
 
 	}
