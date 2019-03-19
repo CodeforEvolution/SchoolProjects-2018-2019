@@ -1,5 +1,7 @@
 package Elevens;
 
+import java.util.Arrays;
+
 /**
  * This class provides a convenient way to test shuffling methods.
  */
@@ -12,13 +14,33 @@ public class Shuffler {
 	private static final int SHUFFLE_COUNT = 10;
 
 	/**
+	 * The number of values to hold within the deck, values are automatically filled.
+	 * Example: 0, 1, 2, 3, ...
+	 */
+	private static final int VALUE_COUNT = 10;
+
+	/**
 	 * Tests shuffling methods.
 	 *
 	 * @param args is not used.
 	 */
 	public static void main(String[] args) {
+		int[] values = new int[VALUE_COUNT];
+		for (int count = 0; count < VALUE_COUNT; count++)
+		{
+			values[count] = count;
+		}
+
+		System.out.println("Original Array:");
+		for (int index = 0; index < values.length; index++)
+		{
+			System.out.print(values[index] + " ");
+		}
+		System.out.println("\n");
+
 		System.out.println("Results of " + SHUFFLE_COUNT + " consecutive perfect shuffles:");
-		int[] values1 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		//int[] values1 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		int[] values1 = Arrays.copyOf(values, values.length);
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
 			perfectShuffle(values1);
 			System.out.print("  " + j + ":");
@@ -30,7 +52,8 @@ public class Shuffler {
 		System.out.println();
 
 		System.out.println("Results of " + SHUFFLE_COUNT + " consecutive efficient selection shuffles:");
-		int[] values2 = { 0, 1, 2, 3 };
+		//int[] values2 = { 0, 1, 2, 3 };
+		int[] values2 = Arrays.copyOf(values, values.length);
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
 			selectionShuffle(values2);
 			System.out.print("  " + j + ":");
@@ -82,8 +105,21 @@ public class Shuffler {
 	 *
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
-	public static void selectionShuffle(int[] values) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+	public static void selectionShuffle(int[] values)
+	{
+		for (int k = values.length - 1; k >= 0; k--)
+		{
+			int r = (int)(values.length * Math.random());
+
+			int temp = values[r];
+			values[r] = values[k];
+			values[k] = temp;
+		}
+	}
+
+	public static void oldSelectionShuffle(int[] values) {
+		/* *** COMPLETED IN ACTIVITY 3 *** */
+
 		int[] shuffled = new int[values.length];
 
 		for (int k = 0; k < values.length; k++)
@@ -105,14 +141,6 @@ public class Shuffler {
 		for (int count = 0; count < values.length; count++)
 		{
 			values[count] = shuffled[count];
-		}
-	}
-
-	public static void efficientSelectionShuffle(int[] values)
-	{
-		for (int k = values.length - 1; k > 0; k--)
-		{
-
 		}
 	}
 }

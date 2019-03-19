@@ -10,15 +10,49 @@ public class DeckTester {
 	 *	@param args is not used.
 	 */
 	public static void main(String[] args) {
-		/* *** COMPLETED IN ACTIVITY 2 *** */
+		String[] ranks = {"jack", "queen", "king"};
+		String[] suits = {"blue", "red"};
+		int[] pointValues = {11, 12, 13};
+		Deck d = new Deck(ranks, suits, pointValues);
 
-		String[] testR = {"Egg", "Bacon", "Cheese"};
-		String[] testS = {"Yes!", "No!", "Maybe :D"};
-		int[] testPA = {100, 4, 2, 3};
-		int[] testPB = {50, -3, 2, 40};
+		System.out.println("**** Original Deck Methods ****");
+		System.out.println("  toString:\n" + d.toString());
+		System.out.println("  isEmpty: " + d.isEmpty());
+		System.out.println("  size: " + d.size());
+		System.out.println();
+		System.out.println();
 
-		System.out.println(new Deck(testR, testS, testPA));
-		System.out.println(new Deck(testS, testR, testPA));
-		System.out.println(new Deck(testR, testS, testPB));
+		System.out.println("**** Deal a Card ****");
+		System.out.println("  deal: " + d.deal());
+		System.out.println();
+		System.out.println();
+
+		System.out.println("**** Deck Methods After 1 Card Dealt ****");
+		System.out.println("  toString:\n" + d.toString());
+		System.out.println("  isEmpty: " + d.isEmpty());
+		System.out.println("  size: " + d.size());
+		System.out.println();
+		System.out.println();
+
+		System.out.println("**** Deal Remaining 5 Cards ****");
+		for (int i = 0; i < 5; i++) {
+			System.out.println("  deal: " + d.deal());
+		}
+		System.out.println();
+		System.out.println();
+
+		System.out.println("**** Deck Methods After All Cards Dealt ****");
+		System.out.println("  toString:\n" + d.toString());
+		System.out.println("  isEmpty: " + d.isEmpty());
+		System.out.println("  size: " + d.size());
+		System.out.println();
+		System.out.println();
+
+		System.out.println("**** Deal a Card From Empty Deck ****");
+		System.out.println("  deal: " + d.deal());
+		System.out.println();
+		System.out.println();
+
+		/* *** TO BE COMPLETED IN ACTIVITY 4 *** */
 	}
 }
