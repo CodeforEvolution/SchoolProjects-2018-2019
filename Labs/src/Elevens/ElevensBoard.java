@@ -75,7 +75,9 @@ public class ElevensBoard extends Board {
 	 */
 	@Override
 	public boolean anotherPlayIsPossible() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		/* *** COMPLETED IN ACTIVITY 9 *** */
+
+		return containsPairSum11(cardIndexes()) || containsJQK(cardIndexes());
 	}
 
 	/**
@@ -88,6 +90,17 @@ public class ElevensBoard extends Board {
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+
+		for (int cardA = 0; cardA < selectedCards.size(); cardA++)
+		{
+			for (int cardB = 0; cardB < selectedCards.size(); cardB++)
+			{
+				if (cardAt(selectedCards.get(cardA)).pointValue() + cardAt(selectedCards.get(cardB)).pointValue() == 11)
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -99,6 +112,22 @@ public class ElevensBoard extends Board {
 	 *              include a jack, a queen, and a king; false otherwise.
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		/* *** COMPLETED IN ACTIVITY 9 *** */
+
+		for (int cardA = 0; cardA < selectedCards.size(); cardA++)
+		{
+			for (int cardB = 0; cardB < selectedCards.size(); cardB++)
+			{
+				for (int cardC = 0; cardC < selectedCards.size(); cardC++)
+				{
+					if (cardAt(selectedCards.get(cardA)).rank().equals("jack") &&
+						cardAt(selectedCards.get(cardB)).rank().equals("queen") &&
+						cardAt(selectedCards.get(cardC)).rank().equals("king"))
+						return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }
