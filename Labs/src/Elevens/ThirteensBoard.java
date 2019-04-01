@@ -1,5 +1,6 @@
+package Elevens;
+
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * The ThirteensBoard class represents the board in a game of Thirteens.
@@ -15,7 +16,7 @@ public class ThirteensBoard extends Board {
 	 * The ranks of the cards for this game to be sent to the deck.
 	 */
 	private static final String[] RANKS =
-		{"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
+		{"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", /*"jack", "queen",*/ "king"};
 
 	/**
 	 * The suits of the cards for this game to be sent to the deck.
