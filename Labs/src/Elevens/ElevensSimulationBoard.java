@@ -1,11 +1,12 @@
 package Elevens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The ElevensBoard class represents the board in a game of Elevens.
  */
-public class ElevensBoard extends Board {
+public class ElevensSimulationBoard extends Board {
 
 	/**
 	 * The size (number of cards) on the board.
@@ -39,7 +40,7 @@ public class ElevensBoard extends Board {
 	/**
 	 * Creates a new <code>ElevensBoard</code> instance.
 	 */
-	 public ElevensBoard() {
+	 public ElevensSimulationBoard() {
 	 	super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
 	 }
 
@@ -81,38 +82,45 @@ public class ElevensBoard extends Board {
 	}
 
 	/**
-	 * Check for an 11-pair in the selected cards.
+	 * Look for an 11-pair in the selected cards.
 	 * @param selectedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
 	 *                      to find an 11-pair.
-	 * @return true if the board entries in selectedCards
-	 *              contain an 11-pair; false otherwise.
+	 * @return a list of the indexes of an 11-pair, if an 11-pair was found;
+	 *         an empty list, if an 11-pair was not found.
 	 */
-	private boolean containsPairSum11(List<Integer> selectedCards) {
+	private ArrayList<Integer> findPairSum11(List<Integer> selectedCards) {
 		/* *** COMPLETED IN ACTIVITY 9 *** */
+		/* *** MODIFIED IN ACTIVITY 11 *** */
 
 		for (int cardA = 0; cardA < selectedCards.size(); cardA++)
 		{
 			for (int cardB = 0; cardB < selectedCards.size(); cardB++)
 			{
 				if (cardAt(selectedCards.get(cardA)).pointValue() + cardAt(selectedCards.get(cardB)).pointValue() == 11)
-					return true;
+				{
+					ArrayList<Integer> out = new ArrayList<Integer>();
+					out.add(cardA);
+					out.add(cardB);
+					return out;
+				}
 			}
 		}
 
-		return false;
+		return new ArrayList<Integer>();
 	}
 
 	/**
-	 * Check for a JQK in the selected cards.
+	 * Look for a JQK in the selected cards.
 	 * @param selectedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
-	 *                      to find a JQK group.
-	 * @return true if the board entries in selectedCards
-	 *              include a jack, a queen, and a king; false otherwise.
+	 *                      to find a JQK.
+	 * @return a list of the index of a JQK, if a JQK was found;
+	 *         an empty list, if a JQK was not found.
 	 */
-	private boolean containsJQK(List<Integer> selectedCards) {
+	private ArrayList<Integer> findJQK(List<Integer> selectedCards) {
 		/* *** COMPLETED IN ACTIVITY 9 *** */
+		/* *** MODIFIED IN ACTIVITY 11 *** */
 
 		for (int cardA = 0; cardA < selectedCards.size(); cardA++)
 		{
@@ -123,11 +131,65 @@ public class ElevensBoard extends Board {
 					if (cardAt(selectedCards.get(cardA)).rank().equals("jack") &&
 						cardAt(selectedCards.get(cardB)).rank().equals("queen") &&
 						cardAt(selectedCards.get(cardC)).rank().equals("king"))
-						return true;
+					{
+						ArrayList<Integer> out = new ArrayList<Integer>();
+						out.add(cardA);
+						out.add(cardB);
+						out.add(cardC);
+						return out;
+					}
 				}
 			}
 		}
 
-		return false;
+		return new ArrayList<Integer>();
+	}
+
+
+	/**
+	 * Looks for a legal play on the board.  If one is found, it plays it.
+	 * @return true if a legal play was found (and made); false otherwise.
+	 */
+	public boolean playIfPossible() {
+		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+		return false; // REPLACE !
+	}
+
+	/**
+	 * Looks for a pair of non-face cards whose values sum to 11.
+	 * If found, replace them with the next two cards in the deck.
+	 * The simulation of this game uses this method.
+	 * @return true if an 11-pair play was found (and made); false otherwise.
+	 */
+	private boolean playPairSum11IfPossible() {
+		/* *** COMPLETED IN ACTIVITY 11 *** */
+
+		List<Integer> replacableCards = findPairSum11(cardIndexes());
+
+		if (replacableCards.isEmpty())
+			return false;
+
+		replaceSelectedCards(replacableCards);
+
+		return true;
+	}
+
+	/**
+	 * Looks for a Jack, Queen, and King.
+	 * If found, replace it with the next card in the deck.
+	 * The simulation of this game uses this method.
+	 * @return true if a jack, queen, king play was found (and made); false otherwise.
+	 */
+	private boolean playJQKIfPossible() {
+		/* *** COMPLETED IN ACTIVITY 11 *** */
+
+		List<Integer> replacableCards = findJQK(cardIndexes());
+
+		if (replacableCards.isEmpty())
+			return false;
+
+		replaceSelectedCards(replacableCards);
+
+		return true;
 	}
 }
