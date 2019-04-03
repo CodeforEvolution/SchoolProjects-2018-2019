@@ -56,12 +56,13 @@ public class ElevensSimulationBoard extends Board {
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
 		/* *** COMPLETED IN ACTIVITY 9 *** */
+		/* *** MODIFIED IN ACTIVITY 11 *** */
 
 		if (selectedCards.size() == 2)
-			return containsPairSum11(selectedCards);
+			return !findPairSum11(selectedCards).isEmpty();
 
 		if (selectedCards.size() == 3)
-			return containsJQK(selectedCards);
+			return !findJQK(selectedCards).isEmpty();
 
 		return false;
 	}
@@ -77,8 +78,9 @@ public class ElevensSimulationBoard extends Board {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		/* *** COMPLETED IN ACTIVITY 9 *** */
+		/* *** MODIFIED IN ACTIVITY 11 *** */
 
-		return containsPairSum11(cardIndexes()) || containsJQK(cardIndexes());
+		return !findPairSum11(cardIndexes()).isEmpty() || !findJQK(cardIndexes()).isEmpty();
 	}
 
 	/**
@@ -97,7 +99,10 @@ public class ElevensSimulationBoard extends Board {
 		{
 			for (int cardB = 0; cardB < selectedCards.size(); cardB++)
 			{
-				if (cardAt(selectedCards.get(cardA)).pointValue() + cardAt(selectedCards.get(cardB)).pointValue() == 11)
+				Card oneCard = cardAt(selectedCards.get(cardA));
+				Card twoCard = cardAt(selectedCards.get(cardB));
+
+				if (oneCard.pointValue() + twoCard.pointValue() == 11)
 				{
 					ArrayList<Integer> out = new ArrayList<Integer>();
 					out.add(cardA);
@@ -128,9 +133,13 @@ public class ElevensSimulationBoard extends Board {
 			{
 				for (int cardC = 0; cardC < selectedCards.size(); cardC++)
 				{
-					if (cardAt(selectedCards.get(cardA)).rank().equals("jack") &&
-						cardAt(selectedCards.get(cardB)).rank().equals("queen") &&
-						cardAt(selectedCards.get(cardC)).rank().equals("king"))
+					Card oneCard = cardAt(selectedCards.get(cardA));
+					Card twoCard = cardAt(selectedCards.get(cardB));
+					Card threeCard = cardAt(selectedCards.get(cardC));
+
+					if (oneCard.rank().equals("jack") &&
+						twoCard.rank().equals("queen") &&
+						threeCard.rank().equals("king"))
 					{
 						ArrayList<Integer> out = new ArrayList<Integer>();
 						out.add(cardA);
@@ -151,8 +160,15 @@ public class ElevensSimulationBoard extends Board {
 	 * @return true if a legal play was found (and made); false otherwise.
 	 */
 	public boolean playIfPossible() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
+		/* *** COMPLETED IN ACTIVITY 11 *** */
+
+		if (playPairSum11IfPossible())
+			return true;
+
+		if (playJQKIfPossible())
+			return true;
+
+		return false;
 	}
 
 	/**

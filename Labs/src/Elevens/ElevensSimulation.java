@@ -9,7 +9,7 @@ public class ElevensSimulation {
 	/**
 	 * The number of games of Elevens to play.
 	 */
-	private static final int GAMES_TO_PLAY = 1;
+	private static final int GAMES_TO_PLAY = 2;
 
 	/**
 	 * Flag used to control debugging print statements.
@@ -21,7 +21,7 @@ public class ElevensSimulation {
 	 * @param args is not used.
 	 */
 	public static void main(String[] args) {
-		ElevensBoard board = new ElevensBoard();
+		ElevensSimulationBoard board = new ElevensSimulationBoard();
 		int wins = 0;
 
 		for (int k = 0; k < GAMES_TO_PLAY; k++) {
