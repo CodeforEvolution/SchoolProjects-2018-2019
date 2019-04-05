@@ -14,6 +14,11 @@ public class IntArrayWorker
   }
 
   /**
+   * Method to find occurrences of passed in integer in array
+   */
+
+
+  /**
    * Method to return the total
    * @return the total of the values in the array
    */

@@ -109,9 +109,9 @@ public class FileChooser
     // try to find the images directory
       try {
         // get the URL for where we loaded this class
-        Class currClass = Class.forName("FileChooser");
+        Class currClass = Class.forName("Pictures.FileChooser");
         URL classURL = currClass.getResource("FileChooser.class");
-        URL fileURL = new URL(classURL,"../images/");
+        URL fileURL = new URL(classURL,"images/");
         directory = fileURL.getPath();
         directory = URLDecoder.decode(directory, "UTF-8");
         dirFile = new File(directory);
@@ -120,6 +120,7 @@ public class FileChooser
           return directory;
         }
       } catch (Exception ex) {
+    	  ex.printStackTrace();
       }
 
       return directory;
