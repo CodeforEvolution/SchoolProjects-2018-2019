@@ -53,6 +53,67 @@ public class IntArrayWorker
   }
 
   /**
+   * Method to return the occurrences of a value in the array
+   * @param toSearch the value to search for
+   * @return the number if occurrences of {@code toSearch}
+   */
+  public int getCount(int toSearch)
+  {
+	  int count = 0;
+
+	  for (int[] rowArray : matrix)
+	  {
+		  for (int box : rowArray)
+		  {
+			  if (box == toSearch)
+				  count++;
+		  }
+	  }
+
+	  return count;
+  }
+
+  /**
+   * Method to get the largest value in the array
+   * @return the largest value in the array
+   */
+  public int getLargest()
+  {
+	  int largest = 0;
+
+	  for (int[] rowArray : matrix)
+	  {
+		  for (int box : rowArray)
+		  {
+			  if (box > largest)
+				  largest = box;
+		  }
+	  }
+
+	  return largest;
+  }
+
+  /**
+   * Method to get the total of the values within a column
+   * @param column the column to get the total of its values
+   * @return the total of the values in the column
+   */
+  public int getColTotal(int column)
+  {
+	  int total = 0;
+
+	  if (column >= matrix[0].length || column < 0)
+		  throw new ArrayIndexOutOfBoundsException("Column doesn't exist.");
+
+	  for (int count = 0; count < matrix.length; count++)
+	  {
+		  total += matrix[count][column];
+	  }
+
+	  return total;
+  }
+
+  /**
    * Method to fill with an increasing count
    */
   public void fillCount()
