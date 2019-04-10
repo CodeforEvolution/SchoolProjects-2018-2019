@@ -36,6 +36,22 @@ public class PictureTester
 	  fun.explore();
   }
 
+  public static void testGrayscale()
+  {
+	  Picture yeah = new Picture("Color Burst.jpg");
+	  yeah.explore();
+	  yeah.grayscale();
+	  yeah.explore();
+  }
+
+  public static void testFixUnderwater()
+  {
+	  Picture wet = new Picture("Water.jpg");
+	  wet.explore();
+	  wet.fixUnderwater();
+	  wet.explore();
+  }
+
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
   {
@@ -81,9 +97,9 @@ public class PictureTester
 //    testKeepOnlyBlue();
 //    testKeepOnlyRed();
 //    testKeepOnlyGreen();
-    testNegate();
+//    testNegate();
 //    testGrayscale();
-//    testFixUnderwater();
+    testFixUnderwater();
 //    testMirrorVertical();
 //    testMirrorTemple();
 //    testMirrorArms();

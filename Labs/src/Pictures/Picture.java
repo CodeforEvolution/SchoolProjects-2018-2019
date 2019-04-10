@@ -122,6 +122,38 @@ public class Picture extends SimplePicture
 	    }
   }
 
+  public void grayscale()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    for (Pixel[] rowArray : pixels)
+	    {
+	      for (Pixel pixelObj : rowArray)
+	      {
+	    	int averageColor = (pixelObj.getRed() + pixelObj.getGreen() + pixelObj.getBlue()) / 3;
+	        pixelObj.setRed(averageColor);
+	        pixelObj.setGreen(averageColor);
+	        pixelObj.setBlue(averageColor);
+	      }
+	    }
+  }
+
+  public void fixUnderwater()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    for (Pixel[] rowArray : pixels)
+	    {
+	      for (Pixel pixelObj : rowArray)
+	      {
+	    	  pixelObj.setGreen(pixelObj.getGreen() / 3);
+	    	  pixelObj.setBlue(pixelObj.getBlue() / 3);
+	    	  if (pixelObj.getRed() > 30)
+	    	  {
+	    		  pixelObj.setBlue(0);
+	    	  }
+	      }
+	    }
+  }
+
   /** Method that mirrors the picture around a
     * vertical mirror in the center of the picture
     * from left to right */
@@ -247,10 +279,12 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args)
   {
-    Picture beach = new Picture("beach.jpg");
-    beach.explore();
-    beach.zeroBlue();
-    beach.explore();
+//    Picture beach = new Picture("beach.jpg");
+//    beach.explore();
+//    beach.zeroBlue();
+//    beach.explore();
+
+	  PictureTester.testFixUnderwater();
   }
 
 } // this } is the end of class Picture, put all new methods before this
