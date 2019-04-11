@@ -61,6 +61,38 @@ public class PictureTester
     caterpillar.explore();
   }
 
+  public static void testMirrorVerticalRightToLeft()
+  {
+	  Picture spooky = new Picture("Water.jpg");
+	  spooky.explore();
+	  spooky.mirrorVerticalRightToLeft();
+	  spooky.explore();
+  }
+
+  public static void testMirrorHorizontal()
+  {
+	  Picture tada = new Picture("Earth and Moon.jpg");
+	  tada.explore();
+	  tada.mirrorHorizontal();
+	  tada.explore();
+  }
+
+  public static void testMirrorHorizontalBottomToTop()
+  {
+	  Picture tada = new Picture("Earth and Moon.jpg");
+	  tada.explore();
+	  tada.mirrorHorizontalBottomToTop();
+	  tada.explore();
+  }
+
+  public static void testMirrorDiagonol()
+  {
+	  Picture tada = new Picture("Earth and Moon.jpg");
+	  tada.explore();
+	  tada.mirrorDiagonal();
+	  tada.explore();
+  }
+
   /** Method to test mirrorTemple */
   public static void testMirrorTemple()
   {
@@ -99,7 +131,7 @@ public class PictureTester
 //    testKeepOnlyGreen();
 //    testNegate();
 //    testGrayscale();
-    testFixUnderwater();
+//    testFixUnderwater();
 //    testMirrorVertical();
 //    testMirrorTemple();
 //    testMirrorArms();

@@ -146,9 +146,11 @@ public class Picture extends SimplePicture
 	      {
 	    	  pixelObj.setGreen(pixelObj.getGreen() / 3);
 	    	  pixelObj.setBlue(pixelObj.getBlue() / 3);
-	    	  if (pixelObj.getRed() > 30)
+	    	  if (pixelObj.getRed() > 30 || pixelObj.getBlue() < 50)
 	    	  {
+	    		  pixelObj.setRed(0);
 	    		  pixelObj.setBlue(0);
+	    		  pixelObj.setGreen(0);
 	    	  }
 	      }
 	    }
@@ -172,6 +174,75 @@ public class Picture extends SimplePicture
         rightPixel.setColor(leftPixel.getColor());
       }
     }
+  }
+
+  public void mirrorVerticalRightToLeft()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel leftPixel = null;
+	    Pixel rightPixel = null;
+	    int width = pixels[0].length;
+	    for (int row = 0; row < pixels.length; row++)
+	    {
+	      for (int col = 0; col < width / 2; col++)
+	      {
+	        leftPixel = pixels[row][col];
+	        rightPixel = pixels[row][width - 1 - col];
+	        leftPixel.setColor(rightPixel.getColor());
+	      }
+	    }
+  }
+
+  public void mirrorHorizontal()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel topPixel = null;
+	    Pixel bottomPixel = null;
+
+	    for (int col = 0; col < pixels.length; col++)
+	    {
+	    	for (int row = 0; row < pixels[0].length; row++)
+	    	{
+	    		topPixel = pixels[col][row];
+	    		bottomPixel = pixels[pixels.length - col - 1][row];
+
+	    		bottomPixel.setColor(topPixel.getColor());
+	    	}
+	    }
+  }
+
+  public void mirrorHorizontalBottomToTop()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel topPixel = null;
+	    Pixel bottomPixel = null;
+
+	    for (int col = 0; col < pixels.length; col++)
+	    {
+	    	for (int row = 0; row < pixels[0].length; row++)
+	    	{
+	    		topPixel = pixels[col][row];
+	    		bottomPixel = pixels[pixels.length - col - 1][row];
+
+	    		topPixel.setColor(bottomPixel.getColor());
+	    	}
+	    }
+  }
+
+  public void mirrorDiagonal()
+  {
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel bottomLeftPixel = null;
+	    Pixel topRightPixel = null;
+	    int width = pixels.length;
+	    int height = pixels[0].length;
+
+	    for (int count = 0; count < height; count++)
+	    {
+	    	bottomLeftPixel = pixels[count][count];
+	    	topRightPixel = pixels[height - count - 1][height - count - 1];
+	    }
+
   }
 
   /** Mirror just part of a picture of a temple */
@@ -284,7 +355,7 @@ public class Picture extends SimplePicture
 //    beach.zeroBlue();
 //    beach.explore();
 
-	  PictureTester.testFixUnderwater();
+	  PictureTester.testMirrorDiagonol();
   }
 
 } // this } is the end of class Picture, put all new methods before this
