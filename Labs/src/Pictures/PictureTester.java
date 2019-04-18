@@ -110,12 +110,27 @@ public class PictureTester
 	  snowy.explore();
   }
 
+  public static void testMirrorGull()
+  {
+	  Picture gulp = new Picture("seagull.jpg");
+	  gulp.explore();
+	  gulp.mirrorGull();
+	  gulp.explore();
+  }
+
   /** Method to test the collage method */
   public static void testCollage()
   {
     Picture canvas = new Picture("640x480.jpg");
     canvas.createCollage();
     canvas.explore();
+  }
+
+  public static void testSpecialCollage()
+  {
+	  Picture special = new Picture("640x480.jpg");
+	  special.createSpecialCollage();
+	  special.explore();
   }
 
   /** Method to test edgeDetection */
