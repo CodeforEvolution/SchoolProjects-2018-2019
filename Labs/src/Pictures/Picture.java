@@ -343,11 +343,14 @@ public class Picture extends SimplePicture {
 
 	public void createSpecialCollage() {
 		Picture motorcycle = new Picture("blueMotorcycle.jpg");
-		Picture burst = new Picture("Color Burst.jpg");
-		burst.
-		this.copy(motorcycle, 0, 0, 200, 300);
-		this.copy(burst, 200, 0, 400, 300);
-		//this.copy(motorcycle, 200, 0, 300, 300);
+		Picture koala = new Picture("koala.jpg");
+		this.copy(koala, 0, 0);
+		this.copy(motorcycle, 0, 0, 200, 200);
+		this.copy(motorcycle, 200, 0, 400, 200);
+		this.copy(motorcycle, 400, 0, 600, 200);
+
+		this.mirrorVertical();
+		this.mirrorHorizontal();
 	}
 
 	/**
