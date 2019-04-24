@@ -15,10 +15,14 @@ public class MagpieRunner
 	 */
 	public static void main(String[] args)
 	{
-		Magpie maggie = new Magpie();
+		Scanner in = new Scanner (System.in);
+
+		System.out.println("Good day, who is this?");
+		User you = new User(in.nextLine());
+
+		Magpie maggie = new Magpie(you);
 
 		System.out.println (maggie.getGreeting());
-		Scanner in = new Scanner (System.in);
 		String statement = in.nextLine();
 
 		while (!statement.equals("Bye"))
@@ -27,5 +31,4 @@ public class MagpieRunner
 			statement = in.nextLine();
 		}
 	}
-
 }

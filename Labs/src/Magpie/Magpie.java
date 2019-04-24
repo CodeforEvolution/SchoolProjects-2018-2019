@@ -14,13 +14,20 @@ package Magpie;
  */
 public class Magpie
 {
+	private User currUser;
+
+	public Magpie(User who)
+	{
+		currUser = who;
+	}
+
 	/**
 	 * Get a default greeting
 	 * @return a greeting
 	 */
 	public String getGreeting()
 	{
-		return "Hello, let's talk.";
+		return "Hello, let's talk. Who are you?";
 	}
 
 	/**
@@ -32,13 +39,34 @@ public class Magpie
 	 */
 	public String getResponse(String statement)
 	{
-		String response = "";
+		String response = "!";
 
 		if (statement.isEmpty())
-		{
 			response = "Whoa, I'm not COMPLETELY stupid...talk to me!";
-		}
-		else if (findKeyword(statement, "no") >= 0)
+
+		if (!isResponseOk(response))
+			response = checkKeyResponses(statement);
+
+		if (!isResponseOk(response))
+			response = checkMultiKeyResponses(statement);
+
+		if (!isResponseOk(response))
+			response = getRandomResponse();
+
+		return response;
+	}
+
+	private boolean isResponseOk(String response)
+	{
+		response = response.trim();
+		return response.equalsIgnoreCase("!") || response.equals(" ") || response.isEmpty() ? false : true;
+	}
+
+	private String checkKeyResponses(String statement)
+	{
+		String response = "!";
+
+		if (findKeyword(statement, "no") >= 0)
 		{
 			response = "Why so negative?";
 		}
@@ -79,30 +107,31 @@ public class Magpie
 		{
 			response = transformIWantSomethingStatement(statement);
 		}
-		else
+
+		return response;
+	}
+
+	private String checkMultiKeyResponses(String statement)
+	{
+		String response = "!";
+
+		// Look for a two word (you <something> me)
+		// pattern
+		int psn = findKeyword(statement, "you", 0);
+
+		if (psn >= 0
+				&& findKeyword(statement, "me", psn) >= 0)
 		{
-			// Look for a two word (you <something> me)
-			// pattern
-			int psn = findKeyword(statement, "you", 0);
-
-			if (psn >= 0
-					&& findKeyword(statement, "me", psn) >= 0)
-			{
-				response = transformYouMeStatement(statement);
-			}
-
-			psn = findKeyword(statement, "I", 0);
-			if (psn >= 0 &&
-				findKeyword(statement, "you", psn) >= 0)
-			{
-				response = transformIYouStatement(statement);
-			}
-
-			if (response.isEmpty())
-			{
-				response = getRandomResponse();
-			}
+			response = transformYouMeStatement(statement);
 		}
+
+		psn = findKeyword(statement, "I", 0);
+		if (psn >= 0 &&
+			findKeyword(statement, "you", psn) >= 0)
+		{
+			response = transformIYouStatement(statement);
+		}
+
 		return response;
 	}
 
