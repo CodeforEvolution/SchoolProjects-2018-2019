@@ -14,20 +14,63 @@ package Magpie;
  */
 public class Magpie
 {
+	private enum Personality {NORMAL, FRESH, CRAZY};
+
 	private User currUser;
+	private Personality feels;
 
 	public Magpie(User who)
 	{
 		currUser = who;
+
+		switch ((int)(Math.random() * 3))
+		{
+			case 0:
+				feels = Personality.NORMAL;
+				break;
+			case 1:
+				feels = Personality.FRESH;
+				break;
+			case 2:
+				feels = Personality.CRAZY;
+				break;
+			default:
+				throw new IllegalStateException("Where's my pizaz???");
+		}
 	}
 
 	/**
 	 * Get a default greeting
 	 * @return a greeting
 	 */
-	public String getGreeting()
+	public void giveWelcome()
 	{
-		return "Hello, let's talk. Who are you?";
+		String name = currUser.getFirstName();
+		String response = "";
+
+		switch (feels)
+		{
+			case CRAZY:
+				response = "Hey, wassssss uuuppp " + name + "?!?";
+				break;
+			case FRESH:
+				response = "What's up my homie " + name + "?";
+				break;
+			case NORMAL:
+				response = "Hello, " + name + ", let's talk.";
+				break;
+			default:
+				throw new IllegalStateException("*Internal Pain*");
+		}
+
+		System.out.println(response);
+
+		return;
+	}
+
+	public void setUp()
+	{
+
 	}
 
 	/**
@@ -40,6 +83,11 @@ public class Magpie
 	public String getResponse(String statement)
 	{
 		String response = "!";
+
+		if (currUser.getPreviousResponses().contains(statement.toLowerCase()))
+			response = "Wait a moment...you asked me that before!";
+		else
+			currUser.addPreviousResponse(statement.toLowerCase());
 
 		if (statement.isEmpty())
 			response = "Whoa, I'm not COMPLETELY stupid...talk to me!";
@@ -317,29 +365,9 @@ public class Magpie
 		int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
 		String response = "";
 
-		switch (whichResponse)
+		switch (feels)
 		{
-			case 0:
-				response = "Interesting, tell me more.";
-				break;
-			case 1:
-				response = "Hmmm.";
-				break;
-			case 2:
-				response = "Do you really think so?";
-				break;
-			case 3:
-				response = "You don't say.";
-				break;
-			case 4:
-				response = "Uh huh.";
-				break;
-			case 5:
-				response = "*Click* Noice!";
-				break;
-			default:
-				response = "*Spontaneously combusts*";
-				break;
+
 		}
 
 		return response;

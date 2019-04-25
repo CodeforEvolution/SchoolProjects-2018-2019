@@ -21,14 +21,15 @@ public class MagpieRunner
 		User you = new User(in.nextLine());
 
 		Magpie maggie = new Magpie(you);
+		maggie.setUp();
+		maggie.giveWelcome();
 
-		System.out.println (maggie.getGreeting());
-		String statement = in.nextLine();
-
-		while (!statement.equals("Bye"))
+		String statement = "";
+		while (!statement.equalsIgnoreCase("bye"));
 		{
-			System.out.println (maggie.getResponse(statement));
 			statement = in.nextLine();
+			System.out.println (maggie.getResponse(statement));
 		}
+		//maggie.sayBye();
 	}
 }
