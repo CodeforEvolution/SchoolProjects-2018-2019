@@ -52,9 +52,19 @@ public class User {
 		return gender;
 	}
 
+	public void setGender(String theGender)
+	{
+		gender = theGender;
+	}
+
 	public int getAge()
 	{
 		return age;
+	}
+
+	public void setAge(int theAge)
+	{
+		age = theAge;
 	}
 
 	public void addNickName(String nickAtNight)
@@ -67,13 +77,25 @@ public class User {
 		return nickNames;
 	}
 
+	public String getRandomNickName()
+	{
+		return nickNames.get((int)(Math.random() * nickNames.size()));
+	}
+
 	public void addPreviousResponse(String prevResponse)
 	{
-		previousResponses.add(prevResponse);
+		previousResponses.add(prevResponse.toLowerCase());
+		checkForRepeat(prevResponse.toLowerCase());
 	}
 
 	public ArrayList<String> getPreviousResponses()
 	{
 		return previousResponses;
+	}
+
+	private void checkForRepeat(String phrase)
+	{
+		if (previousResponses.contains(phrase.toLowerCase()))
+			repeats++;
 	}
 }

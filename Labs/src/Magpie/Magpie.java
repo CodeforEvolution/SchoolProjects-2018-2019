@@ -1,5 +1,8 @@
 package Magpie;
 
+import java.net.URI;
+import java.util.Scanner;
+
 /**
  * A program to carry on conversations with a human user.
  * This is the initial version that:
@@ -51,7 +54,7 @@ public class Magpie
 		switch (feels)
 		{
 			case CRAZY:
-				response = "Hey, wassssss uuuppp " + name + "?!?";
+				response = "Hey, wassssss uuuppp " + currUser.getRandomNickName() + "?!?";
 				break;
 			case FRESH:
 				response = "What's up my homie " + name + "?";
@@ -70,6 +73,51 @@ public class Magpie
 
 	public void setUp()
 	{
+		Scanner in = new Scanner(System.in);
+
+		System.out.println("\nHey! Just some initial questions for you...");
+
+		System.out.println("\nWhat's your gender? (You don't have to say if you don't want to): ");
+		currUser.setGender(in.next());
+
+		System.out.println("\nWhat's your age? (You don't have to say if you don't want to): ");
+		currUser.setAge(in.nextInt());
+
+		System.out.println("\nA nickname? : ");
+		currUser.addNickName(in.next());
+
+		System.out.println("\nGreat!!");
+
+		in.close();
+
+		exaggerateStartup();
+	}
+
+	private void exaggerateStartup()
+	{
+		System.out.println("\nI'm going to do some stretches...");
+		try {
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpDown.wav").getPath());
+		} catch (Exception e) {
+			System.out.println("That wasn't jazzy!");
+			e.printStackTrace();
+		}
+
+		System.out.println("\nAHhhhh!!!!");
+		try {
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpError.wav").getPath());
+		} catch (Exception e) {
+			System.out.println("That wasn't jazzy!");
+			e.printStackTrace();
+		}
+
+		System.out.println("\nDone!");
+		try {
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpLogon.wav").getPath());
+		} catch (Exception e) {
+			System.out.println("That wasn't jazzy!");
+			e.printStackTrace();
+		}
 
 	}
 
@@ -84,10 +132,10 @@ public class Magpie
 	{
 		String response = "!";
 
-		if (currUser.getPreviousResponses().contains(statement.toLowerCase()))
+		if (currUser.getPreviousResponses().contains(statement))
 			response = "Wait a moment...you asked me that before!";
 		else
-			currUser.addPreviousResponse(statement.toLowerCase());
+			currUser.addPreviousResponse(statement);
 
 		if (statement.isEmpty())
 			response = "Whoa, I'm not COMPLETELY stupid...talk to me!";
