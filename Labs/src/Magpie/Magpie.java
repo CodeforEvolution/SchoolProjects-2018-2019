@@ -97,7 +97,7 @@ public class Magpie
 	{
 		System.out.println("\nI'm going to do some stretches...");
 		try {
-			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpDown.wav").getPath());
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpDown.wav").getPath(), 1);
 		} catch (Exception e) {
 			System.out.println("That wasn't jazzy!");
 			e.printStackTrace();
@@ -105,7 +105,7 @@ public class Magpie
 
 		System.out.println("\nAHhhhh!!!!");
 		try {
-			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpError.wav").getPath());
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpError.wav").getPath(), 10);
 		} catch (Exception e) {
 			System.out.println("That wasn't jazzy!");
 			e.printStackTrace();
@@ -113,12 +113,13 @@ public class Magpie
 
 		System.out.println("\nDone!");
 		try {
-			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpLogon.wav").getPath());
+			new MagpieAudioPlayer(new URI("/Users/SECUNJAC000/Documents/workspace/Labs/src/Magpie/Sounds/XpLogon.wav").getPath(), 1);
 		} catch (Exception e) {
 			System.out.println("That wasn't jazzy!");
 			e.printStackTrace();
 		}
 
+		System.out.println();
 	}
 
 	/**

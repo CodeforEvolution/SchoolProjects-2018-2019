@@ -15,24 +15,29 @@ public class MagpieAudioPlayer {
 	private AudioInputStream fileStream;
 	private Clip audioClip;
 
-	public MagpieAudioPlayer(String path) throws IOException,
+	public MagpieAudioPlayer(String path, int loops) throws IOException,
 	   											 UnsupportedAudioFileException,
 	   											 LineUnavailableException
 	{
-		loopNumber = 0;
+		loopNumber = loops;
 		filePath = path;
 		resetAudioSys();
 	}
 
-	public void setLoops(int theLoops)
+	public void play() throws IOException,
+	   						  UnsupportedAudioFileException,
+	   						  LineUnavailableException
 	{
-		loopNumber = theLoops;
-	}
-
-	public void play()
-	{
-		audioClip.loop(loopNumber);
+		audioClip.open(fileStream);
 		audioClip.start();
+
+		while (audioClip.isActive())
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				System.out.println("\nYou just couldn't be patient!!!");
+				e.printStackTrace();
+			}
 	}
 
 	public void stop() throws IOException,
@@ -43,14 +48,13 @@ public class MagpieAudioPlayer {
 		resetAudioSys();
 	}
 
-	public void resetAudioSys() throws IOException,
+	private void resetAudioSys() throws IOException,
 									   UnsupportedAudioFileException,
 									   LineUnavailableException
 	{
 		fileStream = AudioSystem.getAudioInputStream(new File(filePath));
 
 		audioClip = AudioSystem.getClip();
-		audioClip.open(fileStream);
-		audioClip.loop(0);
+		//audioClip.loop(loopNumber);
 	}
 }
