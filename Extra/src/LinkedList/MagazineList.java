@@ -41,25 +41,60 @@ public class MagazineList {
 		count++;
 	}
 
-	public void remove(Object mag, int index)
+	public Object remove(int index)
 	{
+		if (index == 0)
+			return removeFirst();
+
+		//if (index > )
+
+		if (list == null)
+			throw new NoSuchElementException();
+
 		ListNode current = list;
 
-		for (int i = 1; i < index && current.getNext() != null; i++)
+		for (int i = 0; i < index - 1; i++)
 			current = current.getNext();
 
-		current.setNext(null);
+		Object lostValue = current.getNext().getValue();
+
+
+
+
 		count--;
+
+		return lostValue;
 	}
 
 	public Object removeFirst() // remove the node at beginning of list
 	{
 		if (list == null)
 			throw new NoSuchElementException();
+
 		Object lostNode = list.getValue();
 		list = list.getNext();
 		count--;
+
 		return lostNode;
+	}
+
+	public Object removeLast()
+	{
+		if (list == null)
+			throw new NoSuchElementException();
+
+		ListNode keep = list;
+
+		for (int c = 0; c < count - 1; c++)
+		{
+			keep = keep.getNext();
+		}
+
+		Object lostData = keep.getNext().getValue();
+		keep.setNext(null);
+		count--;
+
+		return lostData;
 	}
 
 	public int size() // return length of linked list
