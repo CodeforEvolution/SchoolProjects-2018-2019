@@ -32,34 +32,50 @@ public class MagazineList {
 
 		if (list == null)
 			list = temp;
-		else {
+		else
+		{
 			current = list;
 			while (current.getNext() != null)
 				current = current.getNext();
 			current.setNext(temp);
 		}
+
+		count++;
+	}
+
+	public void addFirst(Object mag)
+	{
+		ListNode toAdd = new ListNode(mag, null);
+
+		if (list == null)
+			list = toAdd;
+		else
+			toAdd.setNext(list);
+
 		count++;
 	}
 
 	public Object remove(int index)
 	{
+		if (index < 0 || index >= count)
+			throw new NoSuchElementException();
+
 		if (index == 0)
 			return removeFirst();
 
-		//if (index > )
+		if (index == count - 1)
+			return removeLast();
 
 		if (list == null)
 			throw new NoSuchElementException();
 
 		ListNode current = list;
-
 		for (int i = 0; i < index - 1; i++)
 			current = current.getNext();
 
 		Object lostValue = current.getNext().getValue();
 
-
-
+		current.setNext(current.getNext().getNext());
 
 		count--;
 
@@ -84,13 +100,12 @@ public class MagazineList {
 			throw new NoSuchElementException();
 
 		ListNode keep = list;
-
-		for (int c = 0; c < count - 1; c++)
+		for (int c = 0; c < count - 2; c++)
 		{
 			keep = keep.getNext();
 		}
 
-		Object lostData = keep.getNext().getValue();
+		Object lostData = keep.getValue();
 		keep.setNext(null);
 		count--;
 
