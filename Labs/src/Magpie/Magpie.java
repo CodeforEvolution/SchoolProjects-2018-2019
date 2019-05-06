@@ -416,6 +416,14 @@ public class Magpie
 
 		switch (feels)
 		{
+		case CRAZY:
+			break;
+		case FRESH:
+			break;
+		case NORMAL:
+			break;
+		default:
+			break;
 
 		}
 

@@ -15,6 +15,12 @@ public class MagazineList {
 
 	public void add(Object mag, int index) // create node, insert magazine at index
 	{
+		if (index == 0)
+		{
+			addFirst(mag);
+			return;
+		}
+
 		ListNode temp = new ListNode(mag, null);
 		ListNode current = list;
 
@@ -50,7 +56,10 @@ public class MagazineList {
 		if (list == null)
 			list = toAdd;
 		else
+		{
 			toAdd.setNext(list);
+			list = toAdd;
+		}
 
 		count++;
 	}
@@ -105,7 +114,7 @@ public class MagazineList {
 			keep = keep.getNext();
 		}
 
-		Object lostData = keep.getValue();
+		Object lostData = keep.getNext().getValue();
 		keep.setNext(null);
 		count--;
 
