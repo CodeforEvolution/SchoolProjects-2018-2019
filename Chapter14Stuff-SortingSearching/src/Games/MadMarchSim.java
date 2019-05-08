@@ -8,8 +8,7 @@ import java.util.Scanner;
 import Games.Team.Region;
 
 public class MadMarchSim {
-	public static Random rEngine = new Random();
-	public static int REGION_COUNT = Region.values().length;
+for
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<Team> teams = new ArrayList<Team>();
