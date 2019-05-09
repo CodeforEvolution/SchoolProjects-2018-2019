@@ -10,28 +10,26 @@ public class TheFriendLoop {
 		countInTheLoop = 0;
 	}
 
-	public void add(FriendsNode friend, int where)
+	public void add(FriendsNode friend)
 	{
-		if (where < 0 || where > countInTheLoop)
-		{
-			throw new IndexOutOfBoundsException("This friend has gone where no friend has gone before.");
-		}
-		else if (theLoop == null)
+		// Make the main list the node
+		if (theLoop == null)
 		{
 			theLoop = friend;
 			theLoop.setNextFriend(theLoop);
 		}
-		else if (where == 0)
-		{
-			//addFirst(friend);
-		}
-		else if (where == countInTheLoop - 1)
-		{
-			//addLast(friend);
-		}
+		// Append to the list's end, sortLoop() will take care of the order
 		else
 		{
-			for (int c = 1; c < index )
+			FriendsNode whereNow = theLoop;
+
+			for (int count = 0; count < countInTheLoop; count++)
+			{
+				whereNow = whereNow.getNextFriend();
+			}
+
+			whereNow.setNextFriend(friend);
+			friend.setNextFriend(theLoop);
 		}
 
 		sortLoop();
@@ -39,19 +37,28 @@ public class TheFriendLoop {
 		countInTheLoop++;
 	}
 
-	private void addFirst(FriendsNode vip)
+	public int size()
 	{
-
+		return countInTheLoop;
 	}
 
-	private void addLast(FriendsNode lastButNotLeast)
+	public String toString()
 	{
+		String result = "";
+		FriendsNode current = theLoop;
 
+		while (current != null)
+		{
+			result += current.toString() + "\n";
+			current = current.getNextFriend();
+		}
+
+		return result;
 	}
 
 	private void sortLoop()
 	{
-		FriendsNode current;
+		FriendsNode current = null;
 
 		for (int loops = 0; loops < countInTheLoop; loops++)
 		{
@@ -59,15 +66,15 @@ public class TheFriendLoop {
 
 			for (int index = 0; index < countInTheLoop - 1; index++)
 			{
-				if (current > current.getNextFriend())
-					swapFriends(index, index + 1);
+				if (current.compareTo(current.getNextFriend()) > 0)
+					swapFriends(current, index, index + 1);
 
 				current = current.getNextFriend();
 			}
 		}
 	}
 
-	private void swapFriends(int first, int second)
+	private void swapFriends(FriendsNode people, int first, int second)
 	{
 
 	}

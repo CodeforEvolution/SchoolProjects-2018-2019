@@ -7,12 +7,12 @@ public class FriendsNode implements Comparable<FriendsNode> {
 	private int friendCount;
 	private FriendsNode nextFriend;
 
-	public FriendsNode(String theName, String theNickName, int theAge, int theFriendCount, FriendsNode myNextFriend)
+	public FriendsNode(String theName, String theNickName, int theAge, FriendsNode myNextFriend)
 	{
 		setName(theName);
 		setNickName(theNickName);
 		setAge(theAge);
-		setFriendCount(theFriendCount);
+		setFriendCount(0);
 		setNextFriend(myNextFriend);
 	}
 
@@ -60,6 +60,19 @@ public class FriendsNode implements Comparable<FriendsNode> {
 	public int compareTo(FriendsNode judge)
 	{
 		return this.getName().compareTo(judge.getName());
+	}
+
+	@Override
+	public String toString()
+	{
+		String out = "";
+
+		out += "Name: " + name + "\n";
+		out += "Nick name: " + nickName + "\n";
+		out += "Age: " + age + "\n";
+		out += "Friend count: " + friendCount + "\n";
+
+		return out;
 	}
 
 }
