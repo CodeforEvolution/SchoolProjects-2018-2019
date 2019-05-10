@@ -7,13 +7,13 @@ public class FriendsNode implements Comparable<FriendsNode> {
 	private int friendCount;
 	private FriendsNode nextFriend;
 
-	public FriendsNode(String theName, String theNickName, int theAge, FriendsNode myNextFriend)
+	public FriendsNode(String theName, String theNickName, int theAge)
 	{
 		setName(theName);
 		setNickName(theNickName);
 		setAge(theAge);
 		setFriendCount(0);
-		setNextFriend(myNextFriend);
+		setNextFriend(null);
 	}
 
 	public String getName() {
@@ -59,7 +59,7 @@ public class FriendsNode implements Comparable<FriendsNode> {
 	@Override
 	public int compareTo(FriendsNode judge)
 	{
-		return this.getName().compareTo(judge.getName());
+		return this.getName().compareToIgnoreCase(judge.getName());
 	}
 
 	@Override

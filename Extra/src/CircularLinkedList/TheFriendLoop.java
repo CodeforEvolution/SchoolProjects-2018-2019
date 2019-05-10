@@ -23,16 +23,32 @@ public class TheFriendLoop {
 		{
 			FriendsNode whereNow = theLoop;
 
-			for (int count = 0; count < countInTheLoop; count++)
+			int count = 0;
+			for (count = 0; count < countInTheLoop; count++)
 			{
 				whereNow = whereNow.getNextFriend();
+
+				if (whereNow.compareTo(friend) <= 0)
+				{
+					if (count > 0 && count < countInTheLoop)
+					{
+						FriendsNode temp = whereNow.getNextFriend();
+
+						whereNow.setNextFriend(friend);
+						friend.setNextFriend(temp);
+
+						break;
+					}
+					else if (count == 0 || count == countInTheLoop - 1)
+					{
+						whereNow.setNextFriend(friend);
+						friend.setNextFriend(theLoop);
+
+						break;
+					}
+				}
 			}
-
-			whereNow.setNextFriend(friend);
-			friend.setNextFriend(theLoop);
 		}
-
-		sortLoop();
 
 		countInTheLoop++;
 	}
@@ -47,35 +63,12 @@ public class TheFriendLoop {
 		String result = "";
 		FriendsNode current = theLoop;
 
-		while (current != null)
+		for (int count = 0; count < countInTheLoop; count++)
 		{
 			result += current.toString() + "\n";
 			current = current.getNextFriend();
 		}
 
 		return result;
-	}
-
-	private void sortLoop()
-	{
-		FriendsNode current = null;
-
-		for (int loops = 0; loops < countInTheLoop; loops++)
-		{
-			current = theLoop;
-
-			for (int index = 0; index < countInTheLoop - 1; index++)
-			{
-				if (current.compareTo(current.getNextFriend()) > 0)
-					swapFriends(current, index, index + 1);
-
-				current = current.getNextFriend();
-			}
-		}
-	}
-
-	private void swapFriends(FriendsNode people, int first, int second)
-	{
-
 	}
 }
