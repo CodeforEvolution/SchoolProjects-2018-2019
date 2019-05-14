@@ -18,17 +18,15 @@ public class TheFriendLoop {
 			theLoop = friend;
 			theLoop.setNextFriend(theLoop);
 		}
-		// Append to the list's end, sortLoop() will take care of the order
 		else
 		{
 			FriendsNode whereNow = theLoop;
 
-			int count = 0;
-			for (count = 0; count < countInTheLoop; count++)
+			for (int count = 0; count < countInTheLoop; count++)
 			{
 				whereNow = whereNow.getNextFriend();
 
-				if (whereNow.compareTo(friend) <= 0)
+				if (friend.compareTo(whereNow) <= 0)
 				{
 					if (count > 0 && count < countInTheLoop)
 					{
@@ -39,18 +37,37 @@ public class TheFriendLoop {
 
 						break;
 					}
-					else if (count == 0 || count == countInTheLoop - 1)
+					else if (count == 0)
 					{
-						whereNow.setNextFriend(friend);
-						friend.setNextFriend(theLoop);
-
+						addEdge(friend, true);
 						break;
 					}
+				}
+				else if (count == countInTheLoop)
+				{
+					addEdge(friend, false);
+					break;
 				}
 			}
 		}
 
 		countInTheLoop++;
+	}
+
+	private void addEdge(FriendsNode node, boolean first)
+	{
+		FriendsNode curr = theLoop;
+
+		for (int count = 0; count < countInTheLoop; count++)
+		{
+			curr = curr.getNextFriend();
+		}
+
+		curr.setNextFriend(node);
+		node.setNextFriend(theLoop);
+
+		if (first)
+			theLoop = node;
 	}
 
 	public int size()
