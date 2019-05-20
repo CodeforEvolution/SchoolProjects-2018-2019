@@ -22,25 +22,20 @@ public class TheFriendLoop {
 		{
 			FriendsNode whereNow = theLoop;
 
-			for (int count = 0; count < countInTheLoop; count++)
+			for (int count = 0; count <= countInTheLoop; count++)
 			{
 				if (friend.compareTo(whereNow) <= 0)
 				{
-					if (count > 0 && count < countInTheLoop)
+					if (count > 0 && count < countInTheLoop - 1)
 					{
 						FriendsNode before = theLoop;
-						for (int beforeC = 0; beforeC < count + 1; beforeC++)
+						for (int beforeC = 0; beforeC < count - 2; beforeC++)
 						{
 							before = before.getNextFriend();
 						}
 
 						before.setNextFriend(friend);
 						friend.setNextFriend(whereNow);
-
-//						FriendsNode temp = whereNow.getNextFriend();
-//
-//						friend.setNextFriend(whereNow);
-//						whereNow.setNextFriend(temp);
 
 						break;
 					}
@@ -49,11 +44,11 @@ public class TheFriendLoop {
 						addEdge(friend, true);
 						break;
 					}
-				}
-				else if (count == countInTheLoop)
-				{
-					addEdge(friend, false);
-					break;
+					else if (count == countInTheLoop)
+					{
+						addEdge(friend, false);
+						break;
+					}
 				}
 
 				whereNow = whereNow.getNextFriend();
@@ -65,14 +60,14 @@ public class TheFriendLoop {
 
 	private void addEdge(FriendsNode node, boolean first)
 	{
-		FriendsNode curr = theLoop;
+		FriendsNode last = theLoop;
 
-		for (int count = 0; count < countInTheLoop; count++)
+		for (int count = 0; count < countInTheLoop + 1; count++)
 		{
-			curr = curr.getNextFriend();
+			last = last.getNextFriend();
 		}
 
-		curr.setNextFriend(node);
+		last.setNextFriend(node);
 		node.setNextFriend(theLoop);
 
 		if (first)
