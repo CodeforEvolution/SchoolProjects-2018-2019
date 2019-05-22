@@ -14,7 +14,7 @@ public class TheFriendLoop {
 	{
 		addAtIndex(friend, determineNodePlacement(friend));
 		countInTheLoop++;
-		updateFriendCount();
+		//updateFriendCount(); // Auto Friend add
 	}
 
 	private int determineNodePlacement(FriendsNode friend)
@@ -28,9 +28,11 @@ public class TheFriendLoop {
 		{
 			if (friend.compareTo(curr) <= 0)
 				return count;
+
+			curr = curr.getNextFriend();
 		}
 
-		return countInTheLoop;
+		return -1;
 	}
 
 	private void addAtIndex(FriendsNode node, int index)
@@ -49,15 +51,13 @@ public class TheFriendLoop {
 			return;
 		}
 
-
-		//Something wrong VVVVV
 		FriendsNode curr = theLoop;
-		for (int place = 0; place < index - 1; place++)
+		for (int place = 0; place < index; place++)
 		{
 			curr = curr.getNextFriend();
 		}
 
-		FriendsNode grip = curr.getNextFriend().getNextFriend();
+		FriendsNode grip = curr.getNextFriend();
 
 		curr.setNextFriend(node);
 		node.setNextFriend(grip);
@@ -97,17 +97,68 @@ public class TheFriendLoop {
 		}
 	}
 
+	public void changeNickName(String oldName, String newName)
+	{
+		FriendsNode loop = theLoop;
+
+		for (int index = 0; index < countInTheLoop; index++)
+		{
+			if (loop.getNickName().equals(oldName))
+			{
+				loop.setNickName(newName);
+				break;
+			}
+
+			loop = loop.getNextFriend();
+		}
+	}
+
+	public void increaseFriends(String who, int howManySlavIMeanFriends)
+	{
+		FriendsNode loop = theLoop;
+
+		for (int index = 0; index < countInTheLoop; index++)
+		{
+			if (loop.getName().equals(who))
+			{
+				loop.setFriendCount(loop.getFriendCount() + howManySlavIMeanFriends);
+			}
+		}
+	}
+
+	public void decreaseFriends(String who, int howMuchLonelier)
+	{
+		FriendsNode loop = theLoop;
+
+		for (int index = 0; index < countInTheLoop; index++)
+		{
+			if (loop.getName().equals(who))
+			{
+				loop.setFriendCount(loop.getFriendCount() - howMuchLonelier);
+			}
+		}
+	}
+
 	public int size()
 	{
 		return countInTheLoop;
 	}
 
-	public String toString()
+	public String printListAt(String who)
 	{
 		String result = "";
-		FriendsNode current = theLoop;
+		int count = 0;
 
-		for (int count = 0; count < countInTheLoop; count++)
+		if (who == null)
+			count = 0;
+		else
+		{
+
+		}
+
+		// WIP
+		FriendsNode current = theLoop;
+		for (count = 0; count < countInTheLoop; count++)
 		{
 			result += current.toString() + "\n";
 			current = current.getNextFriend();
@@ -116,51 +167,8 @@ public class TheFriendLoop {
 		return result;
 	}
 
-	private void addOld(FriendsNode friend)
+	public String toString()
 	{
-		// Make the main list the node
-		if (theLoop == null)
-		{
-			theLoop = friend;
-			theLoop.setNextFriend(theLoop);
-		}
-		else
-		{
-			FriendsNode whereNow = theLoop;
-
-			for (int count = 0; count <= countInTheLoop; count++)
-			{
-				if (friend.compareTo(whereNow) <= 0)
-				{
-					if (count > 0 && count < countInTheLoop - 1)
-					{
-						FriendsNode before = theLoop;
-						for (int beforeC = 0; beforeC < count - 2; beforeC++)
-						{
-							before = before.getNextFriend();
-						}
-
-						before.setNextFriend(friend);
-						friend.setNextFriend(whereNow);
-
-						break;
-					}
-					else if (count == 0)
-					{
-						addEdge(friend, true);
-						break;
-					}
-					else if (count == countInTheLoop)
-					{
-						addEdge(friend, false);
-						break;
-					}
-				}
-
-				whereNow = whereNow.getNextFriend();
-			}
-		}
-
-		countInTheLoop++;
+		return printListAt(null);
 	}
 }
