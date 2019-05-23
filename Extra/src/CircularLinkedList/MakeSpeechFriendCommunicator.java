@@ -15,5 +15,13 @@ public class MakeSpeechFriendCommunicator {
 		roster.add(new FriendsNode("Jake", "Jakey", 17));
 
 		System.out.println(roster);
+
+		System.out.println("\n\n\n------\n\n\n");
+
+		roster.delete("Babe");
+		roster.delete("Lays");
+		roster.delete("Yes");
+
+		System.out.println(roster);
 	}
 }
