@@ -124,7 +124,7 @@ public class TheFriendLoop {
 		FriendsNode current = theLoop;
 		for (int count = 0; count < countInTheLoop; count++)
 		{
-			if (current.getAge() >= ageOrOlder)
+			if (current.getAge() > ageOrOlder)
 				out += current.toString() + "\n";
 
 			current = current.getNextFriend();

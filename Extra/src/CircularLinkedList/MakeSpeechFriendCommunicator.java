@@ -99,22 +99,87 @@ public class MakeSpeechFriendCommunicator {
 
 	public static void doReNickName()
 	{
+		String name = "";
 
+		boolean again = true;
+		do
+		{
+			System.out.println("Please enter a name to change their nick name:");
+			name = in.next();
+
+			if (roster.exists(name))
+				again = false;
+			else
+				System.out.println("That isn't a name on the list, please try again!");
+
+		} while (again == true);
+
+		System.out.println("What should " + name + "'s new nick be:");
+		roster.changeNickName(name, in.next());
+
+		System.out.println("Success!");
 	}
 
 	public static void doLessFriends()
 	{
+		String name = "";
 
+		boolean again = true;
+		do
+		{
+			System.out.println("Please enter a name to remove a friend from their friend count:");
+			name = in.next();
+
+			if (roster.exists(name))
+				again = false;
+			else
+				System.out.println("That isn't a name on the list, please try again!");
+
+		} while (again == true);
+
+		roster.decreaseFriends(name, 1);
+		System.out.println("Awesome! " + name + " now has 1 less friend!");
 	}
 
 	public static void doMoreFriends()
 	{
+		String name = "";
 
+		boolean again = true;
+		do
+		{
+			System.out.println("Please enter a name to add a friend to their friend count:");
+			name = in.next();
+
+			if (roster.exists(name))
+				again = false;
+			else
+				System.out.println("That isn't a name on the list, please try again!");
+
+		} while (again == true);
+
+		roster.increaseFriends(name, 1);
+		System.out.println("Awesome! " + name + " now has 1 more friend!");
 	}
 
 	public static void doDelete()
 	{
+		String nickName = "";
 
+		boolean again = true;
+		do
+		{
+			System.out.println("Please enter a nickname of a person to remove from the friend list:");
+			nickName = in.next();
+
+			if (roster.exists(nickName))
+				again = false;
+			else
+				System.out.println("This isn't a nick name on the list, please try again!");
+		} while (again == true);
+
+		roster.delete(nickName);
+		System.out.println(nickName + " is no longer a friend!");
 	}
 
 	public static void doPrintAll()
@@ -131,7 +196,11 @@ public class MakeSpeechFriendCommunicator {
 		{
 			System.out.println("Please enter a name to print your friend list from:");
 			name = in.next();
-			//TODO Finish Method
+
+			if (roster.exists(name))
+				again = false;
+			else
+				System.out.println("That isn't a name on the list, please try again!");
 
 		} while (again == true);
 
@@ -140,7 +209,25 @@ public class MakeSpeechFriendCommunicator {
 
 	public static void doPrintOlder()
 	{
+		int age = 0;
 
+		boolean again = true;
+		do
+		{
+			again = false;
+			System.out.println("Please enter an age that all friends older than will be printed out:");
+
+			try
+			{
+				age = in.nextInt();
+			} catch (Exception e) {
+				System.out.println("That isn't an age...please try again!");
+				again = true;
+			}
+
+		} while(again == true);
+
+		System.out.println("Here's everyone older than " + age + ": " + roster.printOlderThan(age));
 	}
 
 	public static void doQuit()
