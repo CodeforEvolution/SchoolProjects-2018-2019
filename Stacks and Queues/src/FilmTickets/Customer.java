@@ -6,15 +6,16 @@ public class Customer {
 	public enum Speed {SLOW, MEDIUM, FAST};
 
 	public int myID;
-	public double myArrivalTime;
+	public int myArrivalTime;
 	public Speed mySpeed;
+	public boolean myServicing;
+	public int myServiceFinishTime;
 
-	public Customer(double currentTime)
+	public Customer(int currentTime)
 	{
 		myID = currentID++;
 
-		double nextTime = (Math.random() * 50.0) + 1.0;
-		myArrivalTime = currentTime + nextTime;
+		myArrivalTime = currentTime;
 
 		switch ((int)(Math.random() * 3))
 		{
@@ -25,12 +26,13 @@ public class Customer {
 				mySpeed = Speed.MEDIUM;
 				break;
 			case 2:
-				mySpeed = Speed.FAST;
-				break;
 			default:
 				mySpeed = Speed.FAST;
 				break;
 		}
+
+		myServicing = false;
+		myServiceFinishTime = -1;
 	}
 
 	public int getID()
@@ -43,16 +45,72 @@ public class Customer {
 		return myArrivalTime;
 	}
 
-	public int getSpeed()
+	public Speed getSpeed()
 	{
 		return mySpeed;
+	}
+
+	public void startService(int currentTime)
+	{
+		if (myServicing == false)
+		{
+			myServicing = true;
+			myServiceFinishTime = currentTime + getTimeForSpeed(mySpeed);
+		}
+
+		throw new IllegalStateException();
+	}
+
+	public boolean serviceComplete(int currentTime)
+	{
+		if (myServicing == true)
+		{
+			if (currentTime >= myServiceFinishTime)
+				return true;
+			return false;
+		}
+
+		throw new IllegalStateException();
 	}
 
 	public String toString()
 	{
 		String out = "";
 
-		out += "I'm #" + myID + "!\n";
-		out += "I'm "
+		out += "\nI'm #" + myID + "!\n";
+		out += "I arrived at " + myArrivalTime + ".\n";
+		out += "I'm going " + getSpeedString(mySpeed) + "!\n";
+
+		return out;
+	}
+
+	public static String getSpeedString(Speed theSpeed)
+	{
+		switch (theSpeed)
+		{
+			case FAST:
+				return "fast";
+			case MEDIUM:
+				return "steady";
+			case SLOW:
+				return "slow";
+			default:
+				return "unknown";
+		}
+	}
+
+	public static int getTimeForSpeed(Speed theSpeed)
+	{
+		switch (theSpeed)
+		{
+			case FAST:
+				return 10;
+			case MEDIUM:
+				return 30;
+			case SLOW:
+				return 50;
+			default:
+				return -1;
+		}
 	}
 }
