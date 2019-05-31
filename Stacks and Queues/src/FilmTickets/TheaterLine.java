@@ -18,7 +18,7 @@ public class TheaterLine {
 	public void addCustomer()
 	{
 		Customer welcome = new Customer(currentTime);
-		currentTime += welcome.getArrivalTime();
+		currentTime += welcome.getArrivalTime() - currentTime;
 
 		waitorsGonnaWait.add(welcome);
 	}
@@ -50,14 +50,40 @@ public class TheaterLine {
 
 	public void heartbeat()
 	{
-		if (moreCustomers() == false ||
-			countedCustomers() < maxLine && (int)(Math.random() * 2) > 0)
+		if ((moreCustomers() == false) ||
+			(countedCustomers() < maxLine && shouldAdd()))
 			addCustomer();
 
-		if (moreCustomers() && currentCustomer().serviceComplete(currentTime) == false)
-			currentCustomer().startService(currentTime);
+		if (moreCustomers() && currentCustomer().isServing() == false)
+		{
+			if (currentCustomer().isFinished() == false)
+				currentCustomer().startService(currentTime);
+			else
+			{
+				throw new IllegalStateException("Well, that was a stubborn customer...");
+			}
+		}
+		else
+		{
+			if (currentCustomer().serviceComplete(currentTime))
+			{
+				System.out.println("\nThank you #" + currentCustomer().getID() + " for buying a ticket!\n");
+				System.out.println("Transaction finished at " + currentTime + " seconds.");
+				nextCustomer();
+			}
+			else
+			{
+				System.out.println("\nWaiting on customer #" + currentCustomer().getID() + ".");
+				System.out.println("They'll finish at " + currentCustomer().getFinishTime() + " seconds!");
+			}
+		}
 
 		currentTime++;
+	}
+
+	private boolean shouldAdd()
+	{
+		return (int)(Math.random() * 10) > 4;
 	}
 
 	public String toString()

@@ -11,8 +11,9 @@ public class Simulator {
 		System.out.println("Welcome to the Film and Films Filmter");
 		System.out.println("Let's go!");
 
-		int beat = 1;
-		while (beat <= TOTAL_BEATS)
+		int beat = 0;
+		// Also for while loop: beat <= TOTAL_BEATS
+		while (true)
 		{
 			theLine.heartbeat();
 
@@ -21,8 +22,15 @@ public class Simulator {
 			System.out.println("-------------------------\n");
 
 			beat++;
+
+			try {
+				Thread.sleep(750);
+			} catch (InterruptedException e) {
+				System.out.println("Sleep darn it!");
+				e.printStackTrace();
+			}
 		}
 
-		System.out.println("\nThank you for visiting!");
+		// System.out.println("\nThank you for visiting!");
 	}
 }

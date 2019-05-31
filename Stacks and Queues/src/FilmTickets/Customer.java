@@ -8,7 +8,7 @@ public class Customer {
 	public int myID;
 	public int myArrivalTime;
 	public Speed mySpeed;
-	public boolean myServicing;
+	public boolean myServiceFinished;
 	public int myServiceFinishTime;
 
 	public Customer(int currentTime)
@@ -31,7 +31,7 @@ public class Customer {
 				break;
 		}
 
-		myServicing = false;
+		myServiceFinished = false;
 		myServiceFinishTime = -1;
 	}
 
@@ -45,17 +45,32 @@ public class Customer {
 		return myArrivalTime;
 	}
 
+	public double getFinishTime()
+	{
+		return myServiceFinishTime;
+	}
+
 	public Speed getSpeed()
 	{
 		return mySpeed;
 	}
 
+	public boolean isServing()
+	{
+		return myServiceFinishTime != -1;
+	}
+
+	public boolean isFinished()
+	{
+		return myServiceFinished;
+	}
+
 	public void startService(int currentTime)
 	{
-		if (myServicing == false)
+		if (myServiceFinished == false && myServiceFinishTime == -1)
 		{
-			myServicing = true;
 			myServiceFinishTime = currentTime + getTimeForSpeed(mySpeed);
+			return;
 		}
 
 		throw new IllegalStateException();
@@ -63,10 +78,14 @@ public class Customer {
 
 	public boolean serviceComplete(int currentTime)
 	{
-		if (myServicing == true)
+		if (myServiceFinishTime != -1)
 		{
 			if (currentTime >= myServiceFinishTime)
+			{
+				myServiceFinished = true;
+				myServiceFinishTime = -1;
 				return true;
+			}
 			return false;
 		}
 
@@ -104,11 +123,11 @@ public class Customer {
 		switch (theSpeed)
 		{
 			case FAST:
-				return 10;
+				return 5;
 			case MEDIUM:
-				return 30;
+				return 10;
 			case SLOW:
-				return 50;
+				return 15;
 			default:
 				return -1;
 		}
