@@ -2,11 +2,8 @@ package Operators;
 
 import java.util.Stack;
 
-import com.sun.xml.internal.fastinfoset.util.CharArray;
-
 public class CalculatorBackend {
-	public enum Ops {ADD, SUB, MULT, DIV};
-
+	public enum Ops {ADD, SUB, MULT, DIV, INVALID};
 
 	Stack<Ops> operatorStore;
 	Stack<Double> numberStore;
@@ -21,13 +18,44 @@ public class CalculatorBackend {
 	{
 		char[] splitInput = input.toCharArray();
 
-		int currIndex = 0;
-		for (currIndex < splitInput.length)
-		{
+		if (splitInput.length % 3 != 0)
+			return false;
 
+		int currIndex = 0;
+		while (currIndex + 2 < splitInput.length)
+		{
+			if (!(Character.isDigit(splitInput[currIndex]) &&
+				Character.isDigit(splitInput[currIndex + 1]) &&
+				parseOp(splitInput[currIndex + 2]) != Ops.INVALID));
+			{
+				operatorStore.clear();
+				numberStore.clear();
+				return false;
+			}
+
+			numberStore.push(Character.getNumericValue(splitInput[currIndex]));
+			numberStore.push(splitInput[currIndex + 1]);
+			operatorStore.push(parseOp(splitInput[currIndex + 2]));
 		}
 
 		return true;
+	}
+
+	private Ops parseOp(char theOp)
+	{
+		switch (theOp)
+		{
+			case '+':
+				return Ops.ADD;
+			case '-':
+				return Ops.SUB;
+			case '*':
+				return Ops.MULT;
+			case '/':
+				return Ops.DIV;
+			default:
+				return Ops.INVALID;
+		}
 	}
 
 	public void addOperator(Ops theOp)
