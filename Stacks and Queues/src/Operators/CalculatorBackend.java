@@ -14,11 +14,16 @@ public class CalculatorBackend {
 		numberStore = new Stack<Double>();
 	}
 
+	/**
+	 * Each number/operator should be separated by spaces
+	 * @param A string to parse into an equation;
+	 * @return true for a successful parse, false if not
+	 */
 	public boolean parse(String input)
 	{
 		char[] splitInput = input.toCharArray();
 
-		if (splitInput.length % 3 != 0)
+		if (splitInput.length % 5 != 0)
 			return false;
 
 		int currIndex = 0;
@@ -33,7 +38,7 @@ public class CalculatorBackend {
 				return false;
 			}
 
-			numberStore.push(Character.getNumericValue(splitInput[currIndex]));
+			numberStore.push((double)Character.getNumericValue(splitInput[currIndex]));
 			numberStore.push(splitInput[currIndex + 1]);
 			operatorStore.push(parseOp(splitInput[currIndex + 2]));
 		}
