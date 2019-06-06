@@ -23,15 +23,16 @@
       <module fileurl="file://$PROJECT_DIR$/Chapter7StuffPart2-ArrayLists/Chapter7StuffPart2-ArrayLists.iml" filepath="$PROJECT_DIR$/Chapter7StuffPart2-ArrayLists/Chapter7StuffPart2-ArrayLists.iml" />
       <module fileurl="file://$PROJECT_DIR$/Chapter8Stuff-DesigningClasses/Chapter8Stuff-DesigningClasses.iml" filepath="$PROJECT_DIR$/Chapter8Stuff-DesigningClasses/Chapter8Stuff-DesigningClasses.iml" />
       <module fileurl="file://$PROJECT_DIR$/Chapter9Stuff-InterfacesPolymorphism/Chapter9Stuff-InterfacesPolymorphism.iml" filepath="$PROJECT_DIR$/Chapter9Stuff-InterfacesPolymorphism/Chapter9Stuff-InterfacesPolymorphism.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Extra/Extra.iml" filepath="$PROJECT_DIR$/Extra/Extra.iml" />
       <module fileurl="file://$PROJECT_DIR$/Graphics/Graphics.iml" filepath="$PROJECT_DIR$/Graphics/Graphics.iml" />
       <module fileurl="file://$PROJECT_DIR$/Hello AP Programming/Hello AP Programming.iml" filepath="$PROJECT_DIR$/Hello AP Programming/Hello AP Programming.iml" />
       <module fileurl="file://$PROJECT_DIR$/Labs/Labs.iml" filepath="$PROJECT_DIR$/Labs/Labs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LinkedLists/LinkedLists.iml" filepath="$PROJECT_DIR$/LinkedLists/LinkedLists.iml" />
       <module fileurl="file://$PROJECT_DIR$/Little Fishes/Little Fishes.iml" filepath="$PROJECT_DIR$/Little Fishes/Little Fishes.iml" />
       <module fileurl="file://$PROJECT_DIR$/LoopReview/LoopReview.iml" filepath="$PROJECT_DIR$/LoopReview/LoopReview.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyLibrary/MyLibrary.iml" filepath="$PROJECT_DIR$/MyLibrary/MyLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/ScreenSaver/ScreenSaver.iml" filepath="$PROJECT_DIR$/ScreenSaver/ScreenSaver.iml" />
       <module fileurl="file://$PROJECT_DIR$/Skyline/Skyline.iml" filepath="$PROJECT_DIR$/Skyline/Skyline.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Stacks and Queues/Stacks and Queues.iml" filepath="$PROJECT_DIR$/Stacks and Queues/Stacks and Queues.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestProject/TestProject.iml" filepath="$PROJECT_DIR$/TestProject/TestProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/TheFlatScreen/TheFlatScreen.iml" filepath="$PROJECT_DIR$/TheFlatScreen/TheFlatScreen.iml" />
     </modules>

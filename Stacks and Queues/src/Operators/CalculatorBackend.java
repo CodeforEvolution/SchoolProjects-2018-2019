@@ -3,7 +3,9 @@ package Operators;
 import java.util.Stack;
 
 public class CalculatorBackend {
-	public enum Ops {ADD, SUB, MULT, DIV, INVALID};
+	private static int CHUNK_SIZE = 5;
+
+	public enum Ops {ADD, SUB, MULT, DIV, INVALID}
 
 	Stack<Ops> operatorStore;
 	Stack<Double> numberStore;
@@ -16,22 +18,22 @@ public class CalculatorBackend {
 
 	/**
 	 * Each number/operator should be separated by spaces
-	 * @param A string to parse into an equation;
+	 * @param input A string to parse into an equation;
 	 * @return true for a successful parse, false if not
 	 */
 	public boolean parse(String input)
 	{
 		char[] splitInput = input.toCharArray();
 
-		if (splitInput.length % 5 != 0)
+		if ((splitInput.length % 2) == 0)
 			return false;
 
 		int currIndex = 0;
-		while (currIndex + 2 < splitInput.length)
+		while (currIndex + CHUNK_SIZE - 1 < splitInput.length)
 		{
 			if (!(Character.isDigit(splitInput[currIndex]) &&
-				Character.isDigit(splitInput[currIndex + 1]) &&
-				parseOp(splitInput[currIndex + 2]) != Ops.INVALID));
+				Character.isDigit(splitInput[currIndex + 2]) &&
+				parseOp(splitInput[currIndex + 4]) != Ops.INVALID))
 			{
 				operatorStore.clear();
 				numberStore.clear();
@@ -39,8 +41,8 @@ public class CalculatorBackend {
 			}
 
 			numberStore.push((double)Character.getNumericValue(splitInput[currIndex]));
-			numberStore.push(splitInput[currIndex + 1]);
-			operatorStore.push(parseOp(splitInput[currIndex + 2]));
+			numberStore.push((double)Character.getNumericValue(splitInput[currIndex + 2]));
+			operatorStore.push(parseOp(splitInput[currIndex + 4]));
 		}
 
 		return true;
@@ -121,5 +123,29 @@ public class CalculatorBackend {
 			return false;
 
 		return true;
+	}
+
+	public String toString()
+	{
+		if (isValid() == false)
+			return "Invalid State";
+
+		String out = "\n";
+
+		int numIndex = 0;
+		int opsIndex = 0;
+		while (numIndex < numberStore.size())
+		{
+			out += numberStore.get(numIndex) + " ";
+			out += numberStore.get(numIndex + 1) + " ";
+			out += numberStore.get(opsIndex) + "|";
+
+			numIndex += 2;
+			opsIndex++;
+		}
+
+		out += "\n";
+
+		return out;
 	}
 }
