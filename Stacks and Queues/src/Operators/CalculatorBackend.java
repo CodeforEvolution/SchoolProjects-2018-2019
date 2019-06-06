@@ -16,12 +16,23 @@ public class CalculatorBackend {
 		numberStore = new Stack<Double>();
 	}
 
+	public boolean parse(String input)
+	{
+		if (parseOld(input))
+			return true;
+
+		if (parseNew(input))
+			return true;
+
+		return false;
+	}
+
 	/**
-	 * Each number/operator should be separated by spaces
+	 * Each number/operator should be separated by spaces, old calculation
 	 * @param input A string to parse into an equation;
 	 * @return true for a successful parse, false if not
 	 */
-	public boolean parse(String input)
+	private boolean parseOld(String input)
 	{
 		char[] splitInput = input.toCharArray();
 
@@ -43,9 +54,16 @@ public class CalculatorBackend {
 			numberStore.push((double)Character.getNumericValue(splitInput[currIndex]));
 			numberStore.push((double)Character.getNumericValue(splitInput[currIndex + 2]));
 			operatorStore.push(parseOp(splitInput[currIndex + 4]));
+
+			currIndex += CHUNK_SIZE;
 		}
 
-		return true;
+		return isValid();
+	}
+
+	private boolean parseNew(String input)
+	{
+		return false;
 	}
 
 	private Ops parseOp(char theOp)
@@ -94,7 +112,7 @@ public class CalculatorBackend {
 
 	public void solveAll()
 	{
-		while (solveStep());
+		while (solveStep() && !(numberStore.empty() || operatorStore.empty()));
 	}
 
 	private double solve(Ops theOp, double numA, double numB)
@@ -116,10 +134,10 @@ public class CalculatorBackend {
 
 	private boolean isValid()
 	{
-		int indexNum = 0;
-		int indexOps = 0;
+		if (numberStore.empty() || operatorStore.empty())
+			return false;
 
-		if (indexOps * 2 != indexNum)
+		if (numberStore.size() % 2 != 0)
 			return false;
 
 		return true;
@@ -132,13 +150,19 @@ public class CalculatorBackend {
 
 		String out = "\n";
 
+		if (operatorStore.empty())
+		{
+			out += numberStore.get(0);
+			return out;
+		}
+
 		int numIndex = 0;
 		int opsIndex = 0;
-		while (numIndex < numberStore.size())
+		while (numIndex + 1 < numberStore.size())
 		{
 			out += numberStore.get(numIndex) + " ";
 			out += numberStore.get(numIndex + 1) + " ";
-			out += numberStore.get(opsIndex) + "|";
+			out += opToString(operatorStore.get(opsIndex));
 
 			numIndex += 2;
 			opsIndex++;
@@ -147,5 +171,23 @@ public class CalculatorBackend {
 		out += "\n";
 
 		return out;
+	}
+
+	private String opToString(Ops theOp)
+	{
+		switch (theOp)
+		{
+			case ADD:
+				return "+";
+			case DIV:
+				return "/";
+			case MULT:
+				return "*";
+			case SUB:
+				return "-";
+			case INVALID:
+			default:
+				return "?";
+		}
 	}
 }
