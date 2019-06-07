@@ -18,6 +18,9 @@ public class CalculatorBackend {
 
 	public boolean parse(String input)
 	{
+		operatorStore.clear();
+		numberStore.clear();
+
 		if (parseOld(input))
 			return true;
 
@@ -112,7 +115,7 @@ public class CalculatorBackend {
 
 	public void solveAll()
 	{
-		while (solveStep() && !(numberStore.empty() || operatorStore.empty()));
+		while (!(numberStore.size() == 1 && operatorStore.empty()) && solveStep());
 	}
 
 	private double solve(Ops theOp, double numA, double numB)
@@ -134,7 +137,11 @@ public class CalculatorBackend {
 
 	private boolean isValid()
 	{
-		if (numberStore.empty() || operatorStore.empty())
+		// We might have the solution...
+		if (numberStore.size() == 1 && operatorStore.empty())
+			return true;
+
+		if (numberStore.empty() && operatorStore.empty())
 			return false;
 
 		if (numberStore.size() % 2 != 0)
