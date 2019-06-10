@@ -1,5 +1,6 @@
 package Operators;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class CalculatorBackend {
@@ -21,52 +22,42 @@ public class CalculatorBackend {
 		operatorStore.clear();
 		numberStore.clear();
 
-		if (parseOld(input))
-			return true;
-
-		if (parseNew(input))
-			return true;
-
-		return false;
+		return goParse(input);
 	}
 
-	/**
-	 * Each number/operator should be separated by spaces, old calculation
-	 * @param input A string to parse into an equation;
-	 * @return true for a successful parse, false if not
-	 */
-	private boolean parseOld(String input)
+	private boolean goParse(String input)
 	{
-		char[] splitInput = input.toCharArray();
+		char[] split = input.toCharArray();
 
-		if ((splitInput.length % 2) == 0)
-			return false;
+		ArrayList<Double> numberTemp = new ArrayList<Double>();
+		ArrayList<Ops> opTemp = new ArrayList<Ops>();
 
-		int currIndex = 0;
-		while (currIndex + CHUNK_SIZE - 1 < splitInput.length)
+		for (int index = 0; index < split.length; index++)
 		{
-			if (!(Character.isDigit(splitInput[currIndex]) &&
-				Character.isDigit(splitInput[currIndex + 2]) &&
-				parseOp(splitInput[currIndex + 4]) != Ops.INVALID))
-			{
-				operatorStore.clear();
-				numberStore.clear();
+			if (Character.isDigit(split[index]))
+				numberTemp.add((double)Character.getNumericValue(split[index]));
+			else if (parseOp(split[index]) != Ops.INVALID)
+				opTemp.add(parseOp(split[index]));
+			else if (split[index] != ' ')
 				return false;
-			}
-
-			numberStore.push((double)Character.getNumericValue(splitInput[currIndex]));
-			numberStore.push((double)Character.getNumericValue(splitInput[currIndex + 2]));
-			operatorStore.push(parseOp(splitInput[currIndex + 4]));
-
-			currIndex += CHUNK_SIZE;
 		}
 
-		return isValid();
-	}
+		int lowPrio;
+		while (!opTemp.isEmpty())
+		{
+			lowPrio = 0;
+			for (int index = 0; index < opTemp.size(); index++)
+			{
+				if (opTemp.get(index).compareTo(opTemp.get(lowPrio)) > 0)
+					lowPrio = index;
+			}
 
-	private boolean parseNew(String input)
-	{
-		return false;
+			operatorStore.push(opTemp.remove(lowPrio));
+			numberStore.push(numberTemp.remove(lowPrio));
+			numberStore.push(numberTemp.remove(lowPrio + 1));
+		}
+
+		return true;
 	}
 
 	private Ops parseOp(char theOp)
@@ -88,34 +79,29 @@ public class CalculatorBackend {
 
 	public void addOperator(Ops theOp)
 	{
-		operatorStore.push(theOp);
+		operatorStore.add(theOp);
 	}
 
 	public void addNumber(Double theNumber)
 	{
-		numberStore.push(theNumber);
+		numberStore.add(theNumber);
 	}
 
-	/**
-	 * @return true if one step was successfully solved, false if not
-	 */
-	public boolean solveStep()
+	public boolean solveAll()
 	{
 		if (isValid() == false)
 			return false;
 
-		double numA = numberStore.pop();
-		double numB = numberStore.pop();
-		Ops theOp = operatorStore.pop();
+		while (!operatorStore.empty())
+		{
+			double numA = numberStore.pop();
+			double numB = numberStore.pop();
+			Ops theOp = operatorStore.pop();
 
-		numberStore.push(solve(theOp, numA, numB));
+			numberStore.push(solve(theOp, numA, numB));
+		}
 
 		return true;
-	}
-
-	public void solveAll()
-	{
-		while (!(numberStore.size() == 1 && operatorStore.empty()) && solveStep());
 	}
 
 	private double solve(Ops theOp, double numA, double numB)
@@ -138,13 +124,13 @@ public class CalculatorBackend {
 	private boolean isValid()
 	{
 		// We might have the solution...
-		if (numberStore.size() == 1 && operatorStore.empty())
+		if (numberStore.size() == 1 && operatorStore.isEmpty())
 			return true;
 
-		if (numberStore.empty() && operatorStore.empty())
+		if (numberStore.isEmpty() && operatorStore.isEmpty())
 			return false;
 
-		if (numberStore.size() % 2 != 0)
+		if (numberStore.size() != operatorStore.size() + 1)
 			return false;
 
 		return true;
@@ -157,7 +143,7 @@ public class CalculatorBackend {
 
 		String out = "\n";
 
-		if (operatorStore.empty())
+		if (operatorStore.isEmpty())
 		{
 			out += numberStore.get(0);
 			return out;
