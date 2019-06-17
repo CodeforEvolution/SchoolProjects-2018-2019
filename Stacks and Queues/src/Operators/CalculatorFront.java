@@ -10,23 +10,22 @@ public class CalculatorFront {
 
         System.out.println("Welcome!!!");
 
-        boolean good = false;
+        boolean good;
         do
         {
         	System.out.println("\nPlease enter an equation:");
         	System.out.print("-----> ");
 
-        	good = backend.parse(in.nextLine());
+        	String input = in.nextLine();
+
+            System.out.println("\nAttempting to solve...\n");
+        	good = backend.parse(input);
 
         	if (good == false)
         		System.out.println("\nThat doesn't seem to be an equation...try again please!");
         } while (good == false);
         in.close();
 
-        System.out.println("Solving...");
-        backend.solveAll();
-
-        System.out.print("Solution: ");
         System.out.println(backend);
 
         System.out.println("\nThank you for your time!");
